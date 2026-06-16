@@ -1,0 +1,36 @@
+@model BookingCheckoutViewModel
+@{
+    ViewData["Title"] = L["Checkout"];
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>@L["Booking information"]</h1>
+        <p>@L["Select add-ons, review the total price and enter passenger information."]</p>
+    </div>
+</section>
+
+<section class="container checkout-grid">
+    <form method="post" action="/booking/checkout" class="booking-form checkout-main" data-passenger-count="@Model.PassengerCount">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <input type="hidden" name="TripType" value="@Model.TripType" />
+        <input type="hidden" name="AirportId" value="@Model.AirportId" />
+        <input type="hidden" name="OriginAddress" value="@Model.OriginAddress" />
+        <input type="hidden" name="DestinationAddress" value="@Model.DestinationAddress" />
+        <input type="hidden" name="PickupDateTime" value="@Model.PickupDateTime.ToString("yyyy-MM-dd")" />
+        <input type="hidden" name="PassengerCount" value="@Model.PassengerCount" />
+        <input type="hidden" name="CarVehicleTypeId" value="@Model.CarVehicleTypeId" />
+        <input type="hidden" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+        <input type="hidden" name="EndDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+
+        @if (Model.TripType != TripType.Hire)
+{
+    @Html.Partial("Checkout/_AddonsSection", Model)
+}
+        @Html.Partial("Checkout/_PassengerSection", Model)
+        <button class="btn btn-gold btn-lg w-100" type="submit">@L["Go to payment"]</button>
+    </form>
+
+    @Html.Partial("Checkout/_Summary", Model)
+</section>

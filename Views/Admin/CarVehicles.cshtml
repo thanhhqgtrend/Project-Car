@@ -1,0 +1,96 @@
+﻿@model AdminCarVehicleListViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Vehicles";
+}
+
+<section class="admin-shell">
+    <div class="admin-page-heading">
+        <div>
+            <h1>Vehicles</h1>
+            <p>Manage vehicle capacity, pricing and visibility for public booking.</p>
+        </div>
+        <a class="btn btn-gold" href="/admin/vehicles/create"><i class="bi bi-plus-lg"></i> New vehicle</a>
+    </div>
+
+    @if (TempData["AdminNotice"] is string notice)
+    {
+        <div class="alert alert-success">@notice</div>
+    }
+
+    <form class="row g-2 admin-filter" method="get">
+        <div class="col-md-4">
+            <input class="form-control" name="search" value="@Model.Search" placeholder="Search name or description" />
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" name="status">
+                <option value="active" selected="@(Model.Status == "active")">Active</option>
+                <option value="inactive" selected="@(Model.Status == "inactive")">Inactive</option>
+                <option value="all" selected="@(Model.Status == "all")">All</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-gold w-100" type="submit">Filter</button>
+        </div>
+    </form>
+
+    <div class="table-responsive admin-table">
+        <table class="table align-middle admin-compact-table">
+            <thead>
+                <tr>
+                    <th>Vehicle</th>
+                    <th>Capacity</th>
+                    <th>Pricing</th>
+                    <th>Order</th>
+                    <th>Flags</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Vehicles.Any())
+                {
+                    <tr><td colspan="6" class="text-muted">No vehicles found.</td></tr>
+                }
+                @foreach (var vehicle in Model.Vehicles)
+                {
+                    <tr>
+                        <td>
+                            <div class="vehicle-admin-cell">
+                                @if (!string.IsNullOrWhiteSpace(vehicle.Image?.SecureUrl))
+                                {
+                                    <img src="@CloudinaryUrlHelper.For(vehicle.Image, CloudinaryUrlHelper.AdminVehicleThumb)" alt="@vehicle.Name" loading="lazy" decoding="async" />
+                                }
+                                else
+                                {
+                                    <span><i class="bi bi-car-front"></i></span>
+                                }
+                                <div>
+                                    <strong>@vehicle.Name</strong>
+                                    <br>
+                                    <small>@vehicle.Description</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>@vehicle.PassengerCapacity pax<br><small>@vehicle.LuggageCapacity bags</small></td>
+                        <td>$@vehicle.BaseFareUsd.ToString("0.00") base<br><small>$@vehicle.PricePerKmUsd.ToString("0.00") / km</small></td>
+                        <td>@vehicle.DisplayOrder</td>
+                        <td>
+                            <span class="admin-status">@(vehicle.IsActive ? "Active" : "Inactive")</span>
+                            @if (vehicle.IsLuxury)
+                            {
+                                <span class="admin-status">Premium</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <div class="admin-row-actions">
+                                <a class="btn btn-sm btn-outline-secondary" href="/admin/vehicles/@vehicle.Id">View</a>
+                                <a class="btn btn-sm btn-outline-gold" href="/admin/vehicles/@vehicle.Id/edit">Edit</a>
+                                <a class="btn btn-sm btn-outline-danger" href="/admin/vehicles/@vehicle.Id/delete">Deactivate</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

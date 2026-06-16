@@ -1,0 +1,80 @@
+﻿@model AdminRedirectListViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Redirects";
+}
+
+<section class="admin-shell">
+    <div class="admin-page-heading">
+        <div>
+            <h1>Redirects</h1>
+            <p>Manage manual 301/302 redirects for old URLs and campaign links.</p>
+        </div>
+        <a class="btn btn-gold" href="/admin/redirects/create"><i class="bi bi-plus-lg"></i> New redirect</a>
+    </div>
+
+    @if (TempData["AdminNotice"] is string notice)
+    {
+        <div class="alert alert-info">@notice</div>
+    }
+
+    <form class="row g-2 admin-filter" method="get">
+        <div class="col-md-4">
+            <input class="form-control" name="search" value="@Model.Search" placeholder="Search source, target or notes" />
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" name="status">
+                <option value="active" selected="@(Model.Status == "active")">Active</option>
+                <option value="inactive" selected="@(Model.Status == "inactive")">Inactive</option>
+                <option value="all" selected="@(Model.Status == "all")">All</option>
+                <option value="deleted" selected="@(Model.Status == "deleted")">Deleted</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-gold w-100" type="submit">Filter</button>
+        </div>
+    </form>
+
+    <div class="table-responsive admin-table">
+        <table class="table align-middle admin-compact-table">
+            <thead>
+                <tr>
+                    <th>Source</th>
+                    <th>Target</th>
+                    <th>Status</th>
+                    <th>Code</th>
+                    <th>Updated</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Redirects.Any())
+                {
+                    <tr><td colspan="6" class="text-muted">No redirects found.</td></tr>
+                }
+                @foreach (var redirect in Model.Redirects)
+                {
+                    <tr>
+                        <td><strong>@redirect.SourcePath</strong><br><small>@redirect.Notes</small></td>
+                        <td><a href="@redirect.TargetUrl" target="_blank" rel="noopener">@redirect.TargetUrl</a></td>
+                        <td><span class="admin-status">@(redirect.DeletedAtUtc is not null ? "Deleted" : redirect.IsActive ? "Active" : "Inactive")</span></td>
+                        <td>@redirect.StatusCode</td>
+                        <td>@redirect.UpdatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                        <td class="text-end">
+                            <div class="admin-row-actions">
+                                @if (redirect.DeletedAtUtc is null)
+                                {
+                                    <a class="btn btn-sm btn-outline-gold" href="/admin/redirects/@redirect.Id/edit">Edit</a>
+                                    <form method="post" action="/admin/redirects/@redirect.Id/delete" onsubmit="return confirm('Delete this redirect rule?');">
+                                        @Html.AntiForgeryToken()
+                                        <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

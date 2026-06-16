@@ -1,0 +1,82 @@
+@model AdminSettingsViewModel
+            <div class="tab-pane fade" id="payments-panel" role="tabpanel" aria-labelledby="payments-tab" tabindex="0">
+    <form class="admin-panel settings-form" method="post" action='@Url.Action("SavePayPalSettings")'>
+        @Html.AntiForgeryToken()
+        <div class="settings-section-heading">
+            <i class="bi bi-paypal"></i>
+            <div>
+                <h2>PayPal</h2>
+                <p>Leave credentials blank to hide PayPal on the payment page.</p>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <label class="form-label" for="PayPalClientId">Client ID</label>
+                @Html.TextBoxFor(m => m.PayPalClientId, new { @class = "form-control form-control-lg" })
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="PayPalMode">Mode</label>
+                <select class="form-select form-select-lg" name="PayPalMode" id="PayPalMode">
+                    <option value="Sandbox" selected="@(string.Equals(Model.PayPalMode, "Sandbox", StringComparison.OrdinalIgnoreCase))">Sandbox</option>
+                    <option value="Live" selected="@(string.Equals(Model.PayPalMode, "Live", StringComparison.OrdinalIgnoreCase))">Live</option>
+                </select>
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="PayPalClientSecret">Client secret</label>
+                <input class="form-control form-control-lg" name="PayPalClientSecret" id="PayPalClientSecret" type="password" autocomplete="new-password" placeholder="@(Model.HasPayPalClientSecret ? "Leave blank to keep current secret" : "PayPal client secret")" />
+                @if (Model.HasPayPalClientSecret)
+                {
+                    <label class="form-check admin-checkline mt-2">
+                        <input class="form-check-input" name="ClearPayPalClientSecret" id="ClearPayPalClientSecret" type="checkbox" />
+                        <span class="form-check-label">Clear saved PayPal secret</span>
+                    </label>
+                }
+            </div>
+        </div>
+        <div class="admin-form-actions">
+            <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save PayPal settings</button>
+        </div>
+    </form>
+
+    <form class="admin-panel settings-form" method="post" action='@Url.Action("SaveStripeSettings")'>
+        @Html.AntiForgeryToken()
+        <div class="settings-section-heading">
+            <i class="bi bi-credit-card"></i>
+            <div>
+                <h2>Stripe / card payments</h2>
+                <p>Leave keys blank to hide Visa / Mastercard on the payment page.</p>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <label class="form-label" for="StripePublishableKey">Publishable key</label>
+                @Html.TextBoxFor(m => m.StripePublishableKey, new { @class = "form-control form-control-lg", placeholder = "pk_test_..." })
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="StripeSecretKey">Secret key</label>
+                <input class="form-control form-control-lg" name="StripeSecretKey" id="StripeSecretKey" type="password" autocomplete="new-password" placeholder="@(Model.HasStripeSecretKey ? "Leave blank to keep current secret" : "sk_test_...")" />
+                @if (Model.HasStripeSecretKey)
+                {
+                    <label class="form-check admin-checkline mt-2">
+                        <input class="form-check-input" name="ClearStripeSecretKey" id="ClearStripeSecretKey" type="checkbox" />
+                        <span class="form-check-label">Clear saved Stripe secret key</span>
+                    </label>
+                }
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="StripeWebhookSecret">Webhook secret</label>
+                <input class="form-control form-control-lg" name="StripeWebhookSecret" id="StripeWebhookSecret" type="password" autocomplete="new-password" placeholder="@(Model.HasStripeWebhookSecret ? "Leave blank to keep current webhook secret" : "whsec_...")" />
+                @if (Model.HasStripeWebhookSecret)
+                {
+                    <label class="form-check admin-checkline mt-2">
+                        <input class="form-check-input" name="ClearStripeWebhookSecret" id="ClearStripeWebhookSecret" type="checkbox" />
+                        <span class="form-check-label">Clear saved Stripe webhook secret</span>
+                    </label>
+                }
+            </div>
+        </div>
+        <div class="admin-form-actions">
+            <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save Stripe settings</button>
+        </div>
+    </form>
+            </div>

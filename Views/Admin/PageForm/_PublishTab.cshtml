@@ -1,0 +1,14 @@
+@model CmsPageFormViewModel
+                <section class="vehicle-form-section">
+                    <div class="settings-section-heading">
+                        <i class="bi bi-toggle-on"></i>
+                        <div>
+                            <h2>Publish</h2>
+                            <p>Draft pages stay available for admin preview but are hidden from public URLs.</p>
+                        </div>
+                    </div>
+                    <label class="vehicle-toggle">
+                        @Html.CheckBoxFor(m => m.IsPublished)
+                        <span><strong>Published</strong><small>Uncheck to save as draft.</small></span>
+                    </label>
+                </section>

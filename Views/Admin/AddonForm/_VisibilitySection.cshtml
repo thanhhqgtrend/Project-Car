@@ -1,0 +1,17 @@
+@model CarBookingAddonFormViewModel
+                <section class="vehicle-form-section">
+                    <div class="vehicle-form-section-heading">
+                        <i class="bi bi-toggle-on"></i>
+                        <div>
+                            <h2>Visibility</h2>
+                            <p>Control whether this addon appears on the public site and checkout.</p>
+                        </div>
+                    </div>
+                    <label class="vehicle-toggle">
+                        @Html.CheckBoxFor(m => m.IsActive)
+                        <span>
+                            <strong>Active on public checkout</strong>
+                            <small>Inactive addons remain on old bookings but are hidden from new checkout.</small>
+                        </span>
+                    </label>
+                </section>

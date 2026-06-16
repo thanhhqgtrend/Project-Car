@@ -1,0 +1,46 @@
+﻿@model AdminBookingListViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Bookings";
+}
+
+<section class="admin-shell">
+    <div class="admin-page-heading">
+        <div>
+            <h1>Bookings</h1>
+            <p>Leads are visible here as soon as customers submit their details.</p>
+        </div>
+    </div>
+    <form class="row g-2 admin-filter" method="get">
+        <div class="col-md-4"><input class="form-control" name="search" value="@Model.Search" placeholder="Booking, name or email" /></div>
+        <div class="col-md-3">
+            <select class="form-select" name="status">
+                <option value="">All statuses</option>
+                @foreach (BookingStatus status in Enum.GetValues(typeof(BookingStatus)))
+                {
+                    <option value="@status" selected="@(Model.Status == status)">@status</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2"><button class="btn btn-gold w-100">Filter</button></div>
+    </form>
+    <div class="table-responsive admin-table">
+        <table class="table align-middle">
+            <thead><tr><th>Booking</th><th>Customer</th><th>Route</th><th>Vehicle</th><th>Fare</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+                @foreach (var booking in Model.Bookings)
+                {
+                    <tr>
+                        <td><strong>@booking.BookingNumber</strong><br><small>@booking.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm") UTC</small></td>
+                        <td>@booking.FullName<br><small>@booking.Email<br>@booking.Phone</small></td>
+                        <td>@booking.Airport?.Code<br><small>@booking.PickupAddress â†’ @booking.DropoffAddress</small></td>
+                        <td>@booking.CarVehicleType?.Name<br><small>@booking.PassengerCount pax</small></td>
+                        <td>$@booking.EstimatedPriceUsd.ToString("0.00")</td>
+                        <td><span class="admin-status">@booking.Status</span></td>
+                        <td><a class="btn btn-sm btn-outline-gold" href="/admin/bookings/@booking.Id">Open</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

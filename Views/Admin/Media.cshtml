@@ -1,0 +1,52 @@
+﻿@model AdminMediaListViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Media";
+}
+
+<section class="admin-shell">
+    <div class="admin-page-heading">
+        <div>
+            <h1>Media library</h1>
+            <p>Upload and manage Cloudinary images used across the website.</p>
+        </div>
+        <a class="btn btn-gold" href="/admin/media/upload"><i class="bi bi-cloud-upload"></i> Upload media</a>
+    </div>
+
+    @if (!Model.IsCloudinaryConfigured)
+    {
+        <div class="alert alert-warning">Cloudinary is not configured yet. Add Cloudinary credentials before uploading.</div>
+    }
+    @if (TempData["AdminNotice"] is string notice)
+    {
+        <div class="alert alert-info">@notice</div>
+    }
+
+    <form class="row g-2 admin-filter" method="get">
+        <div class="col-md-5">
+            <input class="form-control" name="search" value="@Model.Search" placeholder="Search filename, alt text or public id" />
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-gold w-100" type="submit">Filter</button>
+        </div>
+    </form>
+
+    <div class="media-grid">
+        @if (!Model.Assets.Any())
+        {
+            <div class="admin-panel">No media uploaded yet.</div>
+        }
+        @foreach (var asset in Model.Assets)
+        {
+            <article class="media-card">
+                <a href="/admin/media/@asset.Id">
+                    <img src="@CloudinaryUrlHelper.For(asset, CloudinaryUrlHelper.MediaLibraryCard)" alt="@asset.AltText" loading="lazy" decoding="async" />
+                </a>
+                <div>
+                    <strong>@asset.FileName</strong>
+                    <small>@(asset.Bytes / 1024) KB Â· @asset.CreatedAtUtc.ToString("yyyy-MM-dd")</small>
+                </div>
+            </article>
+        }
+    </div>
+</section>

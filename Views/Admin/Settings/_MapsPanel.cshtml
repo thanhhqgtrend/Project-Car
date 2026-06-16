@@ -1,0 +1,18 @@
+@model AdminSettingsViewModel
+            <div class="tab-pane fade" id="maps-panel" role="tabpanel" aria-labelledby="maps-tab" tabindex="0">
+    <form class="admin-panel settings-form" method="post" action='@Url.Action("SaveGeoapifySettings")'>
+        @Html.AntiForgeryToken()
+        <div class="settings-section-heading">
+            <i class="bi bi-geo-alt"></i>
+            <div>
+                <h2>Geoapify location services</h2>
+                <p>Used for address autocomplete, geocoding and route distance calculation.</p>
+            </div>
+        </div>
+        <label class="form-label" for="GeoapifyApiKey">Geoapify API key</label>
+        @Html.TextBoxFor(m => m.GeoapifyApiKey, new { @class = "form-control form-control-lg" })
+        <div class="admin-form-actions">
+            <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save Geoapify key</button>
+        </div>
+    </form>
+            </div>

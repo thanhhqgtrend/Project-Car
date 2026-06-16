@@ -1,0 +1,219 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = L["Premium Transfer"];
+    var firstAirport = Model.Airports.FirstOrDefault()?.Id ?? 0;
+    var searchModel = new BookingSearchViewModel
+    {
+        AirportId = firstAirport == 0 ? null : firstAirport,
+        PickupDateTime = DateTime.Now.AddHours(4),
+        Airports = Model.Airports
+            .Select(x => new System.Web.Mvc.SelectListItem { Text = $"{x.City} ({x.Code})", Value = x.Id.ToString() })
+            .ToList(),
+        GeoapifyApiKey = Model.GeoapifyApiKey
+    };
+}
+
+<section class="hero">
+    <div class="container hero-inner">
+        <div class="hero-copy">
+            <span class="hero-pill"><i class="bi bi-award"></i> @L["Fixed price airport pickup"]</span>
+            <h1>@L["Vietnam Transfer private rides in Vietnam"]</h1>
+            <p>@L["Professional private rides. Safe, on time and transparent from booking to arrival."]</p>
+        </div>
+    </div>
+</section>
+
+<section class="booking-card container">
+    @Html.Partial("~/Views/Booking/_SearchForm.cshtml", searchModel)
+    <div class="booking-benefits">
+        <span><i class="bi bi-shield-check"></i> @L["Fixed price"]</span>
+        <span><i class="bi bi-arrow-counterclockwise"></i> @L["Free cancellation 24h before pickup"]</span>
+        <span><i class="bi bi-person-check"></i> @L["Professional drivers"]</span>
+        <span><i class="bi bi-car-front"></i> @L["Clean private cars"]</span>
+    </div>
+</section>
+
+<section class="section-block container">
+    <div class="section-heading">
+        <span>@L["Featured service"]</span>
+        <h2>@L["Premium transfer vehicles"]</h2>
+        <p>@L["Choose a vehicle that matches your group, luggage and comfort level."]</p>
+    </div>
+    <div class="row g-4">
+        @foreach (var vehicle in Model.CarVehicleTypes.Take(4))
+        {
+            <div class="col-md-6 col-xl-3">
+                <article class="vehicle-card">
+                    @if (vehicle.IsLuxury)
+                    {
+                        <span class="badge badge-gold">@L["Popular"]</span>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(vehicle.Image?.SecureUrl))
+                    {
+                        <img class="vehicle-card-image" src="@CloudinaryUrlHelper.For(vehicle.Image, CloudinaryUrlHelper.PublicVehicleCard)" alt="@vehicle.Name" loading="lazy" decoding="async" />
+                    }
+                    else
+                    {
+                        <div class="placeholder-image car-placeholder"><span>@vehicle.Name</span></div>
+                    }
+                    <h3>@vehicle.Name</h3>
+                    <p>@vehicle.Description</p>
+                    <div class="vehicle-meta">
+                        <span><i class="bi bi-people"></i> @vehicle.PassengerCapacity @L["pax"]</span>
+                        <span><i class="bi bi-briefcase"></i> @vehicle.LuggageCapacity @L["bags"]</span>
+                    </div>
+                    <strong>@L["From"] $@vehicle.BaseFareUsd.ToString("0.00")</strong>
+                    <a class="btn btn-outline-gold w-100" href="/booking/checkout?TripType=AirportPickup&AirportId=@firstAirport&PickupDateTime=@DateTime.Now.AddHours(4).ToString("yyyy-MM-dd")&PassengerCount=1&CarVehicleTypeId=@vehicle.Id">@L["Book now"]</a>
+                </article>
+            </div>
+        }
+    </div>
+</section>
+
+@if (Model.FeaturedAddons.Any())
+{
+    <section class="section-block container home-showcase">
+        <div class="section-heading">
+            <span>@L["Featured services"]</span>
+            <h2>@L["Add more comfort to your transfer"]</h2>
+            <p>@L["Select helpful extras during checkout, prepared together with your private ride."]</p>
+        </div>
+        <div class="thumbnail-grid">
+            @foreach (var addon in Model.FeaturedAddons)
+            {
+                var addonImage = !string.IsNullOrWhiteSpace(addon.Image?.SecureUrl)
+                    ? CloudinaryUrlHelper.For(addon.Image, CloudinaryUrlHelper.PublicAddonCard)
+                    : "/images/home-hero-airport-transfer.webp";
+                <article class="thumbnail-card">
+                    <a href="/booking/search?AirportId=@firstAirport" aria-label="@addon.Name">
+                        <img src="@addonImage" alt="@addon.Name" loading="lazy" decoding="async" />
+                        <div>
+                            <h3>@addon.Name</h3>
+                            <p>@addon.Description</p>
+                        </div>
+                    </a>
+                </article>
+            }
+        </div>
+    </section>
+}
+
+<section class="section-block popular-route-section">
+    <div class="container">
+        <div class="route-heading">
+            <h2>@L["Popular point-to-point routes"]</h2>
+        </div>
+        <div class="route-carousel">
+            <button class="route-arrow route-arrow-prev" type="button" aria-label="@L["Previous routes"]">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="popular-route-grid">
+                @foreach (var route in Model.PopularRoutes)
+                {
+                    var routeTitle = route.Title;
+                    var routeImage = !string.IsNullOrWhiteSpace(route.Image?.SecureUrl)
+                        ? CloudinaryUrlHelper.For(route.Image, CloudinaryUrlHelper.PublicRouteCard)
+                        : "/wwwroot/images/home-hero-airport-transfer.webp";
+                    var bookingUrl = string.IsNullOrWhiteSpace(route.BookingUrl) ? "/booking/search" : route.BookingUrl;
+                    var routeSlug = route.Slug;
+var routeDetailUrl = string.IsNullOrWhiteSpace(routeSlug) ? bookingUrl : $"/routes/{routeSlug}";
+                    <article class="popular-route-card">
+                        <a class="popular-route-image" href="@bookingUrl" aria-label="@routeTitle">
+                            <img src="@routeImage" alt="@routeTitle" loading="lazy" decoding="async" width="640" height="360" />
+                        </a>
+                        <div class="popular-route-meta">
+                            <h3>@routeTitle</h3>
+                            <div class="popular-route-price"><strong>@route.PriceLabel</strong><span>/ @L["one way"]</span></div>
+                        </div>
+                        <a class="btn btn-route-detail" href="@routeDetailUrl">@L["View details"]</a>
+                    </article>
+                }
+            </div>
+            <button class="route-arrow route-arrow-next" type="button" aria-label="@L["Next routes"]">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="section-block latest-news-section">
+    <div class="container">
+        <div class="route-heading">
+            <h2>@L["Latest news"]</h2>
+        </div>
+        <div class="latest-news-grid">
+            @foreach (var news in Model.LatestBlogPosts)
+            {
+                <article class="latest-news-card">
+                    <a class="latest-news-image" href="/blog/@news.Translation.Slug" aria-label="@news.Translation.Title">
+                        @if (!string.IsNullOrWhiteSpace(news.Post.FeaturedMediaAsset?.SecureUrl))
+                        {
+                            <img src="@CloudinaryUrlHelper.For(news.Post.FeaturedMediaAsset, CloudinaryUrlHelper.BlogCard)" alt="@news.Translation.Title" loading="lazy" decoding="async" width="640" height="360" />
+                        }
+                        else
+                        {
+                            <img src="/images/home-hero-airport-transfer.webp" alt="@news.Translation.Title" loading="lazy" decoding="async" width="640" height="360" />
+                        }
+                    </a>
+                    <h3><a href="/blog/@news.Translation.Slug">@news.Translation.Title</a></h3>
+                    <div class="news-rating" aria-label="@L["0 reviews"]">
+                        <span class="news-stars" aria-hidden="true"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span>
+                        <span>@L["0 reviews"]</span>
+                    </div>
+                    <div class="news-date"><i class="bi bi-calendar3"></i> @((news.Post.PublishedAtUtc ?? news.Post.CreatedAtUtc).ToString("dd MMMM yyyy", CultureInfo.CurrentUICulture))</div>
+                </article>
+            }
+        </div>
+        <div class="news-dots" aria-hidden="true">
+            <span class="active"></span>
+            <span></span>
+        </div>
+    </div>
+</section>
+
+<section class="section-block container">
+    <div class="section-heading">
+        <span>@L["Booking process"]</span>
+        <h2>@L["Book your ride in 4 simple steps"]</h2>
+    </div>
+    <div class="process-grid">
+        <div><i class="bi bi-pencil-square"></i><h3>@L["1. Enter trip details"]</h3><p>@L["Choose airport, address, time and passengers."]</p></div>
+        <div><i class="bi bi-car-front"></i><h3>@L["2. Select vehicle"]</h3><p>@L["Compare capacity, comfort and estimated price."]</p></div>
+        <div><i class="bi bi-check2-square"></i><h3>@L["3. Confirm booking"]</h3><p>@L["Your booking number is created before payment."]</p></div>
+        <div><i class="bi bi-person-badge"></i><h3>@L["4. Meet your driver"]</h3><p>@L["Driver meets you on time at the agreed point."]</p></div>
+    </div>
+</section>
+
+<section class="section-block trust-section">
+    <div class="container">
+        <div class="section-heading">
+            <span>@L["Why choose us"]</span>
+            <h2>@L["Trusted by international travelers"]</h2>
+        </div>
+        <div class="trust-grid">
+            <div><i class="bi bi-clock-history"></i><h3>@L["Always on time"]</h3><p>@L["We plan airport pickups around your flight."]</p></div>
+            <div><i class="bi bi-cash-coin"></i><h3>@L["Transparent fare"]</h3><p>@L["Estimated route price before you confirm."]</p></div>
+            <div><i class="bi bi-headset"></i><h3>@L["24/7 support"]</h3><p>@L["Reach us through phone or messaging apps."]</p></div>
+            <div><i class="bi bi-stars"></i><h3>@L["Premium fleet"]</h3><p>@L["Clean cars for business and leisure travel."]</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="section-block container">
+    <div class="section-heading">
+        <span>@L["Testimonials"]</span>
+        <h2>@L["10,000+ happy travelers"]</h2>
+    </div>
+    <div class="row g-4">
+        @foreach (var item in new[] { L["Smooth pickup and a very clean sedan."], L["Easy booking, fair price and polite driver."], L["Recommended for business travel in Vietnam."], L["Fast support on WhatsApp after landing."] })
+        {
+            <div class="col-md-6 col-xl-3">
+                <div class="testimonial-card">
+                    <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                    <p>@item</p>
+                    <strong>@L["Verified traveler"]</strong>
+                </div>
+            </div>
+        }
+    </div>
+</section>

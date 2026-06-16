@@ -1,0 +1,195 @@
+@{
+    var siteBrandName = AppSettings.GetAsync("Site:BrandName", "Vietnam Transfer").GetAwaiter().GetResult();
+    var siteTagline = AppSettings.GetAsync("Site:Tagline", "Private Transfer").GetAwaiter().GetResult();
+    var siteHotline = AppSettings.GetAsync("Site:Hotline", "1900 8888").GetAwaiter().GetResult();
+    var siteContactEmail = AppSettings.GetAsync("Site:ContactEmail", "info@vietnamtransfer.vn").GetAwaiter().GetResult();
+    var siteAddress = AppSettings.GetAsync("Site:Address", "123 Nguyen Hue, District 1, Ho Chi Minh City").GetAwaiter().GetResult();
+    var themeInk = NormalizeThemeColor(AppSettings.GetAsync("Theme:Ink", "#151515").GetAwaiter().GetResult(), "#151515");
+    var themeMuted = NormalizeThemeColor(AppSettings.GetAsync("Theme:Muted", "#6f6f6f").GetAwaiter().GetResult(), "#6f6f6f");
+    var themeAccent = NormalizeThemeColor(AppSettings.GetAsync("Theme:Accent", "#c89b3c").GetAwaiter().GetResult(), "#c89b3c");
+    var themeAccentDark = NormalizeThemeColor(AppSettings.GetAsync("Theme:AccentDark", "#a87920").GetAwaiter().GetResult(), "#a87920");
+    var themePaper = NormalizeThemeColor(AppSettings.GetAsync("Theme:Paper", "#ffffff").GetAwaiter().GetResult(), "#ffffff");
+    var themeSoft = NormalizeThemeColor(AppSettings.GetAsync("Theme:Soft", "#f7f5f0").GetAwaiter().GetResult(), "#f7f5f0");
+    var themeLine = NormalizeThemeColor(AppSettings.GetAsync("Theme:Line", "#e9e4d9").GetAwaiter().GetResult(), "#e9e4d9");
+}
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="@ViewData["MetaDescription"]" />
+    <title>@ViewData["Title"] - @siteBrandName</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="preload" as="image" href="/wwwroot/images/home-hero-airport-transfer.webp" type="image/webp" fetchpriority="high">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    @Styles.Render("~/Content/site")
+    <style>
+        :root {
+            --ink: @themeInk;
+            --muted: @themeMuted;
+            --gold: @themeAccent;
+            --gold-dark: @themeAccentDark;
+            --paper: @themePaper;
+            --soft: @themeSoft;
+            --line: @themeLine;
+        }
+    </style>
+    @RenderSection("Head", required: false)
+</head>
+<body>
+    <div class="topbar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-telephone"></i> @L["Hotline 24/7"]: @siteHotline</span>
+            <span>@L["Vietnam time"]: <strong id="vietnamClock">--:--:--</strong></span>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand brand-mark" href="/">
+                <span>@siteBrandName</span>
+                <small>@siteTagline</small>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="/">@L["Home"]</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">@L["About"]</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/faq">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">@L["Contact"]</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-gold" href="/booking/search">@L["Book now"]</a></li>
+                    @if (!Request.RawUrl.StartsWith("/admin", StringComparison.OrdinalIgnoreCase))
+                    {
+                    <li class="nav-item dropdown language-switcher">
+                        @{
+                            var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+                            var returnUrl = Request.RawUrl;
+                            var languages = new[]
+                            {
+                                new { Code = "en", Label = "EN", Name = "English" },
+                                new { Code = "vi", Label = "VI", Name = "Tiếng Việt" },
+                                new { Code = "ko", Label = "KO", Name = "한국어" },
+                                new { Code = "zh", Label = "ZH", Name = "中文" },
+                                new { Code = "ja", Label = "JA", Name = "日本語" },
+                                new { Code = "fr", Label = "FR", Name = "Français" }
+                            };
+                            var currentLanguage = languages.FirstOrDefault(x => x.Code == currentCulture) ?? languages[0];
+                        }
+                        <button class="btn btn-language dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="@L["Change language"]">
+                            @currentLanguage.Label
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            @foreach (var language in languages)
+                            {
+                                <li>
+                                    <form method="post" action="/culture/set">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="culture" value="@language.Code" />
+                                        <input type="hidden" name="returnUrl" value="@returnUrl" />
+                                        <button class="dropdown-item @(language.Code == currentCulture ? "active" : "")" type="submit">
+                                            <span>@language.Label</span>
+                                            <small>@GetLanguageName(language.Code)</small>
+                                        </button>
+                                    </form>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <section class="newsletter-band">
+        <div class="container d-flex flex-column flex-lg-row gap-3 justify-content-between align-items-lg-center">
+            <div>
+                <h2>@L["Get transfer offers"]</h2>
+                <p>@L["Receive route deals and travel tips for Vietnam."]</p>
+            </div>
+            <form class="newsletter-form">
+                <input type="email" class="form-control" placeholder="@L["Your email address"]" aria-label="Email">
+                <button type="button" class="btn btn-gold">@L["Subscribe"]</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="brand-mark footer-brand"><span>@siteBrandName</span><small>@siteTagline</small></div>
+                    <p>@L["Premium private transfer service across Vietnam, built for international travelers."]</p>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h3>@L["Service"]</h3>
+                    <a href="/booking/search">@L["Airport pickup"]</a>
+                    <a href="/booking/search">@L["Airport dropoff"]</a>
+                    <a href="/booking/search">@L["Premium transfer"]</a>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h3>@L["Info"]</h3>
+                    <a href="/about">@L["About us"]</a>
+                    <a href="/terms">@L["Terms"]</a>
+                    <a href="/privacy">Privacy</a>
+                    <a href="/faq">FAQ</a>
+                </div>
+                <div class="col-lg-4">
+                    <h3>@L["Contact"]</h3>
+                    <p><i class="bi bi-telephone"></i> @L["Hotline"]: @siteHotline</p>
+                    <p><i class="bi bi-envelope"></i> @siteContactEmail</p>
+                    <p><i class="bi bi-geo-alt"></i> @siteAddress</p>
+                </div>
+            </div>
+            <div class="footer-bottom">&copy; @DateTime.UtcNow.Year @siteBrandName. @L["All rights reserved."]</div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    @Scripts.Render("~/bundles/site")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+@functions {
+    private static string NormalizeThemeColor(string? value, string defaultValue)
+    {
+        var color = value?.Trim();
+        if (color?.Length == 7 &&
+            color[0] == '#' &&
+            color.Skip(1).All(Uri.IsHexDigit))
+        {
+            return color.ToLowerInvariant();
+        }
+
+        return defaultValue;
+    }
+
+    private static string GetLanguageName(string code)
+    {
+        switch ((code ?? string.Empty).ToLowerInvariant())
+        {
+            case "vi":
+                return "Vietnamese";
+            case "ko":
+                return "Korean";
+            case "zh":
+                return "Chinese";
+            case "ja":
+                return "Japanese";
+            case "fr":
+                return "French";
+            default:
+                return "English";
+        }
+    }
+}

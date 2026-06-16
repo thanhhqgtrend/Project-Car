@@ -1,0 +1,31 @@
+﻿@model MediaAsset
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Delete Media";
+}
+
+<section class="admin-shell">
+    <a href="/admin/media/@Model.Id" class="admin-back">&larr; Back to media details</a>
+    <div class="admin-page-heading">
+        <div>
+            <h1>Delete media</h1>
+            <p>This will delete the remote Cloudinary asset and remove it from vehicles that use it.</p>
+        </div>
+    </div>
+
+    @if (TempData["AdminNotice"] is string notice)
+    {
+        <div class="alert alert-warning">@notice</div>
+    }
+
+    <div class="admin-panel delete-panel">
+        <img class="media-delete-preview" src="@CloudinaryUrlHelper.For(Model, CloudinaryUrlHelper.DeletePreview)" alt="@Model.AltText" decoding="async" />
+        <h2>@Model.FileName</h2>
+        <p>@Model.PublicId</p>
+        <form method="post" action="/admin/media/@Model.Id/delete" class="admin-form-actions">
+            @Html.AntiForgeryToken()
+            <a class="btn btn-outline-secondary" href="/admin/media/@Model.Id">Cancel</a>
+            <button class="btn btn-danger" type="submit">Delete from Cloudinary</button>
+        </form>
+    </div>
+</section>

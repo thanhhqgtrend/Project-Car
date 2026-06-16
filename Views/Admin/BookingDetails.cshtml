@@ -1,0 +1,92 @@
+﻿@model Booking
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = Model.BookingNumber;
+    var siteBrandName = AppSettings.GetAsync("Site:BrandName", "Vietnam Transfer").GetAwaiter().GetResult();
+}
+
+<section class="admin-shell">
+    <a href="/admin/bookings" class="admin-back">â† Back to bookings</a>
+    <div class="admin-page-heading">
+        <div><h1>@Model.BookingNumber</h1><p>@Model.FullName - @Model.Status</p></div>
+        <a class="btn btn-gold" href="/admin/bookings/@Model.Id/edit"><i class="bi bi-pencil-square"></i> Edit booking</a>
+    </div>
+    @if (TempData["AdminNotice"] is string notice)
+    {
+        <div class="alert alert-info">@notice</div>
+    }
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="admin-panel">
+                <h2>Booking details</h2>
+                <dl class="summary-list">
+                    <dt>Customer</dt><dd>@Model.Title @Model.FullName</dd>
+                    <dt>Email</dt><dd>@Model.Email</dd>
+                    <dt>Phone</dt><dd>@Model.Phone</dd>
+                    <dt>Messaging</dt><dd>@Model.MessagingApp @Model.MessagingHandle</dd>
+                    <dt>Flight</dt><dd>@Model.FlightNumber</dd>
+                    <dt>Trip</dt><dd>@Model.TripType - @Model.Airport?.Name</dd>
+                    <dt>Route</dt><dd>@Model.PickupAddress â†’ @Model.DropoffAddress</dd>
+                    <dt>Vehicle</dt><dd>@Model.CarVehicleType?.Name</dd>
+                    <dt>Distance</dt><dd>@Model.DistanceKm.ToString("0.0") km (@Model.DistanceStatus)</dd>
+                    <dt>Base price</dt><dd>$@Model.BasePriceUsd.ToString("0.00")</dd>
+                    <dt>Addon total</dt><dd>$@Model.AddonTotalUsd.ToString("0.00")</dd>
+                    <dt>Discount</dt><dd>-$@Model.DiscountUsd.ToString("0.00") @Model.CouponCode</dd>
+                    <dt>Tax and fee</dt><dd>$@Model.TaxFeeUsd.ToString("0.00")</dd>
+                    <dt>Total</dt><dd>$@Model.EstimatedPriceUsd.ToString("0.00")</dd>
+                    <dt>Terms accepted</dt><dd>@(Model.TermsAccepted ? "Yes" : "No")</dd>
+                    <dt>Notes</dt><dd>@Model.Notes</dd>
+                </dl>
+                @if (Model.CarAddonSelections.Any())
+                {
+                    <h2>Selected addons</h2>
+                    <ul class="addon-summary-list">
+                        @foreach (var addon in Model.CarAddonSelections)
+                        {
+                            <li><span>@addon.Name (@addon.Quantity)</span><strong>@(addon.PriceUsd == 0 ? "Free" : $"${addon.PriceUsd:0.00}")</strong></li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <form class="admin-panel" method="post" action="/admin/bookings/@Model.Id/status">
+                @Html.AntiForgeryToken()
+                <h2>Update status</h2>
+                <select class="form-select" name="status">
+                    @foreach (BookingStatus status in Enum.GetValues(typeof(BookingStatus)))
+                    {
+                        <option value="@status" selected="@(Model.Status == status)">@status</option>
+                    }
+                </select>
+                <button class="btn btn-gold w-100 mt-3">Save status</button>
+            </form>
+        </div>
+        <div class="col-12">
+            <form class="admin-panel js-rich-email-form" method="post" action="/admin/bookings/@Model.Id/email">
+                @Html.AntiForgeryToken()
+                <h2>Send email manually</h2>
+                <p class="text-muted">Send a custom message to @Model.Email.</p>
+                <div class="mb-3">
+                    <label class="form-label" for="ManualEmailSubject">Subject</label>
+                    <input class="form-control" id="ManualEmailSubject" name="Subject" maxlength="220" value="Booking @Model.BookingNumber update" required />
+                </div>
+                <label class="form-label" for="ManualEmailBodyEditor">Message</label>
+                <div class="rich-editor-toolbar" role="toolbar" aria-label="Email editor toolbar">
+                    <button type="button" data-rich-command="bold"><i class="bi bi-type-bold"></i></button>
+                    <button type="button" data-rich-command="italic"><i class="bi bi-type-italic"></i></button>
+                    <button type="button" data-rich-command="insertUnorderedList"><i class="bi bi-list-ul"></i></button>
+                    <button type="button" data-rich-command="createLink"><i class="bi bi-link-45deg"></i></button>
+                </div>
+                <div class="rich-editor" id="ManualEmailBodyEditor" contenteditable="true">
+                    <p>Dear @Model.FullName,</p>
+                    <p>We are contacting you about booking <strong>@Model.BookingNumber</strong>.</p>
+                    <p>Route: @Model.PickupAddress â†’ @Model.DropoffAddress</p>
+                    <p>Best regards,<br>@siteBrandName team</p>
+                </div>
+                <textarea class="d-none js-rich-email-body" name="BodyHtml"></textarea>
+                <button class="btn btn-gold w-100 mt-3" type="submit">Send email</button>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,63 @@
+﻿@model RedirectRuleFormViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var mode = (ViewData["RedirectFormMode"] as string) ?? "Edit";
+    ViewData["Title"] = mode + " Redirect";
+    var action = mode == "Create" ? "/admin/redirects/create" : $"/admin/redirects/{Model.Id}/edit";
+}
+
+<section class="admin-shell">
+    <a href="/admin/redirects" class="admin-back">&larr; Back to redirects</a>
+    <div class="admin-page-heading">
+        <div>
+            <h1>@mode redirect</h1>
+            <p>Use relative paths for internal redirects or a full URL for external targets.</p>
+        </div>
+    </div>
+
+    <form class="admin-panel settings-form" method="post" action="@action">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <label class="form-label" for="SourcePath">Source path</label>
+                <input class="form-control form-control-lg" name="SourcePath" id="SourcePath" placeholder="/old-url" />
+                <small class="text-muted">Full URLs are accepted; only the path is saved.</small>
+                @Html.ValidationMessage("SourcePath", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="TargetUrl">Target URL</label>
+                <input class="form-control form-control-lg" name="TargetUrl" id="TargetUrl" placeholder="/new-url or https://example.com/new-url" />
+                @Html.ValidationMessage("TargetUrl", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label" for="StatusCode">Status code</label>
+                <select class="form-select form-select-lg" name="StatusCode" id="StatusCode">
+                    <option value="301">301 permanent</option>
+                    <option value="302">302 temporary</option>
+                </select>
+            </div>
+            <div class="col-lg-3 d-flex align-items-end">
+                <label class="form-check admin-checkline mb-2">
+                    <input class="form-check-input" name="IsActive" id="IsActive" type="checkbox" />
+                    <span class="form-check-label">Active</span>
+                </label>
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="Notes">Notes</label>
+                <input class="form-control form-control-lg" name="Notes" id="Notes" placeholder="Campaign, old CMS URL, partner link..." />
+            </div>
+        </div>
+
+        <div class="admin-form-actions">
+            <a class="btn btn-outline-secondary" href="/admin/redirects">Cancel</a>
+            <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save redirect</button>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

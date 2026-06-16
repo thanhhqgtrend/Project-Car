@@ -1,0 +1,18 @@
+@model CmsPageFormViewModel
+                <section class="vehicle-form-section">
+                    <div class="settings-section-heading">
+                        <i class="bi bi-search"></i>
+                        <div>
+                            <h2>SEO metadata</h2>
+                            <p>Meta, canonical, robots and Open Graph text for this language.</p>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-6"><label class="form-label" for="MetaTitle">Meta title</label>@Html.TextBoxFor(m => m.MetaTitle, new { @class = "form-control form-control-lg" })</div>
+                        <div class="col-lg-6"><label class="form-label" for="Robots">Robots</label>@Html.TextBoxFor(m => m.Robots, new { @class = "form-control form-control-lg", placeholder = "index,follow" })</div>
+                        <div class="col-12"><label class="form-label" for="MetaDescription">Meta description</label>@Html.TextAreaFor(m => m.MetaDescription, new { @class = "form-control", rows = "3" })</div>
+                        <div class="col-12"><label class="form-label" for="CanonicalUrl">Canonical URL</label>@Html.TextBoxFor(m => m.CanonicalUrl, new { @class = "form-control form-control-lg", placeholder = "Leave blank to use public path" })</div>
+                        <div class="col-lg-6"><label class="form-label" for="OgTitle">OG title</label>@Html.TextBoxFor(m => m.OgTitle, new { @class = "form-control form-control-lg" })</div>
+                        <div class="col-lg-6"><label class="form-label" for="OgDescription">OG description</label>@Html.TextAreaFor(m => m.OgDescription, new { @class = "form-control", rows = "3" })</div>
+                    </div>
+                </section>

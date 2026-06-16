@@ -1,0 +1,13 @@
+@model BookingResultsViewModel
+@{
+    ViewData["Title"] = L["Available Cars"];
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>@L["Select your vehicle"]</h1>
+        <p>@L["Compare vehicles, policies and prices before entering booking information."]</p>
+    </div>
+</section>
+
+@Html.Partial("_CarVehicleResults", Model)

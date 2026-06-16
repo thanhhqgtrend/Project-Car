@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Home" xml:space="preserve"><value>首页</value></data>
+  <data name="About" xml:space="preserve"><value>关于我们</value></data>
+  <data name="Contact" xml:space="preserve"><value>联系</value></data>
+  <data name="Book now" xml:space="preserve"><value>立即预订</value></data>
+  <data name="Private Transfer" xml:space="preserve"><value>私人接送</value></data>
+  <data name="Vietnam time" xml:space="preserve"><value>越南时间</value></data>
+  <data name="Airport pickup" xml:space="preserve"><value>机场接机</value></data>
+  <data name="Airport dropoff" xml:space="preserve"><value>机场送机</value></data>
+  <data name="A to B" xml:space="preserve"><value>A 到 B</value></data>
+  <data name="Car hire" xml:space="preserve"><value>包车</value></data>
+  <data name="Airport" xml:space="preserve"><value>机场</value></data>
+  <data name="Select airport" xml:space="preserve"><value>选择机场</value></data>
+  <data name="Pickup point" xml:space="preserve"><value>上车点</value></data>
+  <data name="Dropoff point" xml:space="preserve"><value>下车点</value></data>
+  <data name="Point A" xml:space="preserve"><value>A 点</value></data>
+  <data name="Point B" xml:space="preserve"><value>B 点</value></data>
+  <data name="Pickup time" xml:space="preserve"><value>接送时间</value></data>
+  <data name="Passengers" xml:space="preserve"><value>乘客</value></data>
+  <data name="passenger" xml:space="preserve"><value>位乘客</value></data>
+  <data name="passenger(s)" xml:space="preserve"><value>位乘客</value></data>
+  <data name="Search" xml:space="preserve"><value>搜索</value></data>
+  <data name="Vietnam Transfer private rides in Vietnam" xml:space="preserve"><value>Vietnam Transfer 越南私人接送服务</value></data>
+  <data name="Professional private rides. Safe, on time and transparent from booking to arrival." xml:space="preserve"><value>专业私人用车，安全准时，价格透明。</value></data>
+  <data name="Fixed price" xml:space="preserve"><value>固定价格</value></data>
+  <data name="Free cancellation 24h before pickup" xml:space="preserve"><value>接车前 24 小时免费取消</value></data>
+  <data name="Professional drivers" xml:space="preserve"><value>专业司机</value></data>
+  <data name="Premium transfer vehicles" xml:space="preserve"><value>高端接送车辆</value></data>
+  <data name="From" xml:space="preserve"><value>起价</value></data>
+  <data name="pax" xml:space="preserve"><value>人</value></data>
+  <data name="bags" xml:space="preserve"><value>件行李</value></data>
+  <data name="Search cars" xml:space="preserve"><value>搜索车辆</value></data>
+  <data name="Select your vehicle" xml:space="preserve"><value>选择车辆</value></data>
+  <data name="View photos" xml:space="preserve"><value>查看照片</value></data>
+  <data name="Instant confirmation" xml:space="preserve"><value>即时确认</value></data>
+  <data name="Free waiting time" xml:space="preserve"><value>免费等待</value></data>
+  <data name="Meet and greet" xml:space="preserve"><value>举牌迎接</value></data>
+  <data name="Policy and cancellation" xml:space="preserve"><value>政策和取消</value></data>
+  <data name="Booking information" xml:space="preserve"><value>预订信息</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>附加服务</value></data>
+  <data name="Free" xml:space="preserve"><value>免费</value></data>
+  <data name="Information" xml:space="preserve"><value>信息</value></data>
+  <data name="First name (as shown on passport)" xml:space="preserve"><value>名（与护照一致）</value></data>
+  <data name="Last name (as shown on passport)" xml:space="preserve"><value>姓（与护照一致）</value></data>
+  <data name="Phone number" xml:space="preserve"><value>电话号码</value></data>
+  <data name="Email (for voucher)" xml:space="preserve"><value>邮箱（接收凭证）</value></data>
+  <data name="Flight number" xml:space="preserve"><value>航班号</value></data>
+  <data name="Promo code" xml:space="preserve"><value>优惠码</value></data>
+  <data name="Go to payment" xml:space="preserve"><value>去支付</value></data>
+  <data name="Total price" xml:space="preserve"><value>总价</value></data>
+  <data name="Vehicle" xml:space="preserve"><value>车辆</value></data>
+  <data name="Route" xml:space="preserve"><value>路线</value></data>
+  <data name="Base price" xml:space="preserve"><value>基础价格</value></data>
+  <data name="Discount" xml:space="preserve"><value>折扣</value></data>
+  <data name="Tax and fee" xml:space="preserve"><value>税费</value></data>
+  <data name="Total" xml:space="preserve"><value>总计</value></data>
+  <data name="Payment" xml:space="preserve"><value>支付</value></data>
+  <data name="Booking summary" xml:space="preserve"><value>订单摘要</value></data>
+  <data name="Payment successful" xml:space="preserve"><value>支付成功</value></data>
+  <data name="View booking" xml:space="preserve"><value>查看订单</value></data>
+  <data name="Something went wrong" xml:space="preserve"><value>出现错误</value></data>
+  <data name="Contact support" xml:space="preserve"><value>联系支持</value></data>
+  <data name="Request ID" xml:space="preserve"><value>请求编号</value></data>
+  <data name="Booking Confirmation" xml:space="preserve"><value>预订确认</value></data>
+  <data name="Trip summary" xml:space="preserve"><value>行程摘要</value></data>
+  <data name="Estimated distance" xml:space="preserve"><value>预估距离</value></data>
+  <data name="24/7 travel support" xml:space="preserve"><value>24/7 出行支持</value></data>
+  <data name="What to include" xml:space="preserve"><value>需要提供的信息</value></data>
+  <data name="Payment reference" xml:space="preserve"><value>付款参考</value></data>
+  <data name="Online payment is not configured yet. Your booking has been saved; please contact support to complete payment." xml:space="preserve"><value>在线支付尚未配置。您的订单已保存；请联系支持团队完成付款。</value></data>
+  <data name="Enter the email or phone number used for this booking to view the details." xml:space="preserve"><value>请输入预订时使用的邮箱或电话号码以查看详情。</value></data>
+  <data name="Verify booking" xml:space="preserve"><value>验证预订</value></data>
+  <data name="For your privacy, booking details are only shown after verification." xml:space="preserve"><value>为保护您的隐私，预订详情仅在验证后显示。</value></data>
+  <data name="Email or phone number" xml:space="preserve"><value>邮箱或电话号码</value></data>
+  <data name="Booking details could not be verified." xml:space="preserve"><value>无法验证预订信息。</value></data>
+  <data name="Page not found" xml:space="preserve"><value>找不到页面</value></data>
+  <data name="The page you are looking for may have moved or is no longer available." xml:space="preserve"><value>您查找的页面可能已移动或不再可用。</value></data>
+  <data name="This page is not available" xml:space="preserve"><value>此页面不可用</value></data>
+  <data name="The link may be outdated, the booking page may require verification, or the address may have been typed incorrectly." xml:space="preserve"><value>链接可能已过期，预订页面可能需要验证，或地址输入有误。</value></data>
+  <data name="Back to home" xml:space="preserve"><value>返回首页</value></data>
+  <data name="If you opened a booking link from another browser, enter the email or phone number used for the booking to view it." xml:space="preserve"><value>如果您从其他浏览器打开预订链接，请输入预订时使用的电子邮件或电话号码查看详情。</value></data>
+  <data name="Airport transfers" xml:space="preserve"><value>机场接送</value></data>
+  <data name="Start a new search with your airport, pickup time and route details to see available vehicles." xml:space="preserve"><value>使用机场、接送时间和路线信息重新搜索，查看可用车辆。</value></data>
+  <data name="Need help?" xml:space="preserve"><value>需要帮助？</value></data>
+  <data name="Our support team can help find your booking or confirm the right vehicle for your trip." xml:space="preserve"><value>我们的支持团队可以帮助查找您的预订，或确认适合行程的车辆。</value></data>
+  <data name="Pickup date" xml:space="preserve"><value>接车日期</value></data>
+  <data name="Please enter the pickup time." xml:space="preserve"><value>请输入接车时间。</value></data>
+  <data name="Please enter a valid pickup time." xml:space="preserve"><value>请输入有效的接车时间。</value></data>
+  <data name="Please select today or a future pickup date." xml:space="preserve"><value>请选择今天或未来的接车日期。</value></data>
+  <data name="Popular point-to-point routes" xml:space="preserve"><value>热门点对点路线</value></data>
+  <data name="Hanoi - Trang An" xml:space="preserve"><value>河内 - 长安</value></data>
+  <data name="Hanoi - Ha Long" xml:space="preserve"><value>河内 - 下龙</value></data>
+  <data name="Hanoi - Sa Pa" xml:space="preserve"><value>河内 - 沙巴</value></data>
+  <data name="800,000 VND" xml:space="preserve"><value>800,000 越南盾</value></data>
+  <data name="1,200,000 VND" xml:space="preserve"><value>1,200,000 越南盾</value></data>
+  <data name="2,300,000 VND" xml:space="preserve"><value>2,300,000 越南盾</value></data>
+  <data name="one way" xml:space="preserve"><value>单程</value></data>
+  <data name="View details" xml:space="preserve"><value>查看详情</value></data>
+  <data name="Previous routes" xml:space="preserve"><value>上一条路线</value></data>
+  <data name="Next routes" xml:space="preserve"><value>下一条路线</value></data>
+  <data name="Latest news" xml:space="preserve"><value>最新资讯</value></data>
+  <data name="Top 08 best mountain-view resorts in Ninh Binh 2026" xml:space="preserve"><value>2026 年宁平最佳山景度假村 Top 08</value></data>
+  <data name="10 best spring destinations near Hanoi in 2026" xml:space="preserve"><value>2026 年河内周边十大春游目的地</value></data>
+  <data name="0 reviews" xml:space="preserve"><value>0 条评价</value></data>
+  <data name="20 March 2026" xml:space="preserve"><value>2026 年 3 月 20 日</value></data>
+  <data name="10 March 2026" xml:space="preserve"><value>2026 年 3 月 10 日</value></data>
+  <data name="Premium transfer" xml:space="preserve"><value>高端接送</value></data>
+  <data name="1. Enter trip details" xml:space="preserve"><value>1. 输入行程详情</value></data>
+  <data name="10,000+ happy travelers" xml:space="preserve"><value>10,000+ 位满意旅客</value></data>
+  <data name="2. Select vehicle" xml:space="preserve"><value>2. 选择车辆</value></data>
+  <data name="24/7 support" xml:space="preserve"><value>24/7 支持</value></data>
+  <data name="3. Confirm booking" xml:space="preserve"><value>3. 确认预订</value></data>
+  <data name="4. Meet your driver" xml:space="preserve"><value>4. 与司机会合</value></data>
+  <data name="Add more comfort to your transfer" xml:space="preserve"><value>为接送添加更多舒适服务</value></data>
+  <data name="Always on time" xml:space="preserve"><value>始终准时</value></data>
+  <data name="Book your ride in 4 simple steps" xml:space="preserve"><value>4 个简单步骤完成预订</value></data>
+  <data name="Booking process" xml:space="preserve"><value>预订流程</value></data>
+  <data name="Choose a vehicle that matches your group, luggage and comfort level." xml:space="preserve"><value>选择适合人数、行李和舒适需求的车辆。</value></data>
+  <data name="Choose airport, address, time and passengers." xml:space="preserve"><value>选择机场、地址、时间和乘客人数。</value></data>
+  <data name="Clean cars for business and leisure travel." xml:space="preserve"><value>适合商务和休闲旅行的洁净车辆。</value></data>
+  <data name="Clean private cars" xml:space="preserve"><value>洁净私家车</value></data>
+  <data name="Compare capacity, comfort and estimated price." xml:space="preserve"><value>比较座位、舒适度和预估价格。</value></data>
+  <data name="Driver meets you on time at the agreed point." xml:space="preserve"><value>司机会按时在约定地点接您。</value></data>
+  <data name="Easy booking, fair price and polite driver." xml:space="preserve"><value>预订简单，价格合理，司机礼貌。</value></data>
+  <data name="Estimated route price before you confirm." xml:space="preserve"><value>确认前即可查看路线预估价格。</value></data>
+  <data name="Fast support on WhatsApp after landing." xml:space="preserve"><value>落地后通过 WhatsApp 快速支持。</value></data>
+  <data name="Featured service" xml:space="preserve"><value>精选服务</value></data>
+  <data name="Featured services" xml:space="preserve"><value>精选服务</value></data>
+  <data name="Fixed price airport pickup" xml:space="preserve"><value>固定价格机场接机</value></data>
+  <data name="Popular" xml:space="preserve"><value>热门</value></data>
+  <data name="Premium fleet" xml:space="preserve"><value>高端车队</value></data>
+  <data name="Reach us through phone or messaging apps." xml:space="preserve"><value>可通过电话或聊天应用联系我们。</value></data>
+  <data name="Recommended for business travel in Vietnam." xml:space="preserve"><value>推荐用于越南商务出行。</value></data>
+  <data name="Select helpful extras during checkout, prepared together with your private ride." xml:space="preserve"><value>结账时选择实用附加服务，与您的私人接送一起准备。</value></data>
+  <data name="Smooth pickup and a very clean sedan." xml:space="preserve"><value>接车顺畅，轿车非常干净。</value></data>
+  <data name="Testimonials" xml:space="preserve"><value>客户评价</value></data>
+  <data name="Transparent fare" xml:space="preserve"><value>透明价格</value></data>
+  <data name="Trusted by international travelers" xml:space="preserve"><value>深受国际旅客信赖</value></data>
+  <data name="Verified traveler" xml:space="preserve"><value>已验证旅客</value></data>
+  <data name="We plan airport pickups around your flight." xml:space="preserve"><value>我们会根据您的航班安排机场接机。</value></data>
+  <data name="Why choose us" xml:space="preserve"><value>为什么选择我们</value></data>
+  <data name="Your booking number is created before payment." xml:space="preserve"><value>付款前会先生成预订编号。</value></data>
+</root>

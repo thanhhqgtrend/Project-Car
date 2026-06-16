@@ -1,0 +1,36 @@
+@model CarBookingAddonFormViewModel
+                <section class="vehicle-form-section">
+                    <div class="vehicle-form-section-heading">
+                        <i class="bi bi-cash-coin"></i>
+                        <div>
+                            <h2>Pricing</h2>
+                            <p>Booking totals use these values without changing existing calculation rules.</p>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="PriceUsd">Unit price USD</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text">$</span>
+                                @Html.TextBoxFor(m => m.PriceUsd, new { @class = "form-control", type = "number", min = "0", step = "0.01" })
+                            </div>
+                            @Html.ValidationMessage("PriceUsd", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="PricingMode">Pricing rule</label>
+                            <select class="form-select form-select-lg" name="PricingMode" id="PricingMode">
+                                @foreach (AddonPricingMode pricingMode in Enum.GetValues(typeof(AddonPricingMode)))
+                                {
+                                    <option value="@pricingMode" selected="@(Model.PricingMode == pricingMode)">@pricingMode</option>
+                                }
+                            </select>
+                            @Html.ValidationMessage("PricingMode", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="IncludedQuantity">Free included quantity</label>
+                            @Html.TextBoxFor(m => m.IncludedQuantity, new { @class = "form-control form-control-lg", type = "number", min = "0" })
+                            @Html.ValidationMessage("IncludedQuantity", "", new { @class = "text-danger" })
+                            <small class="text-muted">Used for quantity pricing. Example: child seat 1 free, then $10 each.</small>
+                        </div>
+                    </div>
+                </section>

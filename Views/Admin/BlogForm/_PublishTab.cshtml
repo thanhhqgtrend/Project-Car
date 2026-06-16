@@ -1,0 +1,23 @@
+@model BlogPostFormViewModel
+@{ var publishedAtValue = Model.PublishedAt.HasValue ? Model.PublishedAt.Value.ToString("yyyy-MM-ddTHH:mm") : string.Empty; }
+                <section class="vehicle-form-section">
+                    <div class="settings-section-heading">
+                        <i class="bi bi-calendar-check"></i>
+                        <div>
+                            <h2>Publish</h2>
+                            <p>Drafts and future scheduled posts are hidden from public blog pages.</p>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-4">
+                            <label class="vehicle-toggle">
+                                <input name="IsPublished" id="IsPublished" type="checkbox" checked="@Model.IsPublished" />
+                                <span><strong>Published</strong><small>Uncheck to save as draft.</small></span>
+                            </label>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" for="PublishedAt">Publish date and time</label>
+                            <input class="form-control form-control-lg" name="PublishedAt" id="PublishedAt" type="datetime-local" value="@publishedAtValue" />
+                        </div>
+                    </div>
+                </section>

@@ -1,0 +1,81 @@
+@model BookingConfirmationViewModel
+@{
+    ViewData["Title"] = L["Booking Confirmation"];
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>@L["Booking"] @Model.Booking.BookingNumber</h1>
+        <p>@(Model.IsVerified ? L["Your transfer request has been saved. Complete payment to confirm the order and receive the final voucher."] : L["Enter the email or phone number used for this booking to view the details."])</p>
+    </div>
+</section>
+
+@if (!Model.IsVerified)
+{
+    <section class="container auth-card">
+        <form class="booking-form verify-booking-form" method="post" action="/booking/confirmation/@Model.Booking.BookingNumber/verify">
+            @Html.AntiForgeryToken()
+            <h2>@L["Verify booking"]</h2>
+            <p>@L["For your privacy, booking details are only shown after verification."]</p>
+            <label class="form-label" for="EmailOrPhone">@L["Email or phone number"]</label>
+            <input class="form-control form-control-lg" name="EmailOrPhone" id="EmailOrPhone" autocomplete="email" />
+            @Html.ValidationMessage("EmailOrPhone", "", new { @class = "text-danger" })
+            <button class="btn btn-gold btn-lg w-100" type="submit">@L["View booking details"]</button>
+        </form>
+    </section>
+    @section Scripts {
+        @Html.Partial("_ValidationScriptsPartial")
+    }
+}
+else
+{
+    <section class="container confirmation-grid">
+        <div class="confirmation-main">
+            @if (TempData["PaymentNotice"] is string notice)
+            {
+                <div class="alert alert-warning">@notice</div>
+            }
+            <div class="status-banner status-@Model.Booking.Status.ToString().ToLowerInvariant()">
+                <span>@L["Status"]</span>
+                <strong>@Model.Booking.Status</strong>
+            </div>
+            <h2>@L["Trip summary"]</h2>
+            <dl class="summary-list">
+                <dt>@L["Airport"]</dt><dd>@(Model.Booking.Airport != null ? Model.Booking.Airport.Name + " (" + Model.Booking.Airport.Code + ")" : "")</dd>
+                <dt>@L["Route"]</dt><dd>@Model.Booking.PickupAddress → @Model.Booking.DropoffAddress</dd>
+                <dt>@L["Vehicle"]</dt><dd>@(Model.Booking.CarVehicleType != null ? Model.Booking.CarVehicleType.Name : "")</dd>
+                <dt>@L["Passengers"]</dt><dd>@Model.Booking.PassengerCount</dd>
+                <dt>@L["Estimated distance"]</dt><dd>@Model.Booking.DistanceKm.ToString("0.0") km (@Model.Booking.DistanceStatus)</dd>
+                <dt>@L["Base price"]</dt><dd>$@Model.Booking.BasePriceUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) USD</dd>
+                <dt>@L["Add-ons"]</dt><dd>$@Model.Booking.AddonTotalUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) USD</dd>
+                <dt>@L["Tax and fee"]</dt><dd>$@Model.Booking.TaxFeeUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) USD</dd>
+                <dt>@L["Total"]</dt><dd>$@Model.Booking.EstimatedPriceUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) USD</dd>
+                <dt>@L["Contact"]</dt><dd>@Model.Booking.Title @Model.Booking.FullName, @Model.Booking.Email, @Model.Booking.Phone</dd>
+                <dt>@L["Flight"]</dt><dd>@(string.IsNullOrWhiteSpace(Model.Booking.FlightNumber) ? L["Not provided"] : Model.Booking.FlightNumber)</dd>
+            </dl>
+            @if (Model.Booking.CarAddonSelections.Any())
+            {
+                <h3>@L["Selected add-ons"]</h3>
+                <ul class="addon-summary-list">
+                    @foreach (var addon in Model.Booking.CarAddonSelections)
+                    {
+                        <li><span>@addon.Name (@addon.Quantity)</span><strong>@(addon.PriceUsd == 0 ? L["Free"] : $"${addon.PriceUsd:0.00}")</strong></li>
+                    }
+                </ul>
+            }
+        </div>
+        <aside class="payment-panel">
+            <h2>@L["Payment"]</h2>
+            @if (Model.IsPaymentConfigured)
+            {
+                <p>@L["Complete online payment on the payment page."]</p>
+                <a class="btn btn-gold w-100" href="/payment/@Model.Booking.BookingNumber">@L["Go to payment"]</a>
+            }
+            else
+            {
+                <p>@L["Online payment is not available right now. Contact support to complete payment."]</p>
+            }
+            <a class="btn btn-outline-gold w-100" href="/contact">@L["Contact support"]</a>
+        </aside>
+    </section>
+}

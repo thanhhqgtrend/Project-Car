@@ -1,0 +1,72 @@
+@model AdminSettingsViewModel
+            <div class="tab-pane fade" id="email-panel" role="tabpanel" aria-labelledby="email-tab" tabindex="0">
+    <form class="admin-panel settings-form" method="post" action='@Url.Action("SaveEmailSettings")'>
+        @Html.AntiForgeryToken()
+        <div class="settings-section-heading">
+            <i class="bi bi-envelope"></i>
+            <div>
+                <h2>Email SMTP</h2>
+                <p>Used for booking notifications, paid booking emails and manual messages.</p>
+            </div>
+            <span class="admin-status">@(Model.IsEmailConfigured ? "Configured" : "Not configured")</span>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <label class="form-label" for="EmailSmtpHost">SMTP host</label>
+                @Html.TextBoxFor(m => m.EmailSmtpHost, new { @class = "form-control form-control-lg", placeholder = "smtp.example.com" })
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label" for="EmailSmtpPort">Port</label>
+                @Html.TextBoxFor(m => m.EmailSmtpPort, new { @class = "form-control form-control-lg", type = "number", min = "1", max = "65535" })
+            </div>
+            <div class="col-lg-3 d-flex align-items-end">
+                <label class="form-check admin-checkline mb-2">
+                    @Html.CheckBoxFor(m => m.EmailEnableSsl, new { @class = "form-check-input" })
+                    <span class="form-check-label">Enable SSL</span>
+                </label>
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="EmailUsername">SMTP username</label>
+                @Html.TextBoxFor(m => m.EmailUsername, new { @class = "form-control form-control-lg", autocomplete = "off" })
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="EmailPassword">SMTP password</label>
+                <input class="form-control form-control-lg" name="EmailPassword" id="EmailPassword" type="password" autocomplete="new-password" placeholder="@(Model.HasEmailPassword ? "Leave blank to keep current password" : "SMTP password")" />
+                @if (Model.HasEmailPassword)
+                {
+                    <label class="form-check admin-checkline mt-2">
+                        <input class="form-check-input" name="ClearEmailPassword" id="ClearEmailPassword" type="checkbox" />
+                        <span class="form-check-label">Clear saved SMTP password</span>
+                    </label>
+                }
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="EmailFrom">From email</label>
+                @Html.TextBoxFor(m => m.EmailFrom, new { @class = "form-control form-control-lg", type = "email" })
+            </div>
+        </div>
+        <div class="admin-form-actions">
+            <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save SMTP settings</button>
+        </div>
+    </form>
+
+    <form class="admin-panel settings-form" method="post" action='@Url.Action("SendTestEmail")'>
+        @Html.AntiForgeryToken()
+        <div class="settings-section-heading">
+            <i class="bi bi-send"></i>
+            <div>
+                <h2>Test email</h2>
+                <p>Send a test message using the currently saved SMTP settings.</p>
+            </div>
+        </div>
+        <div class="row g-3 align-items-end">
+            <div class="col-lg-8">
+                <label class="form-label" for="TestEmailTo">Recipient email</label>
+                <input class="form-control form-control-lg" name="TestEmailTo" id="TestEmailTo" placeholder="you@example.com" />
+            </div>
+            <div class="col-lg-4">
+                <button class="btn btn-outline-gold w-100" type="submit"><i class="bi bi-send"></i> Send test email</button>
+            </div>
+        </div>
+    </form>
+            </div>

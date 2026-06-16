@@ -1,0 +1,103 @@
+﻿@model AdminDashboardViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="admin-page-heading">
+    <div>
+        <h1>Dashboard</h1>
+        <p>Monitor bookings, payment status and estimated revenue.</p>
+    </div>
+    <div class="admin-actions">
+        <a class="btn btn-outline-gold" href="/admin/bookings">View bookings</a>
+        <a class="btn btn-gold" href="/">Open public site</a>
+    </div>
+</div>
+
+<section class="dashboard-kpis">
+    <div class="dashboard-card">
+        <span>Total bookings</span>
+        <strong>@Model.TotalBookings</strong>
+    </div>
+    <div class="dashboard-card">
+        <span>Pending payment</span>
+        <strong>@Model.PendingPaymentBookings</strong>
+    </div>
+    <div class="dashboard-card">
+        <span>Paid bookings</span>
+        <strong>@Model.PaidBookings</strong>
+    </div>
+    <div class="dashboard-card">
+        <span>Estimated revenue</span>
+        <strong>$@Model.EstimatedRevenueUsd.ToString("0.00")</strong>
+    </div>
+    <div class="dashboard-card">
+        <span>Created today</span>
+        <strong>@Model.TodayBookings</strong>
+    </div>
+</section>
+
+<section class="row g-4">
+    <div class="col-xl-8">
+        <div class="admin-panel">
+            <div class="admin-panel-heading">
+                <h2>Recent bookings</h2>
+                <a href="/admin/bookings">View all</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-middle admin-compact-table">
+                    <thead>
+                        <tr><th>Booking</th><th>Customer</th><th>Route</th><th>Fare</th><th>Status</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.RecentBookings.Any())
+                        {
+                            <tr><td colspan="6" class="text-muted">No bookings yet.</td></tr>
+                        }
+                        @foreach (var booking in Model.RecentBookings)
+                        {
+                            var airportCode = booking.Airport == null ? string.Empty : booking.Airport.Code;
+                            <tr>
+                                <td><strong>@booking.BookingNumber</strong><br><small>@booking.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm") UTC</small></td>
+                                <td>@booking.FullName<br><small>@booking.Email</small></td>
+                                <td>@airportCode<br><small>@booking.PickupAddress â†’ @booking.DropoffAddress</small></td>
+                                <td>$@booking.EstimatedPriceUsd.ToString("0.00")</td>
+                                <td><span class="admin-status">@booking.Status</span></td>
+                                <td><a class="btn btn-sm btn-outline-gold" href="/admin/bookings/@booking.Id">Open</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="admin-panel">
+            <div class="admin-panel-heading">
+                <h2>Status summary</h2>
+            </div>
+            <div class="status-summary">
+                @foreach (BookingStatus status in Enum.GetValues(typeof(BookingStatus)))
+                {
+                    var statusCount = Model.StatusCounts.ContainsKey(status) ? Model.StatusCounts[status] : 0;
+                    <a href="/admin/bookings?status=@status">
+                        <span>@status</span>
+                        <strong>@statusCount</strong>
+                    </a>
+                }
+            </div>
+        </div>
+        <div class="admin-panel mt-4">
+            <div class="admin-panel-heading">
+                <h2>Quick actions</h2>
+            </div>
+            <div class="quick-actions">
+                <a href="/admin/bookings"><i class="bi bi-calendar-check"></i> Manage bookings</a>
+                <a href="/admin/vehicles"><i class="bi bi-car-front"></i> Manage vehicles</a>
+                <a href="/admin/pages"><i class="bi bi-file-earmark-text"></i> Edit CMS pages</a>
+                <a href="/"><i class="bi bi-box-arrow-up-right"></i> Open public site</a>
+            </div>
+        </div>
+    </div>
+</section>

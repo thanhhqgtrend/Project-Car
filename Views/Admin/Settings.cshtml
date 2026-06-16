@@ -1,0 +1,71 @@
+@model AdminSettingsViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Settings";
+}
+
+<section class="admin-shell">
+    <div class="admin-page-heading">
+        <div>
+            <h1>Settings</h1>
+            <p>Manage public site details, integrations, email, payments and admin access.</p>
+        </div>
+    </div>
+
+    @{
+        var adminNotice = TempData["AdminNotice"] as string;
+        if (string.IsNullOrWhiteSpace(adminNotice))
+        {
+            adminNotice = ViewData["AdminNoticeQuery"]?.ToString();
+        }
+    }
+    @if (!string.IsNullOrWhiteSpace(adminNotice))
+    {
+        <div class="alert alert-info">@adminNotice</div>
+    }
+
+    <div class="settings-tabs">
+        <ul class="nav nav-pills settings-tab-nav" id="settingsTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="public-tab" data-bs-toggle="tab" data-bs-target="#public-panel" type="button" role="tab" aria-controls="public-panel" aria-selected="true"><i class="bi bi-window"></i> Public</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="theme-tab" data-bs-toggle="tab" data-bs-target="#theme-panel" type="button" role="tab" aria-controls="theme-panel" aria-selected="false"><i class="bi bi-palette"></i> Theme</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email-panel" type="button" role="tab" aria-controls="email-panel" aria-selected="false"><i class="bi bi-envelope"></i> Email</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="media-tab" data-bs-toggle="tab" data-bs-target="#media-panel" type="button" role="tab" aria-controls="media-panel" aria-selected="false"><i class="bi bi-cloud"></i> Media</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="maps-tab" data-bs-toggle="tab" data-bs-target="#maps-panel" type="button" role="tab" aria-controls="maps-panel" aria-selected="false"><i class="bi bi-geo-alt"></i> Maps</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments-panel" type="button" role="tab" aria-controls="payments-panel" aria-selected="false"><i class="bi bi-credit-card"></i> Payments</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="booking-tab" data-bs-toggle="tab" data-bs-target="#booking-panel" type="button" role="tab" aria-controls="booking-panel" aria-selected="false"><i class="bi bi-receipt"></i> Booking</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security-panel" type="button" role="tab" aria-controls="security-panel" aria-selected="false"><i class="bi bi-shield-lock"></i> Security</button>
+            </li>
+        </ul>
+
+        <div class="tab-content settings-tab-content" id="settingsTabsContent">
+            @Html.Partial("Settings/_PublicPanel", Model)
+            @Html.Partial("Settings/_ThemePanel", Model)
+            @Html.Partial("Settings/_EmailPanel", Model)
+            @Html.Partial("Settings/_MediaPanel", Model)
+            @Html.Partial("Settings/_MapsPanel", Model)
+            @Html.Partial("Settings/_PaymentsPanel", Model)
+            @Html.Partial("Settings/_BookingPanel", Model)
+            @Html.Partial("Settings/_SecurityPanel", Model)
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

@@ -1,0 +1,69 @@
+@model List<PopularRoute>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Popular Routes";
+    var status = ViewData["Status"]?.ToString() ?? "active";
+    var search = ViewData["Search"]?.ToString() ?? string.Empty;
+}
+
+<section class="admin-shell">
+    <div class="admin-page-heading">
+        <div><h1>Popular Routes</h1><p>Manage the public "Popular point-to-point routes" cards on the homepage.</p></div>
+        <a class="btn btn-gold" href="/admin/popular-routes/create">Create route</a>
+    </div>
+
+    <form class="admin-filter" method="get">
+        <div class="col-md-3">
+            <select class="form-select" name="status">
+                <option value="active" selected="@(status == "active")">Active</option>
+                <option value="inactive" selected="@(status == "inactive")">Inactive</option>
+                <option value="all" selected="@(status == "all")">All</option>
+            </select>
+        </div>
+        <div class="col-md-5"><input class="form-control" name="search" value="@search" placeholder="Search route, price or description" /></div>
+        <div class="col-md-2"><button class="btn btn-outline-gold w-100">Filter</button></div>
+    </form>
+
+    <div class="admin-panel">
+        <div class="table-responsive admin-table">
+            <table class="table align-middle mb-0">
+                <thead><tr><th>Image</th><th>Route</th><th>Price</th><th>Order</th><th>Status</th><th></th></tr></thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr><td colspan="6" class="text-muted">No popular routes found.</td></tr>
+                    }
+                    @foreach (var route in Model)
+                    {
+                        <tr>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(route.Image?.SecureUrl))
+                                {
+                                    <img class="admin-addon-thumb" src="@CloudinaryUrlHelper.For(route.Image, CloudinaryUrlHelper.PublicRouteCard)" alt="@route.Title" loading="lazy" decoding="async" />
+                                }
+                                else
+                                {
+                                    <span class="admin-addon-thumb admin-addon-thumb-empty"><i class="bi bi-image"></i></span>
+                                }
+                            </td>
+                            <td><strong>@route.Title</strong><br><small>@route.Description</small><br><small class="text-muted">@route.BookingUrl</small></td>
+                            <td><strong>@route.PriceLabel</strong></td>
+                            <td>@route.DisplayOrder</td>
+                            <td><span class="admin-status">@(route.IsActive ? "Active" : "Inactive")</span></td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-gold" href="/admin/popular-routes/@route.Id/edit">Edit</a>
+                                @if (route.IsActive)
+                                {
+                                    <form class="d-inline" method="post" action="/admin/popular-routes/@route.Id/deactivate">
+                                        @Html.AntiForgeryToken()
+                                        <button class="btn btn-sm btn-outline-danger" type="submit">Deactivate</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

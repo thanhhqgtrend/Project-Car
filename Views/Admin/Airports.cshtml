@@ -1,0 +1,73 @@
+﻿@model List<Airport>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Airports";
+    var status = ViewData["Status"]?.ToString() ?? "active";
+    var search = ViewData["Search"]?.ToString() ?? string.Empty;
+}
+
+<section class="admin-shell">
+    <div class="admin-page-heading">
+        <div>
+            <h1>Airports</h1>
+            <p>Manage the airport list used by public booking search.</p>
+        </div>
+        <a class="btn btn-gold" href="/admin/airports/create"><i class="bi bi-plus-lg"></i> New airport</a>
+    </div>
+
+    @if (TempData["AdminNotice"] is string notice)
+    {
+        <div class="alert alert-success">@notice</div>
+    }
+
+    <form class="admin-filter" method="get">
+        <div class="col-md-3">
+            <select class="form-select" name="status">
+                <option value="active" selected="@(status == "active")">Active</option>
+                <option value="inactive" selected="@(status == "inactive")">Inactive</option>
+                <option value="all" selected="@(status == "all")">All</option>
+            </select>
+        </div>
+        <div class="col-md-5">
+            <input class="form-control" name="search" value="@search" placeholder="Search code, name or city" />
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-gold w-100" type="submit">Filter</button>
+        </div>
+    </form>
+
+    <div class="admin-panel">
+        <div class="table-responsive admin-table">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr><th>Airport</th><th>City</th><th>Coordinates</th><th>Status</th><th class="text-end">Actions</th></tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr><td colspan="5" class="text-muted">No airports found.</td></tr>
+                    }
+                    @foreach (var airport in Model)
+                    {
+                        <tr>
+                            <td><strong>@airport.Code</strong><br><small>@airport.Name</small></td>
+                            <td>@airport.City<br><small>@airport.Country</small></td>
+                            <td>@airport.Latitude.ToString("0.######"), @airport.Longitude.ToString("0.######")</td>
+                            <td><span class="admin-status">@(airport.IsActive ? "Active" : "Inactive")</span></td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-gold" href="/admin/airports/@airport.Id/edit">Edit</a>
+                                @if (airport.IsActive)
+                                {
+                                    <form class="d-inline" method="post" action="/admin/airports/@airport.Id/deactivate">
+                                        @Html.AntiForgeryToken()
+                                        <button class="btn btn-sm btn-outline-danger" type="submit">Deactivate</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

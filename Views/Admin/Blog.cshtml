@@ -1,0 +1,90 @@
+@model AdminBlogListViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "SEO Blog";
+    var notice = TempData["AdminNotice"] as string;
+}
+
+<section class="admin-shell">
+    <div class="admin-page-heading">
+        <div>
+            <h1>SEO Blog</h1>
+            <p>Manage multilingual SEO news articles published at /blog.</p>
+        </div>
+        <a class="btn btn-gold" href="/admin/blog/create?culture=@Model.Culture"><i class="bi bi-plus-lg"></i> New post</a>
+    </div>
+
+    <div class="alert alert-info @(string.IsNullOrWhiteSpace(notice) ? "d-none" : string.Empty)">@notice</div>
+
+    <form class="row g-2 admin-filter" method="get">
+        <div class="col-md-3"><input class="form-control" name="search" value="@Model.Search" placeholder="Search title, slug or meta" /></div>
+        <div class="col-md-2">
+            <select class="form-select" name="status">
+                <option value="all" selected="@(Model.Status == "all")">All</option>
+                <option value="published" selected="@(Model.Status == "published")">Published</option>
+                <option value="scheduled" selected="@(Model.Status == "scheduled")">Scheduled</option>
+                <option value="draft" selected="@(Model.Status == "draft")">Draft</option>
+                <option value="deleted" selected="@(Model.Status == "deleted")">Deleted</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" name="culture">
+                @foreach (var culture in new[] { "en", "vi", "ko", "zh", "ja", "fr" })
+                {
+                    <option value="@culture" selected="@(Model.Culture == culture)">@culture.ToUpperInvariant()</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" name="sort">
+                <option value="newest" selected="@(Model.Sort == "newest")">Updated</option>
+                <option value="published" selected="@(Model.Sort == "published")">Published</option>
+            </select>
+        </div>
+        <div class="col-md-2"><button class="btn btn-outline-gold w-100" type="submit">Filter</button></div>
+    </form>
+
+    <div class="table-responsive admin-table">
+        <table class="table align-middle admin-compact-table">
+            <thead>
+                <tr><th>Post</th><th>Status</th><th>Published</th><th>Updated</th><th class="text-end">Actions</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var post in Model.Posts)
+                {
+                    var translation = post.Translations.FirstOrDefault(x => x.Culture == Model.Culture) ?? post.Translations.FirstOrDefault(x => x.Culture == "en") ?? post.Translations.FirstOrDefault();
+                    var title = translation == null ? "Untitled" : translation.Title;
+                    var slug = translation == null ? string.Empty : translation.Slug;
+                    var isScheduled = post.IsPublished && post.PublishedAtUtc.HasValue && post.PublishedAtUtc > DateTime.UtcNow;
+                    var status = post.DeletedAtUtc != null ? "Deleted" : !post.IsPublished ? "Draft" : isScheduled ? "Scheduled" : "Published";
+                    var published = post.PublishedAtUtc.HasValue ? post.PublishedAtUtc.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm") : "-";
+                    var imageUrl = post.FeaturedMediaAsset == null ? string.Empty : CloudinaryUrlHelper.For(post.FeaturedMediaAsset, CloudinaryUrlHelper.AdminVehicleThumb);
+                    <tr>
+                        <td>
+                            <div class="vehicle-admin-cell">
+                                @if (!string.IsNullOrWhiteSpace(imageUrl))
+                                {
+                                    <img src="@imageUrl" alt="@title" loading="lazy" decoding="async" />
+                                }
+                                else
+                                {
+                                    <span><i class="bi bi-newspaper"></i></span>
+                                }
+                                <div><strong>@title</strong><br><small>/blog/@slug</small></div>
+                            </div>
+                        </td>
+                        <td><span class="admin-status">@status</span></td>
+                        <td>@published</td>
+                        <td>@post.UpdatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                        <td class="text-end">
+                            <div class="admin-row-actions">
+                                <a class="btn btn-sm btn-outline-secondary" href="/admin/blog/@post.Id/preview?culture=@Model.Culture" target="_blank" rel="noopener">Preview</a>
+                                <a class="btn btn-sm btn-outline-gold" href="/admin/blog/@post.Id/edit?culture=@Model.Culture">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

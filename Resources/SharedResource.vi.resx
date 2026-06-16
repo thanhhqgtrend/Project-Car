@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Home" xml:space="preserve"><value>Trang chủ</value></data>
+  <data name="About" xml:space="preserve"><value>Giới thiệu</value></data>
+  <data name="Contact" xml:space="preserve"><value>Liên hệ</value></data>
+  <data name="Book now" xml:space="preserve"><value>Đặt ngay</value></data>
+  <data name="Private Transfer" xml:space="preserve"><value>Xe riêng</value></data>
+  <data name="Hotline 24/7" xml:space="preserve"><value>Hotline 24/7</value></data>
+  <data name="Vietnam time" xml:space="preserve"><value>Giờ Việt Nam</value></data>
+  <data name="Change language" xml:space="preserve"><value>Đổi ngôn ngữ</value></data>
+  <data name="Airport pickup" xml:space="preserve"><value>Đón sân bay</value></data>
+  <data name="Airport dropoff" xml:space="preserve"><value>Tiễn sân bay</value></data>
+  <data name="A to B" xml:space="preserve"><value>Từ A đến B</value></data>
+  <data name="Car hire" xml:space="preserve"><value>Thuê xe</value></data>
+  <data name="Airport" xml:space="preserve"><value>Sân bay</value></data>
+  <data name="Select airport" xml:space="preserve"><value>Chọn sân bay</value></data>
+  <data name="Pickup point" xml:space="preserve"><value>Điểm đón</value></data>
+  <data name="Dropoff point" xml:space="preserve"><value>Điểm trả</value></data>
+  <data name="Point A" xml:space="preserve"><value>Điểm A</value></data>
+  <data name="Point B" xml:space="preserve"><value>Điểm B</value></data>
+  <data name="Hotel, address, city or landmark" xml:space="preserve"><value>Khách sạn, địa chỉ, thành phố hoặc địa danh</value></data>
+  <data name="Pickup time" xml:space="preserve"><value>Giờ đón</value></data>
+  <data name="Passengers" xml:space="preserve"><value>Hành khách</value></data>
+  <data name="passenger" xml:space="preserve"><value>hành khách</value></data>
+  <data name="passenger(s)" xml:space="preserve"><value>hành khách</value></data>
+  <data name="Search" xml:space="preserve"><value>Tìm kiếm</value></data>
+  <data name="Vietnam Transfer private rides in Vietnam" xml:space="preserve"><value>Vietnam Transfer - dịch vụ xe riêng tại Việt Nam</value></data>
+  <data name="Professional private rides. Safe, on time and transparent from booking to arrival." xml:space="preserve"><value>Chuyến xe riêng chuyên nghiệp, an toàn, đúng giờ và minh bạch từ lúc đặt đến khi đến nơi.</value></data>
+  <data name="Fixed price" xml:space="preserve"><value>Giá cố định</value></data>
+  <data name="Fixed price airport pickup" xml:space="preserve"><value>Đón sân bay giá cố định</value></data>
+  <data name="Free cancellation 24h before pickup" xml:space="preserve"><value>Hủy miễn phí trước giờ đón 24h</value></data>
+  <data name="Professional drivers" xml:space="preserve"><value>Tài xế chuyên nghiệp</value></data>
+  <data name="Clean private cars" xml:space="preserve"><value>Xe riêng sạch sẽ</value></data>
+  <data name="Featured service" xml:space="preserve"><value>Dịch vụ nổi bật</value></data>
+  <data name="Premium transfer vehicles" xml:space="preserve"><value>Dòng xe đưa đón cao cấp</value></data>
+  <data name="Choose a vehicle that matches your group, luggage and comfort level." xml:space="preserve"><value>Chọn xe phù hợp với nhóm khách, hành lý và mức độ thoải mái mong muốn.</value></data>
+  <data name="Popular" xml:space="preserve"><value>Phổ biến</value></data>
+  <data name="From" xml:space="preserve"><value>Từ</value></data>
+  <data name="pax" xml:space="preserve"><value>khách</value></data>
+  <data name="bags" xml:space="preserve"><value>hành lý</value></data>
+  <data name="Booking process" xml:space="preserve"><value>Quy trình đặt xe</value></data>
+  <data name="Book your ride in 4 simple steps" xml:space="preserve"><value>Đặt xe trong 4 bước đơn giản</value></data>
+  <data name="Why choose us" xml:space="preserve"><value>Vì sao chọn chúng tôi</value></data>
+  <data name="Trusted by international travelers" xml:space="preserve"><value>Được khách quốc tế tin dùng</value></data>
+  <data name="Search cars" xml:space="preserve"><value>Tìm xe</value></data>
+  <data name="Select your vehicle" xml:space="preserve"><value>Chọn loại xe</value></data>
+  <data name="Choose your route first, then compare vehicles and prices before entering booking information." xml:space="preserve"><value>Chọn hành trình trước, sau đó so sánh xe và giá trước khi nhập thông tin đặt xe.</value></data>
+  <data name="Compare vehicles, policies and prices before entering booking information." xml:space="preserve"><value>So sánh xe, quy định và giá trước khi nhập thông tin đặt xe.</value></data>
+  <data name="View photos" xml:space="preserve"><value>Xem ảnh</value></data>
+  <data name="Instant confirmation" xml:space="preserve"><value>Xác nhận tức thì</value></data>
+  <data name="Free waiting time" xml:space="preserve"><value>Miễn phí chờ</value></data>
+  <data name="Meet and greet" xml:space="preserve"><value>Đón tận nơi</value></data>
+  <data name="Policy and cancellation" xml:space="preserve"><value>Quy định và hoàn hủy</value></data>
+  <data name="Includes tax and fee estimate" xml:space="preserve"><value>Đã gồm thuế và phí ước tính</value></data>
+  <data name="No vehicles match this passenger count. Please adjust the search." xml:space="preserve"><value>Không có xe phù hợp với số khách này. Vui lòng điều chỉnh tìm kiếm.</value></data>
+  <data name="Booking information" xml:space="preserve"><value>Thông tin đặt xe</value></data>
+  <data name="Select add-ons, review the total price and enter passenger information." xml:space="preserve"><value>Chọn dịch vụ bổ sung, kiểm tra tổng tiền và nhập thông tin hành khách.</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>Dịch vụ bổ sung</value></data>
+  <data name="Free" xml:space="preserve"><value>Miễn phí</value></data>
+  <data name="Information" xml:space="preserve"><value>Thông tin</value></data>
+  <data name="First name (as shown on passport)" xml:space="preserve"><value>Tên (trên hộ chiếu)</value></data>
+  <data name="Last name (as shown on passport)" xml:space="preserve"><value>Họ (trên hộ chiếu)</value></data>
+  <data name="Phone number" xml:space="preserve"><value>Số điện thoại</value></data>
+  <data name="Email (for voucher)" xml:space="preserve"><value>Email (nhận voucher)</value></data>
+  <data name="Flight number" xml:space="preserve"><value>Số hiệu chuyến bay</value></data>
+  <data name="Other contact information (optional)" xml:space="preserve"><value>Thông tin liên hệ khác (nếu có)</value></data>
+  <data name="Special requests (optional)" xml:space="preserve"><value>Yêu cầu đặc biệt (nếu có)</value></data>
+  <data name="Promo code" xml:space="preserve"><value>Mã giảm giá</value></data>
+  <data name="I agree to the terms and cancellation policy." xml:space="preserve"><value>Tôi đồng ý với điều khoản và chính sách hoàn hủy.</value></data>
+  <data name="Go to payment" xml:space="preserve"><value>Đi đến thanh toán</value></data>
+  <data name="Total price" xml:space="preserve"><value>Tổng tiền</value></data>
+  <data name="Vehicle" xml:space="preserve"><value>Xe</value></data>
+  <data name="Route" xml:space="preserve"><value>Hành trình</value></data>
+  <data name="Base price" xml:space="preserve"><value>Giá cơ bản</value></data>
+  <data name="Discount" xml:space="preserve"><value>Giảm giá</value></data>
+  <data name="Tax and fee" xml:space="preserve"><value>Thuế và phí</value></data>
+  <data name="Total" xml:space="preserve"><value>Tổng cộng</value></data>
+  <data name="Payment" xml:space="preserve"><value>Thanh toán</value></data>
+  <data name="Booking summary" xml:space="preserve"><value>Tóm tắt đơn hàng</value></data>
+  <data name="Payment successful" xml:space="preserve"><value>Thanh toán thành công</value></data>
+  <data name="Order summary" xml:space="preserve"><value>Tóm tắt đơn hàng</value></data>
+  <data name="View booking" xml:space="preserve"><value>Xem đơn hàng</value></data>
+  <data name="View booking details" xml:space="preserve"><value>Xem chi tiết đơn hàng</value></data>
+  <data name="Contact Vietnam Transfer" xml:space="preserve"><value>Liên hệ Vietnam Transfer</value></data>
+  <data name="Get in touch" xml:space="preserve"><value>Liên hệ với chúng tôi</value></data>
+  <data name="Need a ride?" xml:space="preserve"><value>Cần đặt xe?</value></data>
+  <data name="Book airport transfer" xml:space="preserve"><value>Đặt xe sân bay</value></data>
+  <data name="Share your route, pickup time and flight number if available. Our team will help confirm the right vehicle and any add-ons you need." xml:space="preserve"><value>Hãy gửi hành trình, giờ đón và số hiệu chuyến bay nếu có. Đội ngũ của chúng tôi sẽ hỗ trợ xác nhận loại xe và dịch vụ bổ sung phù hợp.</value></data>
+  <data name="What to include" xml:space="preserve"><value>Thông tin nên gửi</value></data>
+  <data name="Airport, hotel or exact pickup and dropoff address." xml:space="preserve"><value>Sân bay, khách sạn hoặc địa chỉ đón trả chính xác.</value></data>
+  <data name="Pickup date and time, passenger count and luggage needs." xml:space="preserve"><value>Ngày giờ đón, số khách và nhu cầu hành lý.</value></data>
+  <data name="Pickup date" xml:space="preserve"><value>Ngày đón</value></data>
+  <data name="Please enter the pickup time." xml:space="preserve"><value>Vui lòng nhập giờ đón.</value></data>
+  <data name="Please enter a valid pickup time." xml:space="preserve"><value>Vui lòng nhập giờ đón hợp lệ.</value></data>
+  <data name="Please select today or a future pickup date." xml:space="preserve"><value>Vui lòng chọn hôm nay hoặc ngày đón trong tương lai.</value></data>
+  <data name="Flight number for airport pickup or dropoff." xml:space="preserve"><value>Số hiệu chuyến bay cho dịch vụ sân bay.</value></data>
+  <data name="Preferred contact method such as WhatsApp, Zalo, Viber or Telegram." xml:space="preserve"><value>Phương thức liên hệ ưu tiên như WhatsApp, Zalo, Viber hoặc Telegram.</value></data>
+  <data name="24/7 travel support" xml:space="preserve"><value>Hỗ trợ chuyến đi 24/7</value></data>
+  <data name="For urgent pickup changes, keep your booking number ready so the support team can find your trip quickly." xml:space="preserve"><value>Khi cần đổi điểm đón gấp, hãy chuẩn bị mã đặt xe để đội hỗ trợ tra cứu nhanh.</value></data>
+  <data name="Something went wrong" xml:space="preserve"><value>Đã có lỗi xảy ra</value></data>
+  <data name="We could not complete this request. Please try again or contact support if the issue continues." xml:space="preserve"><value>Chúng tôi chưa thể hoàn tất yêu cầu này. Vui lòng thử lại hoặc liên hệ hỗ trợ nếu lỗi tiếp diễn.</value></data>
+  <data name="Need help with a booking?" xml:space="preserve"><value>Cần hỗ trợ đặt xe?</value></data>
+  <data name="If you were booking a transfer, your information may not have been saved. Please return to search or contact support with your trip details." xml:space="preserve"><value>Nếu bạn đang đặt xe, thông tin có thể chưa được lưu. Vui lòng quay lại tìm xe hoặc liên hệ hỗ trợ với chi tiết chuyến đi.</value></data>
+  <data name="Contact support" xml:space="preserve"><value>Liên hệ hỗ trợ</value></data>
+  <data name="Request ID" xml:space="preserve"><value>Mã yêu cầu</value></data>
+  <data name="Booking Confirmation" xml:space="preserve"><value>Xác nhận đặt xe</value></data>
+  <data name="Your transfer request has been saved. Complete payment to confirm the order and receive the final voucher." xml:space="preserve"><value>Yêu cầu đặt xe đã được lưu. Hoàn tất thanh toán để xác nhận đơn hàng và nhận voucher cuối cùng.</value></data>
+  <data name="Trip summary" xml:space="preserve"><value>Tóm tắt chuyến đi</value></data>
+  <data name="Estimated distance" xml:space="preserve"><value>Quãng đường ước tính</value></data>
+  <data name="Pay securely by PayPal or Visa/Mastercard on the payment page." xml:space="preserve"><value>Thanh toán an toàn bằng PayPal hoặc Visa/Mastercard trên trang thanh toán.</value></data>
+  <data name="Booking" xml:space="preserve"><value>Đơn đặt xe</value></data>
+  <data name="Status" xml:space="preserve"><value>Trạng thái</value></data>
+  <data name="Flight" xml:space="preserve"><value>Chuyến bay</value></data>
+  <data name="Not provided" xml:space="preserve"><value>Chưa cung cấp</value></data>
+  <data name="Get transfer offers" xml:space="preserve"><value>Nhận ưu đãi đưa đón</value></data>
+  <data name="Receive route deals and travel tips for Vietnam." xml:space="preserve"><value>Nhận ưu đãi tuyến đường và mẹo du lịch tại Việt Nam.</value></data>
+  <data name="Your email address" xml:space="preserve"><value>Địa chỉ email của bạn</value></data>
+  <data name="Subscribe" xml:space="preserve"><value>Đăng ký</value></data>
+  <data name="Premium private transfer service across Vietnam, built for international travelers." xml:space="preserve"><value>Dịch vụ xe riêng cao cấp tại Việt Nam dành cho khách quốc tế.</value></data>
+  <data name="Service" xml:space="preserve"><value>Dịch vụ</value></data>
+  <data name="Premium transfer" xml:space="preserve"><value>Xe cao cấp</value></data>
+  <data name="Info" xml:space="preserve"><value>Thông tin</value></data>
+  <data name="About us" xml:space="preserve"><value>Về chúng tôi</value></data>
+  <data name="Terms" xml:space="preserve"><value>Điều khoản</value></data>
+  <data name="Privacy" xml:space="preserve"><value>Bảo mật</value></data>
+  <data name="Hotline" xml:space="preserve"><value>Hotline</value></data>
+  <data name="All rights reserved." xml:space="preserve"><value>Đã đăng ký bản quyền.</value></data>
+  <data name="Our team is available 24/7 for transfer support." xml:space="preserve"><value>Đội ngũ của chúng tôi hỗ trợ dịch vụ đưa đón 24/7.</value></data>
+  <data name="Use the payment reference below when paying through the external payment link. Your booking remains pending until our team confirms payment." xml:space="preserve"><value>Hãy dùng mã tham chiếu bên dưới khi thanh toán qua link ngoài. Đơn đặt xe vẫn chờ thanh toán cho đến khi đội ngũ xác nhận đã nhận tiền.</value></data>
+  <data name="Payment reference" xml:space="preserve"><value>Tham chiếu thanh toán</value></data>
+  <data name="Online payment links are not configured yet. Your booking has been saved; please contact support to complete payment." xml:space="preserve"><value>Link thanh toán online chưa được cấu hình. Đơn đặt xe đã được lưu; vui lòng liên hệ hỗ trợ để hoàn tất thanh toán.</value></data>
+  <data name="Online payment is not configured yet. Your booking has been saved; please contact support to complete payment." xml:space="preserve"><value>Thanh toán online chưa được cấu hình. Đơn đặt xe đã được lưu; vui lòng liên hệ hỗ trợ để hoàn tất thanh toán.</value></data>
+  <data name="Choose an available online payment method for this booking." xml:space="preserve"><value>Chọn phương thức thanh toán online có sẵn cho đơn này.</value></data>
+  <data name="Pay securely with PayPal." xml:space="preserve"><value>Thanh toán an toàn bằng PayPal.</value></data>
+  <data name="Pay securely by Visa / Mastercard." xml:space="preserve"><value>Thanh toán an toàn bằng Visa / Mastercard.</value></data>
+  <data name="Online payment is not available for this booking right now." xml:space="preserve"><value>Hiện chưa có thanh toán online cho đơn này.</value></data>
+  <data name="Complete online payment on the payment page." xml:space="preserve"><value>Hoàn tất thanh toán online trên trang thanh toán.</value></data>
+  <data name="Online payment is not available right now. Contact support to complete payment." xml:space="preserve"><value>Hiện chưa có thanh toán online. Vui lòng liên hệ hỗ trợ để hoàn tất thanh toán.</value></data>
+  <data name="Enter the email or phone number used for this booking to view the details." xml:space="preserve"><value>Nhập email hoặc số điện thoại đã dùng khi đặt để xem chi tiết.</value></data>
+  <data name="Verify booking" xml:space="preserve"><value>Xác minh đặt xe</value></data>
+  <data name="For your privacy, booking details are only shown after verification." xml:space="preserve"><value>Để bảo vệ thông tin của bạn, chi tiết đơn chỉ hiển thị sau khi xác minh.</value></data>
+  <data name="Email or phone number" xml:space="preserve"><value>Email hoặc số điện thoại</value></data>
+  <data name="Booking details could not be verified." xml:space="preserve"><value>Không thể xác minh thông tin đặt xe.</value></data>
+  <data name="Page not found" xml:space="preserve"><value>Không tìm thấy trang</value></data>
+  <data name="The page you are looking for may have moved or is no longer available." xml:space="preserve"><value>Trang bạn đang tìm có thể đã được chuyển hoặc không còn tồn tại.</value></data>
+  <data name="This page is not available" xml:space="preserve"><value>Trang này không khả dụng</value></data>
+  <data name="The link may be outdated, the booking page may require verification, or the address may have been typed incorrectly." xml:space="preserve"><value>Liên kết có thể đã cũ, trang đặt xe có thể cần xác minh, hoặc địa chỉ đã được nhập chưa chính xác.</value></data>
+  <data name="Back to home" xml:space="preserve"><value>Về trang chủ</value></data>
+  <data name="If you opened a booking link from another browser, enter the email or phone number used for the booking to view it." xml:space="preserve"><value>Nếu bạn mở liên kết đặt xe từ trình duyệt khác, hãy nhập email hoặc số điện thoại đã dùng khi đặt để xem chi tiết.</value></data>
+  <data name="Airport transfers" xml:space="preserve"><value>Đưa đón sân bay</value></data>
+  <data name="Start a new search with your airport, pickup time and route details to see available vehicles." xml:space="preserve"><value>Bắt đầu tìm kiếm mới với sân bay, giờ đón và thông tin hành trình để xem xe còn trống.</value></data>
+  <data name="Need help?" xml:space="preserve"><value>Cần hỗ trợ?</value></data>
+  <data name="Our support team can help find your booking or confirm the right vehicle for your trip." xml:space="preserve"><value>Đội hỗ trợ có thể giúp tìm đơn đặt xe hoặc xác nhận loại xe phù hợp cho chuyến đi của bạn.</value></data>
+  <data name="Popular point-to-point routes" xml:space="preserve"><value>Điểm đi - đến phổ biến</value></data>
+  <data name="Hanoi - Trang An" xml:space="preserve"><value>Hà Nội - Tràng An</value></data>
+  <data name="Hanoi - Ha Long" xml:space="preserve"><value>Hà Nội - Hạ Long</value></data>
+  <data name="Hanoi - Sa Pa" xml:space="preserve"><value>Hà Nội - Sa Pa</value></data>
+  <data name="800,000 VND" xml:space="preserve"><value>800,000vnđ</value></data>
+  <data name="1,200,000 VND" xml:space="preserve"><value>1,200,000vnđ</value></data>
+  <data name="2,300,000 VND" xml:space="preserve"><value>2,300,000vnđ</value></data>
+  <data name="one way" xml:space="preserve"><value>chiều</value></data>
+  <data name="View details" xml:space="preserve"><value>Xem chi tiết</value></data>
+  <data name="Previous routes" xml:space="preserve"><value>Tuyến trước</value></data>
+  <data name="Next routes" xml:space="preserve"><value>Tuyến tiếp theo</value></data>
+  <data name="Latest news" xml:space="preserve"><value>Tin tức mới nhất</value></data>
+  <data name="Top 08 best mountain-view resorts in Ninh Binh 2026" xml:space="preserve"><value>Top 08 resort view núi đẹp nhất Ninh Bình 2026</value></data>
+  <data name="10 best spring destinations near Hanoi in 2026" xml:space="preserve"><value>10 Điểm Du Xuân Tết 2026 Gần Thành Phố Hà Nội Đẹp Và Hot Nhất</value></data>
+  <data name="0 reviews" xml:space="preserve"><value>0 Đánh giá</value></data>
+  <data name="20 March 2026" xml:space="preserve"><value>20 Tháng 3 năm 2026</value></data>
+  <data name="10 March 2026" xml:space="preserve"><value>10 Tháng 3 năm 2026</value></data>
+  <data name="1. Enter trip details" xml:space="preserve"><value>1. Nhập thông tin chuyến đi</value></data>
+  <data name="10,000+ happy travelers" xml:space="preserve"><value>10.000+ khách hàng hài lòng</value></data>
+  <data name="2. Select vehicle" xml:space="preserve"><value>2. Chọn xe</value></data>
+  <data name="24/7 support" xml:space="preserve"><value>Hỗ trợ 24/7</value></data>
+  <data name="3. Confirm booking" xml:space="preserve"><value>3. Xác nhận đặt xe</value></data>
+  <data name="4. Meet your driver" xml:space="preserve"><value>4. Gặp tài xế</value></data>
+  <data name="Add more comfort to your transfer" xml:space="preserve"><value>Thêm tiện nghi cho chuyến đi</value></data>
+  <data name="Always on time" xml:space="preserve"><value>Luôn đúng giờ</value></data>
+  <data name="Choose airport, address, time and passengers." xml:space="preserve"><value>Chọn sân bay, địa chỉ, thời gian và số khách.</value></data>
+  <data name="Clean cars for business and leisure travel." xml:space="preserve"><value>Xe sạch cho chuyến công tác và du lịch.</value></data>
+  <data name="Compare capacity, comfort and estimated price." xml:space="preserve"><value>So sánh sức chứa, độ thoải mái và giá ước tính.</value></data>
+  <data name="Driver meets you on time at the agreed point." xml:space="preserve"><value>Tài xế đón đúng giờ tại điểm đã hẹn.</value></data>
+  <data name="Easy booking, fair price and polite driver." xml:space="preserve"><value>Đặt xe dễ, giá hợp lý và tài xế lịch sự.</value></data>
+  <data name="Estimated route price before you confirm." xml:space="preserve"><value>Biết giá ước tính trước khi xác nhận.</value></data>
+  <data name="Fast support on WhatsApp after landing." xml:space="preserve"><value>Hỗ trợ nhanh qua WhatsApp sau khi hạ cánh.</value></data>
+  <data name="Featured services" xml:space="preserve"><value>Dịch vụ nổi bật</value></data>
+  <data name="Premium fleet" xml:space="preserve"><value>Đội xe cao cấp</value></data>
+  <data name="Reach us through phone or messaging apps." xml:space="preserve"><value>Liên hệ qua điện thoại hoặc ứng dụng nhắn tin.</value></data>
+  <data name="Recommended for business travel in Vietnam." xml:space="preserve"><value>Phù hợp cho chuyến công tác tại Việt Nam.</value></data>
+  <data name="Select helpful extras during checkout, prepared together with your private ride." xml:space="preserve"><value>Chọn dịch vụ bổ sung khi thanh toán, được chuẩn bị cùng chuyến xe riêng.</value></data>
+  <data name="Smooth pickup and a very clean sedan." xml:space="preserve"><value>Đón xe thuận tiện và sedan rất sạch.</value></data>
+  <data name="Testimonials" xml:space="preserve"><value>Đánh giá khách hàng</value></data>
+  <data name="Transparent fare" xml:space="preserve"><value>Giá minh bạch</value></data>
+  <data name="Verified traveler" xml:space="preserve"><value>Khách đã xác thực</value></data>
+  <data name="We plan airport pickups around your flight." xml:space="preserve"><value>Chúng tôi sắp xếp đón sân bay theo chuyến bay của bạn.</value></data>
+  <data name="Your booking number is created before payment." xml:space="preserve"><value>Mã đặt xe được tạo trước khi thanh toán.</value></data>
+</root>

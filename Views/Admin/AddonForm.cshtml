@@ -1,0 +1,45 @@
+@model CarBookingAddonFormViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var mode = ViewData["AddonFormMode"]?.ToString() ?? "Edit";
+    var cloudinaryConfigured = ViewData["CloudinaryConfigured"] as bool? ?? false;
+    ViewData["Title"] = $"{mode} Addon";
+    var action = mode == "Create" ? "/admin/addons/create" : $"/admin/addons/{Model.Id}/edit";
+}
+
+<section class="admin-shell">
+    <a href="/admin/addons" class="admin-back">&larr; Back to addons</a>
+    <div class="admin-page-heading">
+        <div><h1>@mode addon</h1><p>Set addon display text, image, price and public availability.</p></div>
+    </div>
+
+    <div class="vehicle-edit-grid">
+        @if (!cloudinaryConfigured)
+        {
+            <div class="alert alert-warning vehicle-form-alert">Cloudinary is not configured. Existing media can be selected, but new image upload requires Cloudinary credentials.</div>
+        }
+        <form class="admin-panel vehicle-form vehicle-editor-card" method="post" action="@action" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="vehicle-form-sections">
+                @Html.Partial("AddonForm/_BasicSection", Model)
+                @Html.Partial("AddonForm/_PricingSection", Model)
+                @Html.Partial("AddonForm/_ImageSection", Model)
+                @Html.Partial("AddonForm/_VisibilitySection", Model)
+            </div>
+
+            <div class="admin-form-actions vehicle-form-actions">
+                <a class="btn btn-outline-secondary" href="/admin/addons">Cancel</a>
+                <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save addon</button>
+            </div>
+        </form>
+
+        @Html.Partial("AddonForm/_Preview", Model)
+    </div>
+</section>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

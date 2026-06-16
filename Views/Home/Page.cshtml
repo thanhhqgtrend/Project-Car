@@ -1,0 +1,50 @@
+@model CmsPageViewModel
+@using System.Text.Json
+@{
+    ViewData["Title"] = Model.MetaTitle;
+    ViewData["MetaDescription"] = Model.MetaDescription;
+    var modified = Model.Page.UpdatedAtUtc == default ? DateTime.UtcNow : Model.Page.UpdatedAtUtc;
+    var jsonLd = new Dictionary<string, object?>
+    {
+        ["@context"] = "https://schema.org",
+        ["@type"] = "WebPage",
+        ["name"] = Model.Title,
+        ["description"] = Model.MetaDescription,
+        ["url"] = Model.CanonicalUrl,
+        ["dateModified"] = modified.ToString("O"),
+        ["image"] = string.IsNullOrWhiteSpace(Model.OgImageUrl) ? null : Model.OgImageUrl
+    };
+}
+
+@section Head {
+    @if (!string.IsNullOrWhiteSpace(Model.CanonicalUrl))
+    {
+        <link rel="canonical" href="@Model.CanonicalUrl" />
+    }
+    <meta name="robots" content="@Model.Robots" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.OgTitle" />
+    <meta property="og:description" content="@Model.OgDescription" />
+    <meta property="og:url" content="@Model.CanonicalUrl" />
+    @if (!string.IsNullOrWhiteSpace(Model.OgImageUrl))
+    {
+        <meta property="og:image" content="@Model.OgImageUrl" />
+    }
+    <script type="application/ld+json">@Html.Raw(JsonSerializer.Serialize(jsonLd.Where(x => x.Value is not null).ToDictionary(x => x.Key, x => x.Value)))</script>
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>@Model.Title</h1>
+        <p>@Model.MetaDescription</p>
+    </div>
+</section>
+@if (!string.IsNullOrWhiteSpace(Model.Page.FeaturedMediaAsset?.SecureUrl))
+{
+    <section class="container blog-featured-image">
+        <img src="@CloudinaryUrlHelper.For(Model.Page.FeaturedMediaAsset, CloudinaryUrlHelper.BlogHero)" alt="@Model.Title" decoding="async" />
+    </section>
+}
+<section class="container content-page">
+    @Html.Raw(Model.BodyHtml)
+</section>

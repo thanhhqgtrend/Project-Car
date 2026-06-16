@@ -1,0 +1,57 @@
+@model BlogPostViewModel
+@using System.Text.Json
+@{
+    ViewData["Title"] = Model.MetaTitle;
+    ViewData["MetaDescription"] = Model.MetaDescription;
+    var published = Model.Post.PublishedAtUtc ?? Model.Post.CreatedAtUtc;
+    var modified = Model.Post.UpdatedAtUtc;
+    var jsonLd = new Dictionary<string, object?>
+    {
+        ["@context"] = "https://schema.org",
+        ["@type"] = "Article",
+        ["headline"] = Model.Translation.Title,
+        ["description"] = Model.MetaDescription,
+        ["datePublished"] = published.ToString("O"),
+        ["dateModified"] = modified.ToString("O"),
+        ["mainEntityOfPage"] = Model.CanonicalUrl,
+        ["image"] = string.IsNullOrWhiteSpace(Model.OgImageUrl) ? null : new[] { Model.OgImageUrl }
+    };
+}
+
+@section Head {
+    @if (!string.IsNullOrWhiteSpace(Model.CanonicalUrl))
+    {
+        <link rel="canonical" href="@Model.CanonicalUrl" />
+    }
+    <meta name="robots" content="@Model.Robots" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="@Model.OgTitle" />
+    <meta property="og:description" content="@Model.OgDescription" />
+    <meta property="og:url" content="@Model.CanonicalUrl" />
+    @if (!string.IsNullOrWhiteSpace(Model.OgImageUrl))
+    {
+        <meta property="og:image" content="@Model.OgImageUrl" />
+    }
+    <script type="application/ld+json">@Html.Raw(JsonSerializer.Serialize(jsonLd.Where(x => x.Value is not null).ToDictionary(x => x.Key, x => x.Value)))</script>
+}
+
+<article class="blog-article">
+    <section class="page-hero blog-hero">
+        <div class="container">
+            <h1>@Model.Translation.Title</h1>
+            <p>@Model.Translation.Excerpt</p>
+            <div class="news-date"><i class="bi bi-calendar3"></i> @published.ToString("dd MMMM yyyy", CultureInfo.CurrentUICulture)</div>
+        </div>
+    </section>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Post.FeaturedMediaAsset?.SecureUrl))
+    {
+        <section class="container blog-featured-image">
+            <img src="@CloudinaryUrlHelper.For(Model.Post.FeaturedMediaAsset, CloudinaryUrlHelper.BlogHero)" alt="@Model.Translation.Title" decoding="async" />
+        </section>
+    }
+
+    <section class="container content-page blog-content">
+        @Html.Raw(Model.Translation.BodyHtml)
+    </section>
+</article>

@@ -1,0 +1,21 @@
+@model BookingSearchViewModel
+@{
+    ViewData["Title"] = L["Search Cars"];
+}
+
+<section class="page-hero search-page-hero">
+    <div class="container">
+        <h1>@L["Search cars"]</h1>
+        <p>@L["Choose your route first, then compare vehicles and prices before entering booking information."]</p>
+    </div>
+</section>
+
+<section class="booking-card container booking-search-card">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.Partial("_SearchForm", Model)
+</section>
+
+@if (Model.SearchSubmitted && ViewData.ModelState.IsValid)
+{
+    @Html.Partial("_CarVehicleResults", Model)
+}

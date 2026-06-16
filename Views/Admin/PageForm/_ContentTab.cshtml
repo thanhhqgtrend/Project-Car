@@ -1,0 +1,52 @@
+@model CmsPageFormViewModel
+@{ var mode = (ViewData["CmsPageFormMode"] as string) ?? "Edit"; }
+                <section class="vehicle-form-section">
+                    <div class="settings-section-heading">
+                        <i class="bi bi-card-text"></i>
+                        <div>
+                            <h2>Content</h2>
+                            <p>Shared URL fields plus language-specific title, excerpt and page body.</p>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-3">
+                            <label class="form-label" for="Culture">Language</label>
+                            <select class="form-select form-select-lg" name="Culture" id="Culture" onchange="if (@(mode == "Create" ? "false" : "true")) window.location.href='/admin/pages/@Model.Id/edit?culture=' + this.value;">
+                                @foreach (var culture in Model.SupportedCultures)
+                                {
+                                    <option value="@culture" selected="@(Model.Culture == culture)">@culture.ToUpperInvariant()</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-lg-9">
+                            <label class="form-label" for="Title">Title</label>
+                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control form-control-lg" })
+                            @Html.ValidationMessage("Title", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label" for="Slug">Internal slug</label>
+                            @Html.TextBoxFor(m => m.Slug, new { @class = "form-control form-control-lg", placeholder = "about" })
+                            @Html.ValidationMessage("Slug", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label" for="PublicPath">Public URL path</label>
+                            @Html.TextBoxFor(m => m.PublicPath, new { @class = "form-control form-control-lg", placeholder = "/slug or /xxx/yyy/slug" })
+                            <small class="text-muted">You can paste a full URL; only the path will be saved.</small>
+                            @Html.ValidationMessage("PublicPath", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="BodyHtml">Body</label>
+                            <div class="rich-editor-toolbar" role="toolbar" aria-label="CMS editor toolbar">
+                                <button type="button" data-rich-command="formatBlock" data-rich-value="H2">H2</button>
+                                <button type="button" data-rich-command="formatBlock" data-rich-value="H3">H3</button>
+                                <button type="button" data-rich-command="bold"><strong>B</strong></button>
+                                <button type="button" data-rich-command="italic"><em>I</em></button>
+                                <button type="button" data-rich-command="insertUnorderedList"><i class="bi bi-list-ul"></i></button>
+                                <button type="button" data-rich-command="createLink"><i class="bi bi-link-45deg"></i></button>
+                                <button type="button" data-rich-command="insertImage"><i class="bi bi-image"></i></button>
+                            </div>
+                            <div class="rich-editor js-rich-editor" contenteditable="true">@Html.Raw(Model.BodyHtml)</div>
+                            @Html.TextAreaFor(m => m.BodyHtml, new { @class = "form-control cms-editor js-rich-editor-source d-none" })
+                        </div>
+                    </div>
+                </section>

@@ -1,0 +1,53 @@
+@model BlogPostFormViewModel
+@{ var mode = (ViewData["BlogFormMode"] as string) ?? "Edit"; }
+                <section class="vehicle-form-section">
+                    <div class="settings-section-heading">
+                        <i class="bi bi-card-text"></i>
+                        <div>
+                            <h2>Content</h2>
+                            <p>Language-specific title, slug, excerpt and article body.</p>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-3">
+                            <label class="form-label" for="Culture">Language</label>
+                            <select class="form-select form-select-lg" name="Culture" id="Culture" onchange="if (@(mode == "Create" ? "false" : "true")) window.location.href='/admin/blog/@Model.Id/edit?culture=' + this.value;">
+                                @foreach (var culture in Model.SupportedCultures)
+                                {
+                                    <option value="@culture" selected="@(Model.Culture == culture)">@culture.ToUpperInvariant()</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-lg-9">
+                            <label class="form-label" for="Title">Title</label>
+                            <input class="form-control form-control-lg" name="Title" id="Title" value="@Model.Title" />
+                            @Html.ValidationMessage("Title", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="Slug">Slug</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text">/blog/</span>
+                                <input class="form-control" name="Slug" id="Slug" value="@Model.Slug" />
+                            </div>
+                            @Html.ValidationMessage("Slug", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="Excerpt">Excerpt</label>
+                            <textarea class="form-control" name="Excerpt" id="Excerpt" rows="3">@Model.Excerpt</textarea>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="BodyHtml">Body</label>
+                            <div class="rich-editor-toolbar" role="toolbar" aria-label="Blog editor toolbar">
+                                <button type="button" data-rich-command="formatBlock" data-rich-value="H2">H2</button>
+                                <button type="button" data-rich-command="formatBlock" data-rich-value="H3">H3</button>
+                                <button type="button" data-rich-command="bold"><strong>B</strong></button>
+                                <button type="button" data-rich-command="italic"><em>I</em></button>
+                                <button type="button" data-rich-command="insertUnorderedList"><i class="bi bi-list-ul"></i></button>
+                                <button type="button" data-rich-command="createLink"><i class="bi bi-link-45deg"></i></button>
+                                <button type="button" data-rich-command="insertImage"><i class="bi bi-image"></i></button>
+                            </div>
+                            <div class="rich-editor js-rich-editor" contenteditable="true">@Html.Raw(Model.BodyHtml)</div>
+                            <textarea class="d-none js-rich-editor-source" name="BodyHtml" id="BodyHtml">@Model.BodyHtml</textarea>
+                        </div>
+                    </div>
+                </section>

@@ -1,0 +1,51 @@
+@{
+    ViewData["Title"] = L["Page not found"];
+    ViewData["MetaDescription"] = L["The page you are looking for may have moved or is no longer available."];
+}
+
+<section class="not-found-hero">
+    <div class="container">
+        <div class="not-found-panel">
+            <div class="not-found-code">404</div>
+            <div>
+                <span class="not-found-kicker">@L["Page not found"]</span>
+                <h1>@L["This page is not available"]</h1>
+                <p>@L["The link may be outdated, the booking page may require verification, or the address may have been typed incorrectly."]</p>
+                <div class="not-found-actions">
+                    <a class="btn btn-gold" href="/">
+                        <i class="bi bi-house-door"></i>
+                        @L["Back to home"]
+                    </a>
+                    <a class="btn btn-outline-gold" href="/booking/search">
+                        <i class="bi bi-search"></i>
+                        @L["Search cars"]
+                    </a>
+                    <a class="btn btn-light" href="/contact">
+                        <i class="bi bi-headset"></i>
+                        @L["Contact support"]
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container not-found-help">
+    <div class="not-found-help-grid">
+        <div>
+            <i class="bi bi-calendar-check"></i>
+            <h2>@L["Booking Confirmation"]</h2>
+            <p>@L["If you opened a booking link from another browser, enter the email or phone number used for the booking to view it."]</p>
+        </div>
+        <div>
+            <i class="bi bi-airplane"></i>
+            <h2>@L["Airport transfers"]</h2>
+            <p>@L["Start a new search with your airport, pickup time and route details to see available vehicles."]</p>
+        </div>
+        <div>
+            <i class="bi bi-chat-dots"></i>
+            <h2>@L["Need help?"]</h2>
+            <p>@L["Our support team can help find your booking or confirm the right vehicle for your trip."]</p>
+        </div>
+    </div>
+</section>

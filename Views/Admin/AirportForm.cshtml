@@ -1,0 +1,71 @@
+﻿@model AirportFormViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var mode = ViewData["AirportFormMode"]?.ToString() ?? "Edit";
+    ViewData["Title"] = $"{mode} Airport";
+    var action = mode == "Create" ? "/admin/airports/create" : $"/admin/airports/{Model.Id}/edit";
+}
+
+<section class="admin-shell">
+    <a href="/admin/airports" class="admin-back">â† Back to airports</a>
+    <div class="admin-page-heading">
+        <div>
+            <h1>@mode airport</h1>
+            <p>Enter airport details and coordinates for route pricing.</p>
+        </div>
+    </div>
+
+    <form class="admin-panel" method="post" action="@action">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label" for="Code">Airport code</label>
+                <input class="form-control form-control-lg text-uppercase" name="Code" id="Code" placeholder="HAN" />
+                @Html.ValidationMessage("Code", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-9">
+                <label class="form-label" for="Name">Airport name</label>
+                <input class="form-control form-control-lg" name="Name" id="Name" placeholder="Noi Bai International Airport" />
+                @Html.ValidationMessage("Name", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="City"></label>
+                <input class="form-control" name="City" id="City" placeholder="Hanoi" />
+                @Html.ValidationMessage("City", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="Country"></label>
+                <input class="form-control" name="Country" id="Country" />
+                @Html.ValidationMessage("Country", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="Latitude"></label>
+                <input class="form-control" name="Latitude" id="Latitude" type="number" step="0.000001" />
+                @Html.ValidationMessage("Latitude", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="Longitude"></label>
+                <input class="form-control" name="Longitude" id="Longitude" type="number" step="0.000001" />
+                @Html.ValidationMessage("Longitude", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-12">
+                <label class="vehicle-toggle">
+                    <input name="IsActive" id="IsActive" type="checkbox" />
+                    <span>
+                        <strong>Active on public search</strong>
+                        <small>Inactive airports are hidden from new public bookings.</small>
+                    </span>
+                </label>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+            <button class="btn btn-gold btn-lg" type="submit">Save airport</button>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

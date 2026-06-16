@@ -1,0 +1,62 @@
+@model CmsPageFormViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var mode = (ViewData["CmsPageFormMode"] as string) ?? "Edit";
+    var cloudinaryConfigured = ViewData["CloudinaryConfigured"] as bool? ?? false;
+    ViewData["Title"] = mode + " CMS Page";
+    var action = mode == "Create" ? "/admin/pages/create" : $"/admin/pages/{Model.Id}/edit";
+}
+
+<section class="admin-shell">
+    <a href="/admin/pages?culture=@Model.Culture" class="admin-back">&larr; Back to CMS pages</a>
+    <div class="admin-page-heading">
+        <div>
+            <h1>@mode CMS page</h1>
+            <p>Build multilingual static pages with custom URLs, SEO metadata and media.</p>
+        </div>
+        @if (mode != "Create" && !string.IsNullOrWhiteSpace(Model.PublicPath))
+        {
+            <a class="btn btn-outline-gold" href="/admin/pages/@Model.Id/preview?culture=@Model.Culture" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right"></i> Preview</a>
+        }
+    </div>
+
+    @if (!cloudinaryConfigured)
+    {
+        <div class="alert alert-warning">Cloudinary is not configured. Existing media can be selected, but new image upload requires Cloudinary credentials.</div>
+    }
+    @if (TempData["AdminNotice"] is string notice)
+    {
+        <div class="alert alert-info">@notice</div>
+    }
+
+    <form class="admin-panel blog-editor-form" method="post" action="@action" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <ul class="nav nav-pills settings-tab-nav" id="cmsEditorTabs" role="tablist">
+            <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#cms-content" type="button" role="tab"><i class="bi bi-pencil-square"></i> Content</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#cms-seo" type="button" role="tab"><i class="bi bi-search"></i> SEO</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#cms-media" type="button" role="tab"><i class="bi bi-image"></i> Media</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#cms-publish" type="button" role="tab"><i class="bi bi-toggle-on"></i> Publish</button></li>
+        </ul>
+
+        <div class="tab-content settings-tab-content">
+            <div class="tab-pane fade show active" id="cms-content" role="tabpanel" tabindex="0">
+            @Html.Partial("PageForm/_ContentTab", Model)
+            @Html.Partial("PageForm/_SeoTab", Model)
+            @Html.Partial("PageForm/_MediaTab", Model)
+            @Html.Partial("PageForm/_PublishTab", Model)
+            </div>
+        </div>
+
+        <div class="admin-form-actions">
+            <a class="btn btn-outline-secondary" href="/admin/pages?culture=@Model.Culture">Cancel</a>
+            <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save CMS page</button>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

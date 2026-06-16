@@ -1,0 +1,42 @@
+﻿@model MediaUploadViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Upload Media";
+    var configured = ViewData["CloudinaryConfigured"] as bool? ?? false;
+}
+
+<section class="admin-shell">
+    <a href="/admin/media" class="admin-back">&larr; Back to media</a>
+    <div class="admin-page-heading">
+        <div>
+            <h1>Upload media</h1>
+            <p>Upload JPG, PNG or WebP images to Cloudinary.</p>
+        </div>
+    </div>
+
+    @if (!configured)
+    {
+        <div class="alert alert-warning">Cloudinary credentials are missing. Upload will be disabled until configuration is added.</div>
+    }
+
+    <form class="admin-panel media-upload-form" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <label class="form-label" for="File">Image file</label>
+        <input class="form-control form-control-lg" name="File" id="File" type="file" accept="image/jpeg,image/png,image/webp" disabled="@(!configured)" />
+        <small class="text-muted">Maximum 5MB.</small>
+
+        <label class="form-label mt-3" for="AltText">Alt text</label>
+        <input class="form-control form-control-lg" name="AltText" id="AltText" placeholder="Black sedan at airport" />
+        @Html.ValidationMessage("AltText", "", new { @class = "text-danger" })
+
+        <div class="admin-form-actions">
+            <a class="btn btn-outline-secondary" href="/admin/media">Cancel</a>
+            <button class="btn btn-gold" type="submit" disabled="@(!configured)">Upload</button>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

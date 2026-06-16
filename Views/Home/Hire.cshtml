@@ -1,0 +1,88 @@
+@model LuxuryCar.ViewModels.CarHireViewModel
+@{
+    ViewData["Title"] = L["Car hire"];
+    var totalDays = Model.TotalDays;
+    var totalPrice = Model.TotalPrice;
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>@L["Car hire"]</h1>
+        <p>@L["Rent a car by the day."]</p>
+    </div>
+</section>
+
+<section class="container" style="margin-top:2rem;">
+    <div class="row g-4">
+        <div class="@(Model.SelectedVehicle != null ? "col-lg-8" : "col-lg-12")">
+            @if (Model.Vehicles.Any())
+            {
+                <div class="vehicle-result-list" style="margin-top:2rem;">
+                    @foreach (var vehicle in Model.Vehicles)
+                    {
+                        var dailyRate = vehicle.DailyRateUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
+                        var hireUrl = $"/booking/checkout?TripType=Hire&CarVehicleTypeId={vehicle.Id}&OriginAddress={Uri.EscapeDataString(Model.PickupAddress)}&PickupDateTime={Model.StartDate:yyyy-MM-dd}&PassengerCount={Model.PassengerCount}&StartDate={Model.StartDate:yyyy-MM-dd}&EndDate={Model.EndDate:yyyy-MM-dd}";
+                        <article class="vehicle-result-card">
+                            <div class="vehicle-result-media">
+                                @if (!string.IsNullOrWhiteSpace(vehicle.Image?.SecureUrl))
+                                {
+                                    <img src="@vehicle.Image.SecureUrl" alt="@vehicle.Name" loading="lazy" />
+                                }
+                                else
+                                {
+                                    <div class="placeholder-image car-placeholder"><span>@vehicle.Name</span></div>
+                                }
+                            </div>
+                            <div class="vehicle-result-body">
+                                <h2>@vehicle.Name</h2>
+                                <p>@vehicle.Description</p>
+                                <div class="vehicle-meta">
+                                    <span><i class="bi bi-people"></i> @vehicle.PassengerCapacity @L["pax"]</span>
+                                    <span><i class="bi bi-briefcase"></i> @vehicle.LuggageCapacity @L["bags"]</span>
+                                    <span><i class="bi bi-calendar3"></i> @L["No km limit"]</span>
+                                </div>
+                                <div class="vehicle-badges">
+                                    <span>@L["No km limit"]</span>
+                                    <span>@L["Flexible schedule"]</span>
+                                </div>
+                            </div>
+                            <div class="vehicle-result-price">
+                                <span>@L["Per day"]</span>
+                                <strong>$@dailyRate</strong>
+                                <small>@totalDays @L["day(s)"] total</small>
+                                <a class="btn btn-gold w-100" href="@hireUrl">@L["Select"]</a>
+                            </div>
+                        </article>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="col-lg-4">
+            @if (Model.SelectedVehicle != null)
+            {
+                var hireCheckoutUrl = $"/booking/checkout?TripType=Hire&CarVehicleTypeId={Model.SelectedVehicle.Id}&OriginAddress={Uri.EscapeDataString(Model.PickupAddress)}&PickupDateTime={Model.StartDate:yyyy-MM-dd}&PassengerCount={Model.PassengerCount}&StartDate={Model.StartDate:yyyy-MM-dd}&EndDate={Model.EndDate:yyyy-MM-dd}";
+                <aside class="payment-panel">
+                    <h2>@L["Hire summary"]</h2>
+                    <dl class="summary-list">
+                        <dt>@L["Vehicle"]</dt>
+                        <dd>@Model.SelectedVehicle.Name</dd>
+                        <dt>@L["Start date"]</dt>
+                        <dd>@Model.StartDate.ToString("dd/MM/yyyy")</dd>
+                        <dt>@L["End date"]</dt>
+                        <dd>@Model.EndDate.ToString("dd/MM/yyyy")</dd>
+                        <dt>@L["Total days"]</dt>
+                        <dd>@totalDays @L["day(s)"]</dd>
+                        <dt>@L["Daily rate"]</dt>
+                        <dd>$@Model.DailyRate.ToString("0.00")</dd>
+                        <dt>@L["Total"]</dt>
+                        <dd><strong>$@totalPrice.ToString("0.00")</strong></dd>
+                    </dl>
+                    <a class="btn btn-gold w-100" style="margin-top:1rem;" href="@hireCheckoutUrl">
+                        @L["Book now"]
+                    </a>
+                </aside>
+            }
+        </div>
+    </div>
+</section>

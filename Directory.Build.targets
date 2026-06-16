@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <_TargetFrameworkVersionWithoutV>4.7.2</_TargetFrameworkVersionWithoutV>
+  </PropertyGroup>
+  <ItemGroup>
+    <Using Remove="Microsoft.AspNetCore.Builder" />
+    <Using Remove="Microsoft.AspNetCore.Hosting" />
+    <Using Remove="Microsoft.AspNetCore.Http" />
+    <Using Remove="Microsoft.AspNetCore.Routing" />
+    <Using Remove="Microsoft.Extensions.Configuration" />
+    <Using Remove="Microsoft.Extensions.DependencyInjection" />
+    <Using Remove="Microsoft.Extensions.Hosting" />
+    <Using Remove="Microsoft.Extensions.Logging" />
+    <Using Remove="System.Net.Http.Json" />
+  </ItemGroup>
+</Project>

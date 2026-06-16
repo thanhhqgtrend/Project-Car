@@ -1,0 +1,160 @@
+@model BookingSearchViewModel
+@{
+    var pointALabel = L["Point A"].Value;
+    var pointBLabel = L["Point B"].Value;
+    var pickupPointLabel = L["Pickup point"].Value;
+    var dropoffPointLabel = L["Dropoff point"].Value;
+    var minPickupDate = DateTime.UtcNow.AddHours(7).ToString("yyyy-MM-dd");
+    var selectedAirport = Model.Airports.FirstOrDefault(x => x.Value == Model.AirportId?.ToString())?.Text ?? string.Empty;
+}
+
+<ul class="nav booking-tabs" role="tablist">
+    <li class="nav-item">
+        <button class="nav-link js-home-trip-tab @(Model.TripType == TripType.AirportPickup ? "active" : "")" type="button" data-trip="@TripType.AirportPickup" role="tab">
+            <i class="bi bi-airplane-arrival"></i> @L["Airport pickup"]
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link js-home-trip-tab @(Model.TripType == TripType.AirportDropoff ? "active" : "")" type="button" data-trip="@TripType.AirportDropoff" role="tab">
+            <i class="bi bi-airplane-departure"></i> @L["Airport dropoff"]
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link js-home-trip-tab @(Model.TripType == TripType.PointToPoint ? "active" : "")" type="button" data-trip="@TripType.PointToPoint" role="tab">
+            <i class="bi bi-signpost-2"></i> @L["A to B"]
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link js-home-trip-tab @(Model.TripType == TripType.Hire ? "active" : "")" type="button" data-trip="@TripType.Hire" role="tab">
+            <i class="bi bi-clock"></i> @L["Car hire"]
+        </button>
+    </li>
+</ul>
+
+<form class="row g-3 align-items-end js-booking-search-form" method="get" action="/booking/search" data-geoapify-key="@Model.GeoapifyApiKey" data-point-a-label="@pointALabel" data-point-b-label="@pointBLabel" data-pickup-label="@pickupPointLabel" data-dropoff-label="@dropoffPointLabel">
+    <input type="hidden" name="SearchSubmitted" value="true" />
+    <input class="js-home-trip-type" type="hidden" name="TripType" value="@Model.TripType" />
+    <div class="col-md-3 js-home-airport-field js-airport-field">
+        <label class="form-label">@L["Airport"]</label>
+        <input class="form-control js-airport-autocomplete" list="airportOptions" value="@selectedAirport" placeholder="@L["Search airport"]" autocomplete="off" />
+        <input class="js-airport-id" type="hidden" name="AirportId" id="AirportId" />
+        <datalist id="airportOptions">
+            @foreach (var airport in Model.Airports)
+            {
+                <option value="@airport.Text" data-id="@airport.Value"></option>
+            }
+        </datalist>
+        @Html.ValidationMessage("AirportId", "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 js-home-origin-field">
+        <label class="form-label js-home-origin-label">@L["Pickup point"]</label>
+        <input class="form-control js-place-autocomplete" name="OriginAddress" id="OriginAddress" placeholder="@L["Hotel, address, city or landmark"]" />
+        @Html.ValidationMessage("OriginAddress", "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 js-home-destination-field">
+        <label class="form-label js-home-destination-label">@L["Dropoff point"]</label>
+        <input class="form-control js-place-autocomplete" name="DestinationAddress" id="DestinationAddress" placeholder="@L["Hotel, address, city or landmark"]" />
+        @Html.ValidationMessage("DestinationAddress", "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">@L["Pickup date"]</label>
+        <div class="date-input-wrap">
+            <i class="bi bi-calendar3"></i>
+            <input class="form-control date-input" name="PickupDateTime" id="PickupDateTime" type="date" min="@minPickupDate" value="@Model.PickupDateTime.ToString("yyyy-MM-dd")" />
+        </div>
+        @Html.ValidationMessage("PickupDateTime", "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">@L["Passengers"]</label>
+        <select class="form-select" name="PassengerCount" id="PassengerCount">
+            <option value="1">1 @L["passenger"]</option>
+            <option value="2">2 @L["passenger(s)"]</option>
+            <option value="3">3 @L["passenger(s)"]</option>
+            <option value="4">4 @L["passenger(s)"]</option>
+            <option value="5">5 @L["passenger(s)"]</option>
+            <option value="7">7 @L["passenger(s)"]</option>
+            <option value="9">9 @L["passenger(s)"]</option>
+        </select>
+        @Html.ValidationMessage("PassengerCount", "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-1 d-grid">
+        <button class="btn btn-gold" type="button" id="search-btn" onclick="
+            var tripType = document.querySelector('.js-home-trip-type').value;
+            if (tripType === 'Hire') {
+                var start = document.getElementById('hire-start-date').value;
+                var end = document.getElementById('hire-end-date').value;
+                var pickup = document.getElementById('hire-pickup').value;
+                var pax = document.getElementById('hire-pax').value;
+               window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&PickupAddress=' + encodeURIComponent(pickup) + '&PassengerCount=' + pax;
+            } else {
+                document.querySelector('.js-booking-search-form').submit();
+            }
+        ">@L["Search"]</button>
+    </div>
+</form>
+
+<div class="js-hire-form row g-3 align-items-end" style="display:none;">
+    <div class="col-md-2">
+        <label class="form-label">@L["Start date"] <span class="required-star">*</span></label>
+        <div class="date-input-wrap">
+            <i class="bi bi-calendar3"></i>
+            <input class="form-control date-input" type="date" id="hire-start-date" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        </div>
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">@L["End date"] <span class="required-star">*</span></label>
+        <div class="date-input-wrap">
+            <i class="bi bi-calendar3"></i>
+            <input class="form-control date-input" type="date" id="hire-end-date" value="@DateTime.Now.AddDays(2).ToString("yyyy-MM-dd")" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" />
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">@L["Pickup address"] <span class="required-star">*</span></label>
+        <input class="form-control" type="text" id="hire-pickup" placeholder="@L["Hotel, address, city or landmark"]" />
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">@L["Passengers"]</label>
+        <select class="form-select" id="hire-pax">
+            @for (int i = 1; i <= 7; i++)
+            {
+                <option value="@i">@i @L["passenger(s)"]</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2 d-grid">
+        <button class="btn btn-gold" type="button" onclick="
+            var start = document.getElementById('hire-start-date').value;
+            var end = document.getElementById('hire-end-date').value;
+            var pickup = document.getElementById('hire-pickup').value;
+            var pax = document.getElementById('hire-pax').value;
+            window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&PickupAddress=' + encodeURIComponent(pickup) + '&PassengerCount=' + pax;
+        ">@L["Search"]</button>
+    </div>
+</div>
+
+<script>
+    function toggleHireForm(tripType) {
+        var hireForm = document.querySelector('.js-hire-form');
+        var bookingForm = document.querySelector('.js-booking-search-form');
+        var searchBtn = document.getElementById('search-btn');
+        if (!hireForm) return;
+        if (tripType === 'Hire') {
+            hireForm.style.display = 'flex';
+            bookingForm.style.display = 'none';
+        } else {
+            hireForm.style.display = 'none';
+            bookingForm.style.display = '';
+        }
+    }
+
+    document.querySelectorAll(".js-home-trip-tab").forEach(function (button) {
+        button.addEventListener("click", function () {
+            syncHomeBookingTabs(button.dataset.trip);
+            toggleHireForm(button.dataset.trip);
+        });
+    });
+    var initialTripType = document.querySelector('.js-home-trip-type');
+    if (initialTripType && initialTripType.value === 'Hire') {
+        toggleHireForm('Hire');
+    }
+</script>

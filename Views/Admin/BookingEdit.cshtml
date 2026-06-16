@@ -1,0 +1,193 @@
+﻿@model AdminBookingEditViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = $"Edit {Model.BookingNumber}";
+}
+
+<section class="admin-shell">
+    <a href="/admin/bookings/@Model.Id" class="admin-back">â† Back to booking</a>
+    <div class="admin-page-heading">
+        <div>
+            <h1>Edit booking</h1>
+            <p>@Model.BookingNumber</p>
+        </div>
+    </div>
+
+    <form class="admin-panel" method="post" action="/admin/bookings/@Model.Id/edit">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.BookingNumber)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="vehicle-form-section-heading">
+            <span><i class="bi bi-person"></i></span>
+            <div>
+                <h2>Customer</h2>
+                <p>Edit contact details if the customer entered them incorrectly.</p>
+            </div>
+        </div>
+        <div class="row g-3 mb-4">
+            <div class="col-md-2">
+                <label class="form-label" for="Title"></label>
+                <input class="form-control" name="Title" id="Title" />
+            </div>
+            <div class="col-md-5">
+                <label class="form-label" for="FullName">Full name</label>
+                <input class="form-control" name="FullName" id="FullName" />
+                @Html.ValidationMessage("FullName", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-5">
+                <label class="form-label" for="Email"></label>
+                <input class="form-control" name="Email" id="Email" />
+                @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="Phone"></label>
+                <input class="form-control" name="Phone" id="Phone" />
+                @Html.ValidationMessage("Phone", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="MessagingApp">Messaging app</label>
+                <input class="form-control" name="MessagingApp" id="MessagingApp" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="MessagingHandle">Messaging contact</label>
+                <input class="form-control" name="MessagingHandle" id="MessagingHandle" />
+            </div>
+        </div>
+
+        <div class="vehicle-form-section-heading">
+            <span><i class="bi bi-signpost-2"></i></span>
+            <div>
+                <h2>Trip</h2>
+                <p>Adjust route, vehicle, pickup time and operational status.</p>
+            </div>
+        </div>
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <label class="form-label" for="TripType">Trip type</label>
+                <select class="form-select" name="TripType" id="TripType">
+                    @foreach (TripType tripType in Enum.GetValues(typeof(TripType)))
+                    {
+                        <option value="@tripType" selected="@(Model.TripType == tripType)">@tripType</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="Status"></label>
+                <select class="form-select" name="Status" id="Status">
+                    @foreach (BookingStatus status in Enum.GetValues(typeof(BookingStatus)))
+                    {
+                        <option value="@status" selected="@(Model.Status == status)">@status</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="AirportId">Airport</label>
+                <select class="form-select" name="AirportId" id="AirportId">
+                    <option value="">No airport</option>
+                    @foreach (var airport in Model.Airports)
+                    {
+                        <option value="@airport.Value" selected="@airport.Selected">@airport.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="CarVehicleTypeId">Vehicle</label>
+                <select class="form-select" name="CarVehicleTypeId" id="CarVehicleTypeId">
+                    @foreach (var vehicle in Model.Vehicles)
+                    {
+                        <option value="@vehicle.Value" selected="@vehicle.Selected">@vehicle.Text</option>
+                    }
+                </select>
+                @Html.ValidationMessage("CarVehicleTypeId", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" for="PassengerCount">Passengers</label>
+                <input class="form-control" name="PassengerCount" id="PassengerCount" type="number" min="1" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" for="PickupDateTime">Pickup time (Vietnam)</label>
+                <input class="form-control" name="PickupDateTime" id="PickupDateTime" type="datetime-local" value="@Model.PickupDateTime.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="PickupAddress">Pickup address</label>
+                <input class="form-control" name="PickupAddress" id="PickupAddress" />
+                @Html.ValidationMessage("PickupAddress", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="DropoffAddress">Dropoff address</label>
+                <input class="form-control" name="DropoffAddress" id="DropoffAddress" />
+                @Html.ValidationMessage("DropoffAddress", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="FlightNumber">Flight number</label>
+                <input class="form-control" name="FlightNumber" id="FlightNumber" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="DistanceKm">Distance km</label>
+                <input class="form-control" name="DistanceKm" id="DistanceKm" type="number" min="0" step="0.01" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="DistanceStatus">Distance status</label>
+                <select class="form-select" name="DistanceStatus" id="DistanceStatus">
+                    @foreach (DistanceStatus distanceStatus in Enum.GetValues(typeof(DistanceStatus)))
+                    {
+                        <option value="@distanceStatus" selected="@(Model.DistanceStatus == distanceStatus)">@distanceStatus</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="vehicle-form-section-heading">
+            <span><i class="bi bi-cash-coin"></i></span>
+            <div>
+                <h2>Pricing</h2>
+                <p>Manual edits here update the amount shown to the customer and payment page.</p>
+            </div>
+        </div>
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <label class="form-label" for="BasePriceUsd">Base price</label>
+                <input class="form-control js-admin-price-part" name="BasePriceUsd" id="BasePriceUsd" type="number" min="0" step="0.01" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" for="AddonTotalUsd">Addon total</label>
+                <input class="form-control js-admin-price-part" name="AddonTotalUsd" id="AddonTotalUsd" type="number" min="0" step="0.01" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" for="DiscountUsd">Discount</label>
+                <input class="form-control js-admin-price-part" name="DiscountUsd" id="DiscountUsd" type="number" min="0" step="0.01" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" for="TaxFeeUsd">Tax and fee</label>
+                <input class="form-control js-admin-price-part" name="TaxFeeUsd" id="TaxFeeUsd" type="number" min="0" step="0.01" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="CouponCode">Coupon code</label>
+                <input class="form-control" name="CouponCode" id="CouponCode" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="TotalPriceUsd">Final total</label>
+                <input class="form-control form-control-lg js-admin-price-total" name="TotalPriceUsd" id="TotalPriceUsd" type="number" min="0" step="0.01" />
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-outline-gold w-100 js-admin-recalculate-total" type="button">Recalculate total</button>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label" for="Notes"></label>
+            <textarea class="form-control" name="Notes" id="Notes" rows="4"></textarea>
+        </div>
+
+        <div class="admin-form-actions">
+            <a class="btn btn-outline-secondary" href="/admin/bookings/@Model.Id">Cancel</a>
+            <button class="btn btn-gold" type="submit">Save booking</button>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Home" xml:space="preserve"><value>홈</value></data>
+  <data name="About" xml:space="preserve"><value>소개</value></data>
+  <data name="Contact" xml:space="preserve"><value>문의</value></data>
+  <data name="Book now" xml:space="preserve"><value>지금 예약</value></data>
+  <data name="Private Transfer" xml:space="preserve"><value>프라이빗 이동</value></data>
+  <data name="Vietnam time" xml:space="preserve"><value>베트남 시간</value></data>
+  <data name="Airport pickup" xml:space="preserve"><value>공항 픽업</value></data>
+  <data name="Airport dropoff" xml:space="preserve"><value>공항 샌딩</value></data>
+  <data name="A to B" xml:space="preserve"><value>A에서 B까지</value></data>
+  <data name="Car hire" xml:space="preserve"><value>차량 대여</value></data>
+  <data name="Airport" xml:space="preserve"><value>공항</value></data>
+  <data name="Select airport" xml:space="preserve"><value>공항 선택</value></data>
+  <data name="Pickup point" xml:space="preserve"><value>픽업 장소</value></data>
+  <data name="Dropoff point" xml:space="preserve"><value>도착 장소</value></data>
+  <data name="Point A" xml:space="preserve"><value>지점 A</value></data>
+  <data name="Point B" xml:space="preserve"><value>지점 B</value></data>
+  <data name="Pickup time" xml:space="preserve"><value>픽업 시간</value></data>
+  <data name="Passengers" xml:space="preserve"><value>승객</value></data>
+  <data name="passenger" xml:space="preserve"><value>명</value></data>
+  <data name="passenger(s)" xml:space="preserve"><value>명</value></data>
+  <data name="Search" xml:space="preserve"><value>검색</value></data>
+  <data name="Vietnam Transfer private rides in Vietnam" xml:space="preserve"><value>Vietnam Transfer 베트남 프라이빗 이동 서비스</value></data>
+  <data name="Professional private rides. Safe, on time and transparent from booking to arrival." xml:space="preserve"><value>예약부터 도착까지 안전하고 정시 운행되는 투명한 프라이빗 차량 서비스입니다.</value></data>
+  <data name="Fixed price" xml:space="preserve"><value>고정 요금</value></data>
+  <data name="Free cancellation 24h before pickup" xml:space="preserve"><value>픽업 24시간 전 무료 취소</value></data>
+  <data name="Professional drivers" xml:space="preserve"><value>전문 기사</value></data>
+  <data name="Premium transfer vehicles" xml:space="preserve"><value>프리미엄 차량</value></data>
+  <data name="From" xml:space="preserve"><value>최저</value></data>
+  <data name="pax" xml:space="preserve"><value>명</value></data>
+  <data name="bags" xml:space="preserve"><value>가방</value></data>
+  <data name="Search cars" xml:space="preserve"><value>차량 검색</value></data>
+  <data name="Select your vehicle" xml:space="preserve"><value>차량 선택</value></data>
+  <data name="View photos" xml:space="preserve"><value>사진 보기</value></data>
+  <data name="Instant confirmation" xml:space="preserve"><value>즉시 확정</value></data>
+  <data name="Free waiting time" xml:space="preserve"><value>무료 대기 시간</value></data>
+  <data name="Meet and greet" xml:space="preserve"><value>미팅 서비스</value></data>
+  <data name="Policy and cancellation" xml:space="preserve"><value>정책 및 취소</value></data>
+  <data name="Booking information" xml:space="preserve"><value>예약 정보</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>추가 서비스</value></data>
+  <data name="Free" xml:space="preserve"><value>무료</value></data>
+  <data name="Information" xml:space="preserve"><value>정보</value></data>
+  <data name="First name (as shown on passport)" xml:space="preserve"><value>이름(여권 기준)</value></data>
+  <data name="Last name (as shown on passport)" xml:space="preserve"><value>성(여권 기준)</value></data>
+  <data name="Phone number" xml:space="preserve"><value>전화번호</value></data>
+  <data name="Email (for voucher)" xml:space="preserve"><value>이메일(바우처 수신)</value></data>
+  <data name="Flight number" xml:space="preserve"><value>항공편 번호</value></data>
+  <data name="Promo code" xml:space="preserve"><value>프로모션 코드</value></data>
+  <data name="Go to payment" xml:space="preserve"><value>결제로 이동</value></data>
+  <data name="Total price" xml:space="preserve"><value>총 금액</value></data>
+  <data name="Vehicle" xml:space="preserve"><value>차량</value></data>
+  <data name="Route" xml:space="preserve"><value>경로</value></data>
+  <data name="Base price" xml:space="preserve"><value>기본 요금</value></data>
+  <data name="Discount" xml:space="preserve"><value>할인</value></data>
+  <data name="Tax and fee" xml:space="preserve"><value>세금 및 수수료</value></data>
+  <data name="Total" xml:space="preserve"><value>합계</value></data>
+  <data name="Payment" xml:space="preserve"><value>결제</value></data>
+  <data name="Booking summary" xml:space="preserve"><value>예약 요약</value></data>
+  <data name="Payment successful" xml:space="preserve"><value>결제 완료</value></data>
+  <data name="View booking" xml:space="preserve"><value>예약 보기</value></data>
+  <data name="Something went wrong" xml:space="preserve"><value>문제가 발생했습니다</value></data>
+  <data name="Contact support" xml:space="preserve"><value>지원팀 문의</value></data>
+  <data name="Request ID" xml:space="preserve"><value>요청 ID</value></data>
+  <data name="Booking Confirmation" xml:space="preserve"><value>예약 확인</value></data>
+  <data name="Trip summary" xml:space="preserve"><value>여정 요약</value></data>
+  <data name="Estimated distance" xml:space="preserve"><value>예상 거리</value></data>
+  <data name="24/7 travel support" xml:space="preserve"><value>24/7 여행 지원</value></data>
+  <data name="What to include" xml:space="preserve"><value>포함할 정보</value></data>
+  <data name="Payment reference" xml:space="preserve"><value>결제 참조</value></data>
+  <data name="Online payment is not configured yet. Your booking has been saved; please contact support to complete payment." xml:space="preserve"><value>온라인 결제가 아직 설정되지 않았습니다. 예약은 저장되었으니 결제 완료를 위해 지원팀에 문의해 주세요.</value></data>
+  <data name="Enter the email or phone number used for this booking to view the details." xml:space="preserve"><value>예약 상세 정보를 보려면 예약 시 사용한 이메일 또는 전화번호를 입력하세요.</value></data>
+  <data name="Verify booking" xml:space="preserve"><value>예약 확인</value></data>
+  <data name="For your privacy, booking details are only shown after verification." xml:space="preserve"><value>개인정보 보호를 위해 인증 후에만 예약 상세 정보가 표시됩니다.</value></data>
+  <data name="Email or phone number" xml:space="preserve"><value>이메일 또는 전화번호</value></data>
+  <data name="Booking details could not be verified." xml:space="preserve"><value>예약 정보를 확인할 수 없습니다.</value></data>
+  <data name="Page not found" xml:space="preserve"><value>페이지를 찾을 수 없습니다</value></data>
+  <data name="The page you are looking for may have moved or is no longer available." xml:space="preserve"><value>찾으시는 페이지가 이동되었거나 더 이상 제공되지 않을 수 있습니다.</value></data>
+  <data name="This page is not available" xml:space="preserve"><value>이 페이지는 사용할 수 없습니다</value></data>
+  <data name="The link may be outdated, the booking page may require verification, or the address may have been typed incorrectly." xml:space="preserve"><value>링크가 오래되었거나 예약 페이지에 확인이 필요하거나 주소가 잘못 입력되었을 수 있습니다.</value></data>
+  <data name="Back to home" xml:space="preserve"><value>홈으로 돌아가기</value></data>
+  <data name="If you opened a booking link from another browser, enter the email or phone number used for the booking to view it." xml:space="preserve"><value>다른 브라우저에서 예약 링크를 열었다면 예약 시 사용한 이메일 또는 전화번호를 입력해 확인하세요.</value></data>
+  <data name="Airport transfers" xml:space="preserve"><value>공항 이동 서비스</value></data>
+  <data name="Start a new search with your airport, pickup time and route details to see available vehicles." xml:space="preserve"><value>공항, 픽업 시간, 경로 정보를 입력해 새 검색을 시작하고 이용 가능한 차량을 확인하세요.</value></data>
+  <data name="Need help?" xml:space="preserve"><value>도움이 필요하신가요?</value></data>
+  <data name="Our support team can help find your booking or confirm the right vehicle for your trip." xml:space="preserve"><value>지원팀이 예약을 찾거나 여행에 맞는 차량을 확인해 드릴 수 있습니다.</value></data>
+  <data name="Pickup date" xml:space="preserve"><value>픽업 날짜</value></data>
+  <data name="Please enter the pickup time." xml:space="preserve"><value>픽업 시간을 입력하세요.</value></data>
+  <data name="Please enter a valid pickup time." xml:space="preserve"><value>올바른 픽업 시간을 입력하세요.</value></data>
+  <data name="Please select today or a future pickup date." xml:space="preserve"><value>오늘 또는 이후의 픽업 날짜를 선택하세요.</value></data>
+  <data name="Popular point-to-point routes" xml:space="preserve"><value>인기 지점 간 이동 코스</value></data>
+  <data name="Hanoi - Trang An" xml:space="preserve"><value>하노이 - 짱안</value></data>
+  <data name="Hanoi - Ha Long" xml:space="preserve"><value>하노이 - 하롱</value></data>
+  <data name="Hanoi - Sa Pa" xml:space="preserve"><value>하노이 - 사파</value></data>
+  <data name="800,000 VND" xml:space="preserve"><value>800,000 VND</value></data>
+  <data name="1,200,000 VND" xml:space="preserve"><value>1,200,000 VND</value></data>
+  <data name="2,300,000 VND" xml:space="preserve"><value>2,300,000 VND</value></data>
+  <data name="one way" xml:space="preserve"><value>편도</value></data>
+  <data name="View details" xml:space="preserve"><value>자세히 보기</value></data>
+  <data name="Previous routes" xml:space="preserve"><value>이전 코스</value></data>
+  <data name="Next routes" xml:space="preserve"><value>다음 코스</value></data>
+  <data name="Latest news" xml:space="preserve"><value>최신 소식</value></data>
+  <data name="Top 08 best mountain-view resorts in Ninh Binh 2026" xml:space="preserve"><value>2026년 닌빈 산 전망 리조트 Top 08</value></data>
+  <data name="10 best spring destinations near Hanoi in 2026" xml:space="preserve"><value>2026년 하노이 근교 봄 여행지 10선</value></data>
+  <data name="0 reviews" xml:space="preserve"><value>리뷰 0개</value></data>
+  <data name="20 March 2026" xml:space="preserve"><value>2026년 3월 20일</value></data>
+  <data name="10 March 2026" xml:space="preserve"><value>2026년 3월 10일</value></data>
+  <data name="Premium transfer" xml:space="preserve"><value>프리미엄 이동</value></data>
+  <data name="1. Enter trip details" xml:space="preserve"><value>1. 여행 정보를 입력하세요</value></data>
+  <data name="10,000+ happy travelers" xml:space="preserve"><value>만족한 여행자 10,000명 이상</value></data>
+  <data name="2. Select vehicle" xml:space="preserve"><value>2. 차량 선택</value></data>
+  <data name="24/7 support" xml:space="preserve"><value>24시간 지원</value></data>
+  <data name="3. Confirm booking" xml:space="preserve"><value>3. 예약 확인</value></data>
+  <data name="4. Meet your driver" xml:space="preserve"><value>4. 기사 만나기</value></data>
+  <data name="Add more comfort to your transfer" xml:space="preserve"><value>이동에 더 많은 편안함을 더하세요</value></data>
+  <data name="Always on time" xml:space="preserve"><value>항상 정시 운행</value></data>
+  <data name="Book your ride in 4 simple steps" xml:space="preserve"><value>간단한 4단계로 차량 예약</value></data>
+  <data name="Booking process" xml:space="preserve"><value>예약 절차</value></data>
+  <data name="Choose a vehicle that matches your group, luggage and comfort level." xml:space="preserve"><value>인원, 수하물, 원하는 편안함에 맞는 차량을 선택하세요.</value></data>
+  <data name="Choose airport, address, time and passengers." xml:space="preserve"><value>공항, 주소, 시간, 승객 수를 선택하세요.</value></data>
+  <data name="Clean cars for business and leisure travel." xml:space="preserve"><value>출장과 여행에 적합한 깨끗한 차량.</value></data>
+  <data name="Clean private cars" xml:space="preserve"><value>깨끗한 전용 차량</value></data>
+  <data name="Compare capacity, comfort and estimated price." xml:space="preserve"><value>수용 인원, 편안함, 예상 요금을 비교하세요.</value></data>
+  <data name="Driver meets you on time at the agreed point." xml:space="preserve"><value>기사가 약속한 장소에서 정시에 맞이합니다.</value></data>
+  <data name="Easy booking, fair price and polite driver." xml:space="preserve"><value>쉬운 예약, 합리적인 가격, 친절한 기사.</value></data>
+  <data name="Estimated route price before you confirm." xml:space="preserve"><value>확정 전 예상 경로 요금을 확인하세요.</value></data>
+  <data name="Fast support on WhatsApp after landing." xml:space="preserve"><value>도착 후 WhatsApp으로 빠른 지원.</value></data>
+  <data name="Featured service" xml:space="preserve"><value>추천 서비스</value></data>
+  <data name="Featured services" xml:space="preserve"><value>추천 서비스</value></data>
+  <data name="Fixed price airport pickup" xml:space="preserve"><value>고정 요금 공항 픽업</value></data>
+  <data name="Popular" xml:space="preserve"><value>인기</value></data>
+  <data name="Premium fleet" xml:space="preserve"><value>프리미엄 차량</value></data>
+  <data name="Reach us through phone or messaging apps." xml:space="preserve"><value>전화나 메시지 앱으로 문의하세요.</value></data>
+  <data name="Recommended for business travel in Vietnam." xml:space="preserve"><value>베트남 출장에 추천합니다.</value></data>
+  <data name="Select helpful extras during checkout, prepared together with your private ride." xml:space="preserve"><value>결제 단계에서 전용 차량과 함께 준비될 추가 서비스를 선택하세요.</value></data>
+  <data name="Smooth pickup and a very clean sedan." xml:space="preserve"><value>부드러운 픽업과 매우 깨끗한 세단.</value></data>
+  <data name="Testimonials" xml:space="preserve"><value>고객 후기</value></data>
+  <data name="Transparent fare" xml:space="preserve"><value>투명한 요금</value></data>
+  <data name="Trusted by international travelers" xml:space="preserve"><value>전 세계 여행자가 신뢰합니다</value></data>
+  <data name="Verified traveler" xml:space="preserve"><value>인증된 여행자</value></data>
+  <data name="We plan airport pickups around your flight." xml:space="preserve"><value>항공편 일정에 맞춰 공항 픽업을 준비합니다.</value></data>
+  <data name="Why choose us" xml:space="preserve"><value>왜 저희를 선택해야 할까요</value></data>
+  <data name="Your booking number is created before payment." xml:space="preserve"><value>결제 전에 예약 번호가 생성됩니다.</value></data>
+</root>

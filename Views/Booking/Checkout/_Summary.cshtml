@@ -1,0 +1,25 @@
+@model BookingCheckoutViewModel
+@{
+    var airportName = Model.Airports.FirstOrDefault(x => x.Value == Model.AirportId?.ToString())?.Text ?? L["Airport"].Value;
+    var routeLabel = Model.TripType switch
+    {
+        TripType.AirportPickup => airportName + " \u2192 " + Model.DestinationAddress,
+        TripType.AirportDropoff => Model.OriginAddress + " \u2192 " + airportName,
+        TripType.Hire => L["Car hire"].Value + " - " + Model.HireTotalDays + " " + L["day(s)"].Value,
+        _ => Model.OriginAddress + " \u2192 " + Model.DestinationAddress
+    };
+    var basePrice = Model.BasePriceUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
+    var vehicleName = Model.CarVehicle?.Name ?? "";
+}
+    <aside class="payment-panel js-price-summary" data-base="@basePrice" data-tax-rate="0.08">
+        <h2>@L["Total price"]</h2>
+        <dl class="summary-list">
+            <dt>@L["Vehicle"]</dt><dd>@vehicleName</dd>
+            <dt>@L["Route"]</dt><dd>@routeLabel</dd>
+            <dt>@L["Base price"]</dt><dd class="js-base-price">$@Model.BasePriceUsd.ToString("0.00")</dd>
+            <dt>@L["Add-ons"]</dt><dd class="js-addon-total">$@Model.AddonTotalUsd.ToString("0.00")</dd>
+            <dt>@L["Discount"]</dt><dd class="js-discount-total">-$@Model.DiscountUsd.ToString("0.00")</dd>
+            <dt>@L["Tax and fee"]</dt><dd class="js-tax-total">$@Model.TaxFeeUsd.ToString("0.00")</dd>
+            <dt>@L["Total"]</dt><dd><strong class="js-grand-total">$@Model.TotalPriceUsd.ToString("0.00")</strong></dd>
+        </dl>
+    </aside>

@@ -1,0 +1,38 @@
+@model AdminSettingsViewModel
+            <div class="tab-pane fade show active" id="public-panel" role="tabpanel" aria-labelledby="public-tab" tabindex="0">
+    <form class="admin-panel settings-form" method="post" action='@Url.Action("SaveSiteSettings")'>
+        @Html.AntiForgeryToken()
+        <div class="settings-section-heading">
+            <i class="bi bi-window"></i>
+            <div>
+                <h2>Public site info</h2>
+                <p>Used in the public header, footer and contact page.</p>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <label class="form-label" for="SiteBrandName">Brand name</label>
+                @Html.TextBoxFor(m => m.SiteBrandName, new { @class = "form-control form-control-lg" })
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="SiteTagline">Tagline</label>
+                @Html.TextBoxFor(m => m.SiteTagline, new { @class = "form-control form-control-lg" })
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="SiteHotline">Hotline</label>
+                @Html.TextBoxFor(m => m.SiteHotline, new { @class = "form-control form-control-lg" })
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="SiteContactEmail">Contact email</label>
+                @Html.TextBoxFor(m => m.SiteContactEmail, new { @class = "form-control form-control-lg", type = "email" })
+            </div>
+            <div class="col-12">
+                <label class="form-label" for="SiteAddress">Address</label>
+                @Html.TextBoxFor(m => m.SiteAddress, new { @class = "form-control form-control-lg" })
+            </div>
+        </div>
+        <div class="admin-form-actions">
+            <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save public info</button>
+        </div>
+    </form>
+            </div>

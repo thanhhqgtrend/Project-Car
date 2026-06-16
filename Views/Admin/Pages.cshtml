@@ -1,0 +1,78 @@
+@model AdminCmsPageListViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "CMS Pages";
+    var notice = TempData["AdminNotice"] as string;
+}
+
+<section class="admin-shell">
+    <div class="admin-page-heading">
+        <div>
+            <h1>CMS Pages</h1>
+            <p>Manage multilingual static and landing pages with custom public URLs.</p>
+        </div>
+        <a class="btn btn-gold" href="/admin/pages/create?culture=@Model.Culture"><i class="bi bi-plus-lg"></i> New page</a>
+    </div>
+
+    <div class="alert alert-info @(string.IsNullOrWhiteSpace(notice) ? "d-none" : string.Empty)">@notice</div>
+
+    <form class="row g-2 admin-filter" method="get">
+        <div class="col-md-3"><input class="form-control" name="search" value="@Model.Search" placeholder="Search title, slug or path" /></div>
+        <div class="col-md-2">
+            <select class="form-select" name="status">
+                <option value="all" selected="@(Model.Status == "all")">All</option>
+                <option value="published" selected="@(Model.Status == "published")">Published</option>
+                <option value="draft" selected="@(Model.Status == "draft")">Draft</option>
+                <option value="deleted" selected="@(Model.Status == "deleted")">Deleted</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" name="culture">
+                @foreach (var culture in new[] { "en", "vi", "ko", "zh", "ja", "fr" })
+                {
+                    <option value="@culture" selected="@(Model.Culture == culture)">@culture.ToUpperInvariant()</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" name="sort">
+                <option value="updated" selected="@(Model.Sort == "updated")">Updated</option>
+                <option value="title" selected="@(Model.Sort == "title")">Title</option>
+            </select>
+        </div>
+        <div class="col-md-2"><button class="btn btn-outline-gold w-100" type="submit">Filter</button></div>
+    </form>
+
+    <div class="table-responsive admin-table">
+        <table class="table align-middle admin-compact-table">
+            <thead>
+                <tr><th>Page</th><th>Path</th><th>Status</th><th>Updated</th><th class="text-end">Actions</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var cmsPage in Model.Pages)
+                {
+                    var translation = cmsPage.Translations.FirstOrDefault(x => x.Culture == Model.Culture) ?? cmsPage.Translations.FirstOrDefault(x => x.Culture == "en") ?? cmsPage.Translations.FirstOrDefault();
+                    var title = translation == null ? cmsPage.Title : translation.Title;
+                    var status = cmsPage.DeletedAtUtc != null ? "Deleted" : cmsPage.IsPublished ? "Published" : "Draft";
+                    <tr>
+                        <td>
+                            <div class="vehicle-admin-cell">
+                                <span><i class="bi bi-file-earmark-text"></i></span>
+                                <div><strong>@title</strong><br><small>@cmsPage.Slug</small></div>
+                            </div>
+                        </td>
+                        <td><a href="@cmsPage.PublicPath" target="_blank" rel="noopener">@cmsPage.PublicPath</a></td>
+                        <td><span class="admin-status">@status</span></td>
+                        <td>@cmsPage.UpdatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                        <td class="text-end">
+                            <div class="admin-row-actions">
+                                <a class="btn btn-sm btn-outline-secondary" href="/admin/pages/@cmsPage.Id/preview?culture=@Model.Culture" target="_blank" rel="noopener">Preview</a>
+                                <a class="btn btn-sm btn-outline-gold" href="/admin/pages/@cmsPage.Id/edit?culture=@Model.Culture">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

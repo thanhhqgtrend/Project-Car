@@ -1,0 +1,77 @@
+@model LuxuryCar.Models.PopularRoute
+@{
+    ViewData["Title"] = Model.Title;
+    var airports = ViewBag.Airports as List<LuxuryCar.Models.Airport> ?? new List<LuxuryCar.Models.Airport>();
+    var firstAirport = airports.FirstOrDefault()?.Id ?? 0;
+    var originEncoded = Uri.EscapeDataString(Model.OriginAddress ?? "");
+    var destinationEncoded = Uri.EscapeDataString(Model.DestinationAddress ?? "");
+    var pickupDate = DateTime.Now.AddHours(4).ToString("yyyy-MM-dd");
+    var bookingUrl = $"/booking/search?TripType=PointToPoint&OriginAddress={originEncoded}&DestinationAddress={destinationEncoded}&PickupDateTime={pickupDate}&PassengerCount=1&SearchSubmitted=true";
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>@Model.Title</h1>
+        <p>@Model.Description</p>
+    </div>
+</section>
+
+@if (!string.IsNullOrWhiteSpace(Model.Image?.SecureUrl))
+{
+    <section class="container" style="margin-top:2rem;">
+        <img src="@Model.Image.SecureUrl" alt="@Model.Title" class="w-100 rounded" style="max-height:400px;object-fit:cover;" />
+    </section>
+}
+
+<section class="container" style="margin-top:2rem;">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card p-4">
+                <h2>@L["About this route"]</h2>
+                @if (!string.IsNullOrWhiteSpace(Model.BodyHtml))
+                {
+                    @Html.Raw(Model.BodyHtml)
+                }
+                else
+                {
+                    <p>@Model.Description</p>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.HighlightOne) || !string.IsNullOrWhiteSpace(Model.HighlightTwo) || !string.IsNullOrWhiteSpace(Model.HighlightThree))
+                {
+                    <h3 style="margin-top:1.5rem;">@L["Highlights"]</h3>
+                    <ul>
+                        @if (!string.IsNullOrWhiteSpace(Model.HighlightOne))
+                        {
+                            <li>@Model.HighlightOne</li>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.HighlightTwo))
+                        {
+                            <li>@Model.HighlightTwo</li>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.HighlightThree))
+                        {
+                            <li>@Model.HighlightThree</li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="payment-panel">
+                <h2>@L["Book this route"]</h2>
+                <div class="summary-list">
+                    <strong>@L["Price"]</strong>
+                    <span>@Model.PriceLabel / @L["one way"]</span>
+                </div>
+                <a class="btn btn-gold w-100" style="margin-top:1rem;" href="@bookingUrl">
+                    @L["Book now"]
+                </a>
+                <a class="btn btn-outline-gold w-100" style="margin-top:0.5rem;" href="/contact">
+                    @L["Contact support"]
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

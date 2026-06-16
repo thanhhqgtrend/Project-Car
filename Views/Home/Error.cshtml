@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = L["Something went wrong"];
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>@L["Something went wrong"]</h1>
+        <p>@L["We could not complete this request. Please try again or contact support if the issue continues."]</p>
+    </div>
+</section>
+
+<section class="container content-page">
+    <div class="contact-panel">
+        <h2>@L["Need help with a booking?"]</h2>
+        <p>@L["If you were booking a transfer, your information may not have been saved. Please return to search or contact support with your trip details."]</p>
+        <div class="d-flex flex-column flex-sm-row gap-2">
+            <a class="btn btn-gold" href="/booking/search">@L["Search cars"]</a>
+            <a class="btn btn-outline-gold" href="/contact">@L["Contact support"]</a>
+        </div>
+        @if (ViewBag.RequestId is not null)
+        {
+            <p class="text-muted mt-3 mb-0">@L["Request ID"]: @ViewBag.RequestId</p>
+        }
+    </div>
+</section>

@@ -1,0 +1,89 @@
+@model PaymentPageViewModel
+@{
+    ViewData["Title"] = L["Payment"];
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>@L["Payment for booking"] @Model.Booking.BookingNumber</h1>
+        <p>@L["Review your booking summary and choose a payment method."]</p>
+    </div>
+</section>
+
+<section class="container confirmation-grid">
+    <div class="confirmation-main">
+        @if (TempData["PaymentNotice"] is string notice)
+        {
+            <div class="alert alert-warning">@notice</div>
+        }
+        <h2>@L["Booking summary"]</h2>
+        <dl class="summary-list">
+            <dt>@L["Vehicle"]</dt><dd>@(Model.Booking.CarVehicleType != null ? Model.Booking.CarVehicleType.Name : "")</dd>
+@if (Model.Booking.TripType == TripType.Hire)
+{
+    <dt>@L["Pickup address"]</dt><dd>@Model.Booking.PickupAddress</dd>
+    <dt>@L["Start date"]</dt><dd>@(Model.Booking.HireStartDate.HasValue ? Model.Booking.HireStartDate.Value.ToString("dd/MM/yyyy") : "")</dd>
+    <dt>@L["End date"]</dt><dd>@(Model.Booking.HireEndDate.HasValue ? Model.Booking.HireEndDate.Value.ToString("dd/MM/yyyy") : "")</dd>
+    <dt>@L["Total days"]</dt><dd>@Model.Booking.HireTotalDays @L["day(s)"]</dd>
+}
+else
+{
+    <dt>@L["Route"]</dt><dd>@Model.Booking.PickupAddress → @Model.Booking.DropoffAddress</dd>
+    <dt>@L["Pickup time"]</dt><dd>@Model.Booking.PickupDateTimeUtc.ToString("yyyy-MM-dd HH:mm") UTC</dd>
+    <dt>@L["Flight"]</dt><dd>@(string.IsNullOrWhiteSpace(Model.Booking.FlightNumber) ? L["Not provided"] : Model.Booking.FlightNumber)</dd>
+}
+            <dt>@L["Base price"]</dt><dd>$@Model.Booking.BasePriceUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</dd>
+            <dt>@L["Add-ons"]</dt><dd>$@Model.Booking.AddonTotalUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</dd>
+            <dt>@L["Tax and fee"]</dt><dd>$@Model.Booking.TaxFeeUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</dd>
+            <dt>@L["Total"]</dt><dd><strong>$@Model.Booking.EstimatedPriceUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</strong></dd>
+        </dl>
+        @if (Model.Booking.CarAddonSelections.Any())
+        {
+            <h3>@L["Selected add-ons"]</h3>
+            <ul class="addon-summary-list">
+                @foreach (var addon in Model.Booking.CarAddonSelections)
+                {
+                    <li><span>@addon.Name (@addon.Quantity)</span><strong>@(addon.PriceUsd == 0 ? L["Free"] : $"${addon.PriceUsd:0.00}")</strong></li>
+                }
+            </ul>
+        }
+    </div>
+    <aside class="payment-panel">
+        <h2>@L["Payment"]</h2>
+        @if (Model.HasPayPal && Model.HasStripe)
+        {
+            <p>@L["Choose an available online payment method for this booking."]</p>
+        }
+        else if (Model.HasPayPal)
+        {
+            <p>@L["Pay securely with PayPal."]</p>
+        }
+        else if (Model.HasStripe)
+        {
+            <p>@L["Pay securely by Visa / Mastercard."]</p>
+        }
+        else
+        {
+            <p>@L["Online payment is not available for this booking right now."]</p>
+        }
+        @if (!Model.IsPaymentConfigured)
+        {
+            <div class="alert alert-warning">@L["Online payment is not configured yet. Your booking has been saved; please contact support to complete payment."]</div>
+        }
+        @if (Model.HasPayPal)
+        {
+            <form method="post" action="/payment/paypal/create/@Model.Booking.BookingNumber">
+                @Html.AntiForgeryToken()
+                <button class="btn btn-paypal w-100" type="submit">@L["Pay with PayPal"]</button>
+            </form>
+        }
+        @if (Model.HasStripe)
+        {
+            <form method="post" action="/payment/stripe/create-checkout/@Model.Booking.BookingNumber">
+                @Html.AntiForgeryToken()
+                <button class="btn btn-dark w-100" type="submit">@L["Pay Visa / Mastercard"]</button>
+            </form>
+        }
+        <a class="btn btn-outline-gold w-100" href="/booking/confirmation/@Model.Booking.BookingNumber">@L["View booking"]</a>
+    </aside>
+</section>

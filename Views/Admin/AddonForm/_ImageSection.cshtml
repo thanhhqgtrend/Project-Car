@@ -1,0 +1,41 @@
+@model CarBookingAddonFormViewModel
+                <section class="vehicle-form-section">
+                    <div class="vehicle-form-section-heading">
+                        <i class="bi bi-image"></i>
+                        <div>
+                            <h2>Addon image</h2>
+                            <p>Upload a new Cloudinary image or select one from the media library.</p>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-7">
+                            <label class="form-label" for="ImageFile">Upload new image</label>
+                            <input class="form-control form-control-lg" name="ImageFile" id="ImageFile" type="file" accept="image/jpeg,image/png,image/webp" />
+                            <small class="text-muted">JPG, PNG or WebP. Maximum 5MB.</small>
+                            @Html.ValidationMessage("ImageFile", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-5">
+                            <label class="form-label" for="ImageAltText">Alt text</label>
+                            @Html.TextBoxFor(m => m.ImageAltText, new { @class = "form-control form-control-lg", placeholder = "Airport VIP meet and assist" })
+                            @Html.ValidationMessage("ImageAltText", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="MediaAssetId">Choose from media library</label>
+                            <div class="vehicle-media-picker">
+                                <label class="vehicle-media-option no-image">
+                                    <input type="radio" name="MediaAssetId" value="" checked="@(!Model.MediaAssetId.HasValue)" />
+                                    <span><i class="bi bi-slash-circle"></i> No image</span>
+                                </label>
+                                @foreach (var asset in Model.AvailableMedia)
+                                {
+                                    <label class="vehicle-media-option">
+                                        <input type="radio" name="MediaAssetId" value="@asset.Id" checked="@(Model.MediaAssetId == asset.Id)" />
+                                        <img src="@CloudinaryUrlHelper.For(asset, CloudinaryUrlHelper.MediaLibraryCard)" alt="@asset.AltText" loading="lazy" decoding="async" />
+                                        <span>@asset.FileName</span>
+                                    </label>
+                                }
+                            </div>
+                            <small class="text-muted">Uploading a new image will override this selection after save.</small>
+                        </div>
+                    </div>
+                </section>

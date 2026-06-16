@@ -1,0 +1,85 @@
+@model BookingSearchViewModel
+@{
+    var siteBrandName = AppSettings.GetAsync("Site:BrandName", "Vietnam Transfer");
+}
+
+<section class="container booking-results">
+    <div class="results-summary">
+        <strong>@Model.TripType</strong>
+        <span>@Model.PickupDateTime.ToString("yyyy-MM-dd")</span>
+        <span>@Model.PassengerCount @L["passenger(s)"]</span>
+    </div>
+
+    @if (!Model.CarVehicleOptions.Any())
+    {
+        <div class="alert alert-warning">@L["No vehicles match this passenger count. Please adjust the search."]</div>
+    }
+    else
+    {
+        <div class="vehicle-result-list">
+            @foreach (var option in Model.CarVehicleOptions)
+            {
+                var modalId = $"vehicleImages{option.CarVehicle.Id}";
+                var checkoutUrl = $"/booking/checkout?TripType={Model.TripType}&AirportId={Model.AirportId}&OriginAddress={Uri.EscapeDataString(Model.OriginAddress ?? string.Empty)}&DestinationAddress={Uri.EscapeDataString(Model.DestinationAddress ?? string.Empty)}&PickupDateTime={Uri.EscapeDataString(Model.PickupDateTime.ToString("yyyy-MM-dd"))}&PassengerCount={Model.PassengerCount}&CarVehicleTypeId={option.CarVehicle.Id}";
+                <article class="vehicle-result-card">
+                    <div class="vehicle-result-media">
+                        @if (!string.IsNullOrWhiteSpace(option.CarVehicle.Image?.SecureUrl))
+                        {
+                            <img src="@CloudinaryUrlHelper.For(option.CarVehicle.Image, CloudinaryUrlHelper.PublicVehicleCard)" alt="@option.CarVehicle.Name" loading="lazy" decoding="async" />
+                            <button class="btn btn-sm btn-outline-light" type="button" data-bs-toggle="modal" data-bs-target="#@modalId">@L["View photos"]</button>
+                        }
+                        else
+                        {
+                            <div class="placeholder-image car-placeholder"><span>@option.CarVehicle.Name</span></div>
+                        }
+                    </div>
+                    <div class="vehicle-result-body">
+                        <div>
+                            <span class="vehicle-brand">@(string.IsNullOrWhiteSpace(option.CarVehicle.Brand) ? siteBrandName : option.CarVehicle.Brand)</span>
+                            <h2>@option.CarVehicle.Name</h2>
+                            <p>@option.CarVehicle.Description</p>
+                        </div>
+                        <div class="vehicle-meta">
+                            <span><i class="bi bi-people"></i> @option.CarVehicle.PassengerCapacity @L["pax"]</span>
+                            <span><i class="bi bi-briefcase"></i> @option.CarVehicle.LuggageCapacity @L["bags"]</span>
+                            <span><i class="bi bi-signpost"></i> @option.DistanceKm.ToString("0.0") km</span>
+                        </div>
+                        <div class="vehicle-badges">
+                            <span>@L["Instant confirmation"]</span>
+                            <span>@L["Free waiting time"]</span>
+                            <span>@L["Meet and greet"]</span>
+                        </div>
+                        <div class="vehicle-policy">
+                            <strong>@L["Policy and cancellation"]</strong>
+                            <span>@L["Free cancellation up to 24h before pickup. Final driver details are confirmed after payment."]</span>
+                        </div>
+                    </div>
+                    <div class="vehicle-result-price">
+                        <span>@L["From"]</span>
+                        <strong>$@option.TotalPriceUsd.ToString("0.00")</strong>
+                        <small>@L["Includes tax and fee estimate"]</small>
+                        <a class="btn btn-gold w-100" href="@checkoutUrl">@L["Book now"]</a>
+                    </div>
+                </article>
+
+                <div class="modal fade" id="@modalId" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title fs-5">@option.CarVehicle.Name</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@L["Close"]"></button>
+                            </div>
+                            <div class="modal-body">
+                                @if (!string.IsNullOrWhiteSpace(option.CarVehicle.Image?.SecureUrl))
+                                {
+                                    <img class="w-100 rounded" src="@option.CarVehicle.Image.SecureUrl" alt="@option.CarVehicle.Name" />
+                                }
+                                <p class="mt-3 mb-0">@option.CarVehicle.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>

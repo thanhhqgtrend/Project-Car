@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Home" xml:space="preserve"><value>Accueil</value></data>
+  <data name="About" xml:space="preserve"><value>À propos</value></data>
+  <data name="Contact" xml:space="preserve"><value>Contact</value></data>
+  <data name="Book now" xml:space="preserve"><value>Réserver</value></data>
+  <data name="Private Transfer" xml:space="preserve"><value>Transfert privé</value></data>
+  <data name="Vietnam time" xml:space="preserve"><value>Heure du Vietnam</value></data>
+  <data name="Airport pickup" xml:space="preserve"><value>Prise en charge aéroport</value></data>
+  <data name="Airport dropoff" xml:space="preserve"><value>Dépose aéroport</value></data>
+  <data name="A to B" xml:space="preserve"><value>De A à B</value></data>
+  <data name="Car hire" xml:space="preserve"><value>Location avec chauffeur</value></data>
+  <data name="Airport" xml:space="preserve"><value>Aéroport</value></data>
+  <data name="Select airport" xml:space="preserve"><value>Choisir un aéroport</value></data>
+  <data name="Pickup point" xml:space="preserve"><value>Lieu de prise en charge</value></data>
+  <data name="Dropoff point" xml:space="preserve"><value>Lieu de dépose</value></data>
+  <data name="Point A" xml:space="preserve"><value>Point A</value></data>
+  <data name="Point B" xml:space="preserve"><value>Point B</value></data>
+  <data name="Pickup time" xml:space="preserve"><value>Heure de prise en charge</value></data>
+  <data name="Passengers" xml:space="preserve"><value>Passagers</value></data>
+  <data name="passenger" xml:space="preserve"><value>passager</value></data>
+  <data name="passenger(s)" xml:space="preserve"><value>passagers</value></data>
+  <data name="Search" xml:space="preserve"><value>Rechercher</value></data>
+  <data name="Vietnam Transfer private rides in Vietnam" xml:space="preserve"><value>Vietnam Transfer - transferts privés au Vietnam</value></data>
+  <data name="Professional private rides. Safe, on time and transparent from booking to arrival." xml:space="preserve"><value>Trajets privés professionnels, sûrs, ponctuels et transparents de la réservation à l’arrivée.</value></data>
+  <data name="Fixed price" xml:space="preserve"><value>Prix fixe</value></data>
+  <data name="Free cancellation 24h before pickup" xml:space="preserve"><value>Annulation gratuite 24 h avant la prise en charge</value></data>
+  <data name="Professional drivers" xml:space="preserve"><value>Chauffeurs professionnels</value></data>
+  <data name="Premium transfer vehicles" xml:space="preserve"><value>Véhicules de transfert premium</value></data>
+  <data name="From" xml:space="preserve"><value>À partir de</value></data>
+  <data name="pax" xml:space="preserve"><value>pers.</value></data>
+  <data name="bags" xml:space="preserve"><value>bagages</value></data>
+  <data name="Search cars" xml:space="preserve"><value>Rechercher des voitures</value></data>
+  <data name="Select your vehicle" xml:space="preserve"><value>Choisissez votre véhicule</value></data>
+  <data name="View photos" xml:space="preserve"><value>Voir les photos</value></data>
+  <data name="Instant confirmation" xml:space="preserve"><value>Confirmation instantanée</value></data>
+  <data name="Free waiting time" xml:space="preserve"><value>Temps d’attente gratuit</value></data>
+  <data name="Meet and greet" xml:space="preserve"><value>Accueil personnalisé</value></data>
+  <data name="Policy and cancellation" xml:space="preserve"><value>Conditions et annulation</value></data>
+  <data name="Booking information" xml:space="preserve"><value>Informations de réservation</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>Options</value></data>
+  <data name="Free" xml:space="preserve"><value>Gratuit</value></data>
+  <data name="Information" xml:space="preserve"><value>Informations</value></data>
+  <data name="First name (as shown on passport)" xml:space="preserve"><value>Prénom (comme sur le passeport)</value></data>
+  <data name="Last name (as shown on passport)" xml:space="preserve"><value>Nom (comme sur le passeport)</value></data>
+  <data name="Phone number" xml:space="preserve"><value>Téléphone</value></data>
+  <data name="Email (for voucher)" xml:space="preserve"><value>Email (pour le bon)</value></data>
+  <data name="Flight number" xml:space="preserve"><value>Numéro de vol</value></data>
+  <data name="Promo code" xml:space="preserve"><value>Code promo</value></data>
+  <data name="Go to payment" xml:space="preserve"><value>Passer au paiement</value></data>
+  <data name="Total price" xml:space="preserve"><value>Prix total</value></data>
+  <data name="Vehicle" xml:space="preserve"><value>Véhicule</value></data>
+  <data name="Route" xml:space="preserve"><value>Trajet</value></data>
+  <data name="Base price" xml:space="preserve"><value>Prix de base</value></data>
+  <data name="Discount" xml:space="preserve"><value>Réduction</value></data>
+  <data name="Tax and fee" xml:space="preserve"><value>Taxes et frais</value></data>
+  <data name="Total" xml:space="preserve"><value>Total</value></data>
+  <data name="Payment" xml:space="preserve"><value>Paiement</value></data>
+  <data name="Booking summary" xml:space="preserve"><value>Résumé de réservation</value></data>
+  <data name="Payment successful" xml:space="preserve"><value>Paiement réussi</value></data>
+  <data name="View booking" xml:space="preserve"><value>Voir la réservation</value></data>
+  <data name="Something went wrong" xml:space="preserve"><value>Une erreur est survenue</value></data>
+  <data name="Contact support" xml:space="preserve"><value>Contacter le support</value></data>
+  <data name="Request ID" xml:space="preserve"><value>ID de demande</value></data>
+  <data name="Booking Confirmation" xml:space="preserve"><value>Confirmation de réservation</value></data>
+  <data name="Trip summary" xml:space="preserve"><value>Résumé du trajet</value></data>
+  <data name="Estimated distance" xml:space="preserve"><value>Distance estimée</value></data>
+  <data name="24/7 travel support" xml:space="preserve"><value>Assistance voyage 24/7</value></data>
+  <data name="What to include" xml:space="preserve"><value>Informations à fournir</value></data>
+  <data name="Payment reference" xml:space="preserve"><value>Référence de paiement</value></data>
+  <data name="Online payment is not configured yet. Your booking has been saved; please contact support to complete payment." xml:space="preserve"><value>Le paiement en ligne n’est pas encore configuré. Votre réservation a été enregistrée ; contactez le support pour finaliser le paiement.</value></data>
+  <data name="Enter the email or phone number used for this booking to view the details." xml:space="preserve"><value>Saisissez l’e-mail ou le numéro de téléphone utilisé pour cette réservation afin de voir les détails.</value></data>
+  <data name="Verify booking" xml:space="preserve"><value>Vérifier la réservation</value></data>
+  <data name="For your privacy, booking details are only shown after verification." xml:space="preserve"><value>Pour votre confidentialité, les détails de la réservation ne s’affichent qu’après vérification.</value></data>
+  <data name="Email or phone number" xml:space="preserve"><value>E-mail ou numéro de téléphone</value></data>
+  <data name="Booking details could not be verified." xml:space="preserve"><value>Les détails de la réservation n’ont pas pu être vérifiés.</value></data>
+  <data name="Page not found" xml:space="preserve"><value>Page introuvable</value></data>
+  <data name="The page you are looking for may have moved or is no longer available." xml:space="preserve"><value>La page que vous recherchez a peut-être été déplacée ou n'est plus disponible.</value></data>
+  <data name="This page is not available" xml:space="preserve"><value>Cette page n'est pas disponible</value></data>
+  <data name="The link may be outdated, the booking page may require verification, or the address may have been typed incorrectly." xml:space="preserve"><value>Le lien est peut-être obsolète, la page de réservation peut nécessiter une vérification, ou l'adresse a peut-être été saisie incorrectement.</value></data>
+  <data name="Back to home" xml:space="preserve"><value>Retour à l'accueil</value></data>
+  <data name="If you opened a booking link from another browser, enter the email or phone number used for the booking to view it." xml:space="preserve"><value>Si vous avez ouvert un lien de réservation depuis un autre navigateur, saisissez l'e-mail ou le numéro de téléphone utilisé pour la réservation afin de l'afficher.</value></data>
+  <data name="Airport transfers" xml:space="preserve"><value>Transferts aéroport</value></data>
+  <data name="Start a new search with your airport, pickup time and route details to see available vehicles." xml:space="preserve"><value>Lancez une nouvelle recherche avec votre aéroport, l'heure de prise en charge et l'itinéraire pour voir les véhicules disponibles.</value></data>
+  <data name="Need help?" xml:space="preserve"><value>Besoin d'aide ?</value></data>
+  <data name="Our support team can help find your booking or confirm the right vehicle for your trip." xml:space="preserve"><value>Notre équipe d'assistance peut retrouver votre réservation ou confirmer le véhicule adapté à votre trajet.</value></data>
+  <data name="Pickup date" xml:space="preserve"><value>Date de prise en charge</value></data>
+  <data name="Please enter the pickup time." xml:space="preserve"><value>Veuillez saisir l'heure de prise en charge.</value></data>
+  <data name="Please enter a valid pickup time." xml:space="preserve"><value>Veuillez saisir une heure de prise en charge valide.</value></data>
+  <data name="Please select today or a future pickup date." xml:space="preserve"><value>Veuillez sélectionner aujourd'hui ou une date de prise en charge future.</value></data>
+  <data name="Popular point-to-point routes" xml:space="preserve"><value>Trajets populaires point à point</value></data>
+  <data name="Hanoi - Trang An" xml:space="preserve"><value>Hanoï - Trang An</value></data>
+  <data name="Hanoi - Ha Long" xml:space="preserve"><value>Hanoï - Ha Long</value></data>
+  <data name="Hanoi - Sa Pa" xml:space="preserve"><value>Hanoï - Sa Pa</value></data>
+  <data name="800,000 VND" xml:space="preserve"><value>800 000 VND</value></data>
+  <data name="1,200,000 VND" xml:space="preserve"><value>1 200 000 VND</value></data>
+  <data name="2,300,000 VND" xml:space="preserve"><value>2 300 000 VND</value></data>
+  <data name="one way" xml:space="preserve"><value>aller simple</value></data>
+  <data name="View details" xml:space="preserve"><value>Voir les détails</value></data>
+  <data name="Previous routes" xml:space="preserve"><value>Trajets précédents</value></data>
+  <data name="Next routes" xml:space="preserve"><value>Trajets suivants</value></data>
+  <data name="Latest news" xml:space="preserve"><value>Dernières nouvelles</value></data>
+  <data name="Top 08 best mountain-view resorts in Ninh Binh 2026" xml:space="preserve"><value>Top 08 des meilleurs resorts avec vue montagne à Ninh Binh 2026</value></data>
+  <data name="10 best spring destinations near Hanoi in 2026" xml:space="preserve"><value>10 meilleures destinations de printemps près de Hanoï en 2026</value></data>
+  <data name="0 reviews" xml:space="preserve"><value>0 avis</value></data>
+  <data name="20 March 2026" xml:space="preserve"><value>20 mars 2026</value></data>
+  <data name="10 March 2026" xml:space="preserve"><value>10 mars 2026</value></data>
+  <data name="Premium transfer" xml:space="preserve"><value>Transfert premium</value></data>
+  <data name="1. Enter trip details" xml:space="preserve"><value>1. Saisissez les détails du trajet</value></data>
+  <data name="10,000+ happy travelers" xml:space="preserve"><value>Plus de 10 000 voyageurs satisfaits</value></data>
+  <data name="2. Select vehicle" xml:space="preserve"><value>2. Choisissez le véhicule</value></data>
+  <data name="24/7 support" xml:space="preserve"><value>Assistance 24/7</value></data>
+  <data name="3. Confirm booking" xml:space="preserve"><value>3. Confirmez la réservation</value></data>
+  <data name="4. Meet your driver" xml:space="preserve"><value>4. Retrouvez votre chauffeur</value></data>
+  <data name="Add more comfort to your transfer" xml:space="preserve"><value>Ajoutez plus de confort à votre transfert</value></data>
+  <data name="Always on time" xml:space="preserve"><value>Toujours à l'heure</value></data>
+  <data name="Book your ride in 4 simple steps" xml:space="preserve"><value>Réservez votre trajet en 4 étapes simples</value></data>
+  <data name="Booking process" xml:space="preserve"><value>Processus de réservation</value></data>
+  <data name="Choose a vehicle that matches your group, luggage and comfort level." xml:space="preserve"><value>Choisissez un véhicule adapté à votre groupe, vos bagages et votre niveau de confort.</value></data>
+  <data name="Choose airport, address, time and passengers." xml:space="preserve"><value>Choisissez l'aéroport, l'adresse, l'heure et le nombre de passagers.</value></data>
+  <data name="Clean cars for business and leisure travel." xml:space="preserve"><value>Voitures propres pour les voyages d'affaires et de loisirs.</value></data>
+  <data name="Clean private cars" xml:space="preserve"><value>Voitures privées propres</value></data>
+  <data name="Compare capacity, comfort and estimated price." xml:space="preserve"><value>Comparez la capacité, le confort et le prix estimé.</value></data>
+  <data name="Driver meets you on time at the agreed point." xml:space="preserve"><value>Le chauffeur vous retrouve à l'heure au point convenu.</value></data>
+  <data name="Easy booking, fair price and polite driver." xml:space="preserve"><value>Réservation simple, prix juste et chauffeur courtois.</value></data>
+  <data name="Estimated route price before you confirm." xml:space="preserve"><value>Prix estimé du trajet avant confirmation.</value></data>
+  <data name="Fast support on WhatsApp after landing." xml:space="preserve"><value>Assistance rapide sur WhatsApp après l'atterrissage.</value></data>
+  <data name="Featured service" xml:space="preserve"><value>Service en vedette</value></data>
+  <data name="Featured services" xml:space="preserve"><value>Services en vedette</value></data>
+  <data name="Fixed price airport pickup" xml:space="preserve"><value>Prise en charge aéroport à prix fixe</value></data>
+  <data name="Popular" xml:space="preserve"><value>Populaire</value></data>
+  <data name="Premium fleet" xml:space="preserve"><value>Flotte premium</value></data>
+  <data name="Reach us through phone or messaging apps." xml:space="preserve"><value>Contactez-nous par téléphone ou messagerie.</value></data>
+  <data name="Recommended for business travel in Vietnam." xml:space="preserve"><value>Recommandé pour les voyages d'affaires au Vietnam.</value></data>
+  <data name="Select helpful extras during checkout, prepared together with your private ride." xml:space="preserve"><value>Sélectionnez des options utiles au paiement, préparées avec votre trajet privé.</value></data>
+  <data name="Smooth pickup and a very clean sedan." xml:space="preserve"><value>Prise en charge fluide et berline très propre.</value></data>
+  <data name="Testimonials" xml:space="preserve"><value>Avis clients</value></data>
+  <data name="Transparent fare" xml:space="preserve"><value>Tarif transparent</value></data>
+  <data name="Trusted by international travelers" xml:space="preserve"><value>Approuvé par les voyageurs internationaux</value></data>
+  <data name="Verified traveler" xml:space="preserve"><value>Voyageur vérifié</value></data>
+  <data name="We plan airport pickups around your flight." xml:space="preserve"><value>Nous planifions les prises en charge aéroport selon votre vol.</value></data>
+  <data name="Why choose us" xml:space="preserve"><value>Pourquoi nous choisir</value></data>
+  <data name="Your booking number is created before payment." xml:space="preserve"><value>Votre numéro de réservation est créé avant le paiement.</value></data>
+</root>

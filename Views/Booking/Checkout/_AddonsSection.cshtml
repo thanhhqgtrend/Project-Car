@@ -1,0 +1,47 @@
+@model BookingCheckoutViewModel
+        <div class="form-section">
+            <h2>@L["Add-ons"]</h2>
+            <div class="addon-grid">
+                @foreach (var addon in Model.Addons)
+                {
+                    var addonPrice = addon.PriceUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
+                    var quantity = Math.Max(1, Model.AddonQuantities.ContainsKey(addon.Id) ? Model.AddonQuantities[addon.Id] : 1);
+                    var isQuantityAddon = addon.PricingMode == AddonPricingMode.Quantity;
+                    var pricingText = addon.PricingMode switch
+                    {
+                        AddonPricingMode.PerPassenger => $"{addon.PriceUsd:0.00} / person",
+                        AddonPricingMode.Quantity when addon.IncludedQuantity > 0 => $"{addon.IncludedQuantity} free, then ${addon.PriceUsd:0.00} each",
+                        AddonPricingMode.Quantity => $"{addon.PriceUsd:0.00} each",
+                        _ => addon.PriceUsd == 0 ? L["Free"].Value : $"${addon.PriceUsd:0.00}"
+                    };
+                    <label class="addon-option">
+                        <input class="js-addon-price" type="checkbox" name="SelectedAddonIds" value="@addon.Id"
+                            data-price="@addonPrice"
+                            data-pricing-mode="@addon.PricingMode"
+                            data-included-quantity="@addon.IncludedQuantity"
+                            data-quantity-input="AddonQuantities_@addon.Id"
+                            checked="@Model.SelectedAddonIds.Contains(addon.Id)" />
+                        @if (!string.IsNullOrWhiteSpace(addon.Image?.SecureUrl))
+                        {
+                            <img class="addon-option-image" src="@CloudinaryUrlHelper.For(addon.Image, CloudinaryUrlHelper.AddonCheckoutThumb)" alt="@addon.Name" loading="lazy" decoding="async" />
+                        }
+                        else
+                        {
+                            <span class="addon-option-placeholder"><i class="bi bi-stars"></i></span>
+                        }
+                        <span>
+                            <strong>@addon.Name</strong>
+                            <small>@addon.Description</small>
+                            @if (isQuantityAddon)
+                            {
+                                <span class="addon-quantity-field">
+                                    <span>@L["Quantity"]</span>
+                                    <input class="form-control form-control-sm js-addon-quantity" id="AddonQuantities_@addon.Id" name="AddonQuantities[@addon.Id]" type="number" min="1" value="@quantity" />
+                                </span>
+                            }
+                        </span>
+                        <b>@pricingText</b>
+                    </label>
+                }
+            </div>
+        </div>

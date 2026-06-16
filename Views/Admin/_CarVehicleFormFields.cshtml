@@ -1,0 +1,156 @@
+@model CarVehicleTypeFormViewModel
+
+<div class="vehicle-form-sections">
+    <section class="vehicle-form-section">
+        <div class="vehicle-form-section-heading">
+            <i class="bi bi-card-text"></i>
+            <div>
+                <h2>Basic details</h2>
+                <p>Name, short customer-facing description and display order.</p>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-8">
+                <label class="form-label" for="Name"></label>
+                <input class="form-control form-control-lg" name="Name" id="Name" placeholder="Premium Sedan" />
+                @Html.ValidationMessage("Name", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-4">
+                <label class="form-label" for="DisplayOrder">Display order</label>
+                <input class="form-control form-control-lg" name="DisplayOrder" id="DisplayOrder" type="number" min="0" />
+                @Html.ValidationMessage("DisplayOrder", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-12">
+                <label class="form-label" for="Description"></label>
+                <textarea class="form-control" name="Description" id="Description" rows="3" placeholder="Premium airport transfer for business travelers"></textarea>
+                @Html.ValidationMessage("Description", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="Brand">Brand</label>
+                <input class="form-control form-control-lg" name="Brand" id="Brand" placeholder="Mercedes, Toyota, Lexus..." />
+                @Html.ValidationMessage("Brand", "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </section>
+
+    <section class="vehicle-form-section">
+        <div class="vehicle-form-section-heading">
+            <i class="bi bi-people"></i>
+            <div>
+                <h2>Capacity</h2>
+                <p>Used to prevent customers from booking a vehicle that is too small.</p>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label" for="PassengerCapacity">Passenger capacity</label>
+                <input class="form-control form-control-lg" name="PassengerCapacity" id="PassengerCapacity" type="number" min="1" max="20" />
+                @Html.ValidationMessage("PassengerCapacity", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="LuggageCapacity">Luggage capacity</label>
+                <input class="form-control form-control-lg" name="LuggageCapacity" id="LuggageCapacity" type="number" min="0" max="20" />
+                @Html.ValidationMessage("LuggageCapacity", "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </section>
+
+    <section class="vehicle-form-section">
+        <div class="vehicle-form-section-heading">
+            <i class="bi bi-cash-coin"></i>
+            <div>
+                <h2>Pricing</h2>
+                <p>Quote calculation uses base fare plus estimated distance.</p>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label" for="BaseFareUsd">Base fare USD</label>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text">$</span>
+                    <input class="form-control" name="BaseFareUsd" id="BaseFareUsd" type="number" min="0" step="0.01" />
+                </div>
+                @Html.ValidationMessage("BaseFareUsd", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="PricePerKmUsd">USD per km</label>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text">$</span>
+                    <input class="form-control" name="PricePerKmUsd" id="PricePerKmUsd" type="number" min="0" step="0.01" />
+                </div>
+                @Html.ValidationMessage("PricePerKmUsd", "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </section>
+
+    <section class="vehicle-form-section">
+        <div class="vehicle-form-section-heading">
+            <i class="bi bi-image"></i>
+            <div>
+                <h2>Vehicle image</h2>
+                <p>Upload a new Cloudinary image or select one from the media library.</p>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-7">
+                <label class="form-label" for="ImageFile">Upload new image</label>
+                <input class="form-control form-control-lg" name="ImageFile" id="ImageFile" type="file" accept="image/jpeg,image/png,image/webp" />
+                <small class="text-muted">JPG, PNG or WebP. Maximum 5MB.</small>
+                @Html.ValidationMessage("ImageFile", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-lg-5">
+                <label class="form-label" for="ImageAltText">Alt text</label>
+                <input class="form-control form-control-lg" name="ImageAltText" id="ImageAltText" placeholder="Black premium sedan" />
+                @Html.ValidationMessage("ImageAltText", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-12">
+                <label class="form-label" for="MediaAssetId">Choose from media library</label>
+                <div class="vehicle-media-picker">
+                    <label class="vehicle-media-option no-image">
+                        <input type="radio" name="MediaAssetId" value="" checked="@(!Model.MediaAssetId.HasValue)" />
+                        <span><i class="bi bi-slash-circle"></i> No image</span>
+                    </label>
+                    @foreach (var asset in Model.AvailableMedia)
+                    {
+                        <label class="vehicle-media-option">
+                            <input type="radio" name="MediaAssetId" value="@asset.Id" checked="@(Model.MediaAssetId == asset.Id)" />
+                            <img src="@CloudinaryUrlHelper.For(asset, CloudinaryUrlHelper.MediaLibraryCard)" alt="@asset.AltText" loading="lazy" decoding="async" />
+                            <span>@asset.FileName</span>
+                        </label>
+                    }
+                </div>
+                <small class="text-muted">Uploading a new image will override this selection after save.</small>
+            </div>
+        </div>
+    </section>
+
+    <section class="vehicle-form-section">
+        <div class="vehicle-form-section-heading">
+            <i class="bi bi-toggle-on"></i>
+            <div>
+                <h2>Visibility</h2>
+                <p>Control public availability and premium labeling.</p>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="vehicle-toggle">
+                    <input name="IsActive" id="IsActive" type="checkbox" />
+                    <span>
+                        <strong>Active on public site</strong>
+                        <small>Show this vehicle in home and booking dropdowns.</small>
+                    </span>
+                </label>
+            </div>
+            <div class="col-md-6">
+                <label class="vehicle-toggle">
+                    <input name="IsLuxury" id="IsLuxury" type="checkbox" />
+                    <span>
+                        <strong>Premium vehicle</strong>
+                        <small>Mark this option as a premium vehicle.</small>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </section>
+</div>

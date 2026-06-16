@@ -1,0 +1,57 @@
+@model AdminSettingsViewModel
+            <div class="tab-pane fade" id="security-panel" role="tabpanel" aria-labelledby="security-tab" tabindex="0">
+    <div class="admin-panel settings-form">
+        <div class="settings-section-heading">
+            <i class="bi bi-shield-lock"></i>
+            <div>
+                <h2>Admin access</h2>
+                <p>Change the email address used to sign in and update the current admin password.</p>
+            </div>
+        </div>
+
+        <form method="post" action='@Url.Action("SaveAdminAccess")'>
+            @Html.AntiForgeryToken()
+            <div class="settings-subsection">
+                <h3>Login email</h3>
+                <p>Use this email when signing in to the admin console.</p>
+            </div>
+            <div class="row g-3">
+                <div class="col-lg-4">
+                    <label class="form-label" for="CurrentAdminEmail">Current login email</label>
+                    @Html.TextBoxFor(m => m.CurrentAdminEmail, new { @class = "form-control form-control-lg", type = "email", @readonly = "readonly" })
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label" for="NewAdminEmail">New login email</label>
+                    @Html.TextBoxFor(m => m.NewAdminEmail, new { @class = "form-control form-control-lg", type = "email", autocomplete = "username" })
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label" for="ConfirmAdminEmail">Confirm new email</label>
+                    @Html.TextBoxFor(m => m.ConfirmAdminEmail, new { @class = "form-control form-control-lg", type = "email", autocomplete = "username" })
+                </div>
+            </div>
+
+            <hr class="settings-divider" />
+
+            <div class="settings-subsection">
+                <h3>Password</h3>
+                <p>Use the current password once to save either email, password or both.</p>
+            </div>
+            <div class="row g-3">
+                <div class="col-lg-4">
+                    <label class="form-label" for="CurrentPassword">Current password</label>
+                    <input class="form-control form-control-lg" name="CurrentPassword" id="CurrentPassword" type="password" autocomplete="current-password" />
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label" for="NewPassword">New password</label>
+                    <input class="form-control form-control-lg" name="NewPassword" id="NewPassword" type="password" autocomplete="new-password" />
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label" for="ConfirmPassword">Confirm new password</label>
+                    <input class="form-control form-control-lg" name="ConfirmPassword" id="ConfirmPassword" type="password" autocomplete="new-password" />
+                </div>
+            </div>
+            <div class="admin-form-actions">
+                <button class="btn btn-gold" type="submit"><i class="bi bi-shield-check"></i> Save admin access</button>
+            </div>
+        </form>
+    </div>

@@ -1,0 +1,101 @@
+@model BookingCheckoutViewModel
+        <div class="form-section passenger-card">
+            <h2>@L["Information"]</h2>
+            <div class="row g-3">
+                <input type="hidden" name="Title" id="Title" value="Mr" />
+                <input type="hidden" name="FullName" id="FullName" />
+                <div class="col-md-6">
+                    <label class="form-label" for="FirstName">@L["First name (as shown on passport)"] <span class="required-star">*</span></label>
+                    <input class="form-control form-control-lg" name="FirstName" id="FirstName" />
+                    @Html.ValidationMessage("FirstName", "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="LastName">@L["Last name (as shown on passport)"] <span class="required-star">*</span></label>
+                    <input class="form-control form-control-lg" name="LastName" id="LastName" />
+                    @Html.ValidationMessage("LastName", "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="Phone">@L["Phone number"] <span class="required-star">*</span></label>
+                    <select class="form-select form-select-lg" name="CountryCode" id="CountryCode">
+                        <option value="+84">Vietnam(+84)</option>
+                        <option value="+1">United States(+1)</option>
+                        <option value="+33">France(+33)</option>
+                        <option value="+44">United Kingdom(+44)</option>
+                        <option value="+81">Japan(+81)</option>
+                        <option value="+82">Korea(+82)</option>
+                        <option value="+86">China(+86)</option>
+                    </select>
+                </div>
+                <div class="col-md-6 phone-number-field">
+                    <label class="form-label d-none d-md-block">&nbsp;</label>
+                    <input class="form-control form-control-lg" name="Phone" id="Phone" />
+                    @Html.ValidationMessage("Phone", "", new { @class = "text-danger" })
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="Email">@L["Email (for voucher)"] <span class="required-star">*</span></label>
+                    <input class="form-control" name="Email" id="Email" />
+                    @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+                </div>
+                @if (Model.TripType == TripType.Hire)
+                {
+                    <input type="hidden" name="PickupTime" value="08:00" />
+                    <div class="col-md-4">
+                        <label class="form-label">@L["Start date"]</label>
+                        <input class="form-control" value="@Model.StartDate.ToString("dd/MM/yyyy")" readonly />
+                        <input type="hidden" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">@L["End date"]</label>
+                        <input class="form-control" value="@Model.EndDate.ToString("dd/MM/yyyy")" readonly />
+                        <input type="hidden" name="EndDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">@L["Total days"]</label>
+                        <input class="form-control" value="@Model.HireTotalDays @L["day(s)"]" readonly />
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-4">
+                        <label class="form-label" for="FlightNumber">@L["Flight number"]</label>
+                        <input class="form-control" name="FlightNumber" id="FlightNumber" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="PickupTime">@L["Pickup time"]</label>
+                        <input class="form-control" name="PickupTime" id="PickupTime" type="time" />
+                        @Html.ValidationMessage("PickupTime", "", new { @class = "text-danger" })
+                    </div>
+                }
+                <div class="col-12">
+                    <label class="form-label">@L["Other contact information (optional)"]</label>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <select class="form-select" name="MessagingApp" id="MessagingApp">
+                                <option>WhatsApp</option>
+                                <option>Viber</option>
+                                <option>Zalo</option>
+                                <option>Telegram</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <input class="form-control" name="MessagingHandle" id="MessagingHandle" placeholder="@L["Username or contact number"]" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="Notes">@L["Special requests (optional)"]</label>
+                    <textarea class="form-control special-request" name="Notes" id="Notes" maxlength="400" rows="4" placeholder="@L["Not included in add-on services; please pay the driver directly if applicable"]"></textarea>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="CouponCode">@L["Promo code"]</label>
+                    <input class="form-control js-coupon-code" name="CouponCode" id="CouponCode" placeholder="VIETNAM10" />
+                </div>
+                <div class="col-12">
+                    <label class="terms-check">
+                        <input name="TermsAccepted" id="TermsAccepted" type="checkbox" value="true" />
+                        <span>@L["I agree to the terms and cancellation policy."]</span>
+                    </label>
+                    @Html.ValidationMessage("TermsAccepted", "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>

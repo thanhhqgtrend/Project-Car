@@ -1,0 +1,27 @@
+@model CarBookingAddonFormViewModel
+                <section class="vehicle-form-section">
+                    <div class="vehicle-form-section-heading">
+                        <i class="bi bi-card-text"></i>
+                        <div>
+                            <h2>Basic details</h2>
+                            <p>Name, short customer-facing description and display order.</p>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-8">
+                            <label class="form-label" for="Name">Name</label>
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control form-control-lg", placeholder = "VIP meet and assist" })
+                            @Html.ValidationMessage("Name", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" for="DisplayOrder">Display order</label>
+                            @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "form-control form-control-lg", type = "number", min = "0" })
+                            @Html.ValidationMessage("DisplayOrder", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="Description">Description</label>
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "3", placeholder = "Premium help for arrival, luggage and transfer handoff." })
+                            @Html.ValidationMessage("Description", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </section>

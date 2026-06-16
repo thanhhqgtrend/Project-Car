@@ -1,0 +1,39 @@
+@model BlogIndexViewModel
+@{
+    ViewData["Title"] = "Blog";
+    ViewData["MetaDescription"] = "Latest Vietnam transfer travel guides and private car tips.";
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>Blog</h1>
+        <p>Travel guides, route tips and private transfer planning notes.</p>
+    </div>
+</section>
+
+<section class="container content-page">
+    <div class="latest-news-grid">
+        @if (!Model.Posts.Any())
+        {
+            <div class="admin-panel">No blog posts published yet.</div>
+        }
+        @foreach (var post in Model.Posts)
+        {
+            <article class="latest-news-card">
+                <a class="latest-news-image" href="/blog/@post.Translation.Slug" aria-label="@post.Translation.Title">
+                    @if (!string.IsNullOrWhiteSpace(post.Post.FeaturedMediaAsset?.SecureUrl))
+                    {
+                        <img src="@CloudinaryUrlHelper.For(post.Post.FeaturedMediaAsset, CloudinaryUrlHelper.BlogCard)" alt="@post.Translation.Title" loading="lazy" decoding="async" width="640" height="360" />
+                    }
+                    else
+                    {
+                        <img src="/wwwroot/images/home-hero-airport-transfer.webp" alt="@post.Translation.Title" loading="lazy" decoding="async" width="640" height="360" />
+                    }
+                </a>
+                <h3><a href="/blog/@post.Translation.Slug">@post.Translation.Title</a></h3>
+                <p>@post.Translation.Excerpt</p>
+                <div class="news-date"><i class="bi bi-calendar3"></i> @((post.Post.PublishedAtUtc ?? post.Post.CreatedAtUtc).ToString("dd MMMM yyyy", CultureInfo.CurrentUICulture))</div>
+            </article>
+        }
+    </div>
+</section>

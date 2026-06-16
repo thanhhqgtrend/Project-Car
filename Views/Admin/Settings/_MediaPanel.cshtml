@@ -1,0 +1,56 @@
+@model AdminSettingsViewModel
+            <div class="tab-pane fade" id="media-panel" role="tabpanel" aria-labelledby="media-tab" tabindex="0">
+    <form class="admin-panel settings-form" method="post" action='@Url.Action("SaveCloudinarySettings")'>
+        @Html.AntiForgeryToken()
+        <div class="settings-section-heading">
+            <i class="bi bi-cloud"></i>
+            <div>
+                <h2>Cloudinary media storage</h2>
+                <p>Uploads and media sync use this Cloudinary account and folder.</p>
+            </div>
+            <span class="admin-status">@(Model.IsCloudinaryConfigured ? "Configured" : "Not configured")</span>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <label class="form-label" for="CloudinaryCloudName">Cloud name</label>
+                @Html.TextBoxFor(m => m.CloudinaryCloudName, new { @class = "form-control form-control-lg" })
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="CloudinaryApiKey">API key</label>
+                @Html.TextBoxFor(m => m.CloudinaryApiKey, new { @class = "form-control form-control-lg" })
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="CloudinaryApiSecret">API secret</label>
+                <input class="form-control form-control-lg" name="CloudinaryApiSecret" id="CloudinaryApiSecret" type="password" autocomplete="new-password" placeholder="@(Model.HasCloudinaryApiSecret ? "Leave blank to keep current secret" : "Enter API secret")" />
+                @if (Model.HasCloudinaryApiSecret)
+                {
+                    <label class="form-check admin-checkline mt-2">
+                        <input class="form-check-input" name="ClearCloudinaryApiSecret" id="ClearCloudinaryApiSecret" type="checkbox" />
+                        <span class="form-check-label">Clear saved Cloudinary secret</span>
+                    </label>
+                }
+            </div>
+            <div class="col-lg-6">
+                <label class="form-label" for="CloudinaryFolder">Folder</label>
+                @Html.TextBoxFor(m => m.CloudinaryFolder, new { @class = "form-control form-control-lg", placeholder = "vietnamtransfer" })
+            </div>
+        </div>
+        <div class="admin-form-actions">
+            <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save Cloudinary settings</button>
+        </div>
+    </form>
+
+    @if (Model.IsCloudinaryConfigured)
+    {
+        <form class="settings-inline-sync" method="post" action="/admin/settings/cloudinary/sync">
+            @Html.AntiForgeryToken()
+            <div>
+                <strong>Sync Cloudinary media</strong>
+                <p>Import existing images from the configured Cloudinary folder into the local media library.</p>
+            </div>
+            <button class="btn btn-outline-gold" type="submit">
+                <i class="bi bi-arrow-repeat"></i> Sync media library
+            </button>
+        </form>
+    }
+            </div>

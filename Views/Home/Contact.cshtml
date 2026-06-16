@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = L["Contact"];
+    var siteBrandName = AppSettings.GetAsync("Site:BrandName", "Vietnam Transfer").GetAwaiter().GetResult();
+    var siteHotline = AppSettings.GetAsync("Site:Hotline", "1900 8888").GetAwaiter().GetResult();
+    var siteContactEmail = AppSettings.GetAsync("Site:ContactEmail", "info@vietnamtransfer.vn").GetAwaiter().GetResult();
+    var siteAddress = AppSettings.GetAsync("Site:Address", "123 Nguyen Hue, District 1, Ho Chi Minh City").GetAwaiter().GetResult();
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>@L["Contact"] @siteBrandName</h1>
+        <p>@L["Our team is available 24/7 for transfer support."]</p>
+    </div>
+</section>
+<section class="container content-page">
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <h2>@L["Get in touch"]</h2>
+            <p>@L["Share your route, pickup time and flight number if available. Our team will help confirm the right vehicle and any add-ons you need."]</p>
+            <p><strong>@L["Hotline"]:</strong> @siteHotline</p>
+            <p><strong>Email:</strong> @siteContactEmail</p>
+            <p><strong>@L["Address"]:</strong> @siteAddress</p>
+            <h2>@L["What to include"]</h2>
+            <ul>
+                <li>@L["Airport, hotel or exact pickup and dropoff address."]</li>
+                <li>@L["Pickup date and time, passenger count and luggage needs."]</li>
+                <li>@L["Flight number for airport pickup or dropoff."]</li>
+                <li>@L["Preferred contact method such as WhatsApp, Zalo, Viber or Telegram."]</li>
+            </ul>
+        </div>
+        <div class="col-lg-6">
+            <div class="contact-panel">
+                <h2>@L["Need a ride?"]</h2>
+                <p>@L["Send your airport, hotel and flight number. We will confirm your car as soon as possible."]</p>
+                <a class="btn btn-gold" href="/booking/search">@L["Book airport transfer"]</a>
+            </div>
+            <div class="contact-panel mt-3">
+                <h2>@L["24/7 travel support"]</h2>
+                <p>@L["For urgent pickup changes, keep your booking number ready so the support team can find your trip quickly."]</p>
+                <a class="btn btn-outline-gold" href="/faq">FAQ</a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,39 @@
+﻿@model MediaAsset
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = Model.FileName;
+}
+
+<section class="admin-shell">
+    <a href="/admin/media" class="admin-back">&larr; Back to media</a>
+    <div class="admin-page-heading">
+        <div>
+            <h1>@Model.FileName</h1>
+            <p>@Model.PublicId</p>
+        </div>
+        <div class="admin-actions">
+            <a class="btn btn-outline-danger" href="/admin/media/@Model.Id/delete">Delete</a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="admin-panel">
+                <img class="media-detail-image" src="@CloudinaryUrlHelper.For(Model, CloudinaryUrlHelper.Detail)" alt="@Model.AltText" decoding="async" />
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="admin-panel">
+                <h2>Metadata</h2>
+                <dl class="summary-list">
+                    <dt>Alt text</dt><dd>@Model.AltText</dd>
+                    <dt>Type</dt><dd>@Model.ContentType</dd>
+                    <dt>Size</dt><dd>@(Model.Bytes / 1024) KB</dd>
+                    <dt>Dimensions</dt><dd>@Model.Width x @Model.Height</dd>
+                    <dt>Folder</dt><dd>@Model.Folder</dd>
+                    <dt>URL</dt><dd><a href="@Model.SecureUrl" target="_blank" rel="noopener">Open Cloudinary URL</a></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</section>

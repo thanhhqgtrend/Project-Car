@@ -1,0 +1,137 @@
+﻿@model CarVehicleType
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = Model.Name;
+}
+
+<section class="admin-shell">
+    <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+        <a href="/admin/vehicles" class="admin-back">&larr; Back to vehicles</a>
+        <div class="admin-actions">
+            <a class="btn btn-outline-gold" href="/admin/vehicles/@Model.Id/edit"><i class="bi bi-pencil"></i> Edit</a>
+            <a class="btn btn-outline-danger" href="/admin/vehicles/@Model.Id/delete"><i class="bi bi-eye-slash"></i> Deactivate</a>
+        </div>
+    </div>
+
+    @if (TempData["AdminNotice"] is string notice)
+    {
+        <div class="alert alert-success">@notice</div>
+    }
+
+    <div class="vehicle-detail-hero admin-panel mb-4">
+        <div class="row g-0">
+            <div class="col-lg-7">
+                <div class="vehicle-detail-photo">
+                    @if (!string.IsNullOrWhiteSpace(Model.Image?.SecureUrl))
+                    {
+                        <img src="@CloudinaryUrlHelper.For(Model.Image, CloudinaryUrlHelper.Detail)" alt="@Model.Name" decoding="async" />
+                    }
+                    else
+                    {
+                        <div class="vehicle-detail-empty">
+                            <i class="bi bi-car-front"></i>
+                            <span>No vehicle image selected</span>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="vehicle-detail-summary">
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <span class="admin-status @(Model.IsActive ? "status-active" : "status-muted")">@(Model.IsActive ? "Active" : "Inactive")</span>
+                        @if (Model.IsLuxury)
+                        {
+                            <span class="admin-status status-luxury">Premium</span>
+                        }
+                    </div>
+                    <span class="vehicle-detail-eyebrow">Vehicle profile</span>
+                    <h1>@Model.Name</h1>
+                    <p>@Model.Description</p>
+
+                    <div class="vehicle-detail-price-strip">
+                        <div>
+                            <span>Base fare</span>
+                            <strong>$@Model.BaseFareUsd.ToString("0.00")</strong>
+                        </div>
+                        <div>
+                            <span>Per km</span>
+                            <strong>$@Model.PricePerKmUsd.ToString("0.00")</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-xl-3">
+            <div class="vehicle-stat-card">
+                <i class="bi bi-people"></i>
+                <span>Passengers</span>
+                <strong>@Model.PassengerCapacity</strong>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="vehicle-stat-card">
+                <i class="bi bi-briefcase"></i>
+                <span>Luggage</span>
+                <strong>@Model.LuggageCapacity</strong>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="vehicle-stat-card">
+                <i class="bi bi-sort-numeric-down"></i>
+                <span>Display order</span>
+                <strong>@Model.DisplayOrder</strong>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="vehicle-stat-card">
+                <i class="bi bi-hash"></i>
+                <span>Vehicle ID</span>
+                <strong>#@Model.Id</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="admin-panel vehicle-detail-info-card">
+                <div class="admin-panel-heading">
+                    <h2>Publishing</h2>
+                </div>
+                <dl class="vehicle-detail-list">
+                    <dt>Status</dt><dd>@(Model.IsActive ? "Visible on public site" : "Hidden from public site")</dd>
+                    <dt>Category</dt><dd>@(Model.IsLuxury ? "Premium vehicle" : "Standard vehicle")</dd>
+                    <dt>Base fare</dt><dd>$@Model.BaseFareUsd.ToString("0.00") USD</dd>
+                    <dt>Price per km</dt><dd>$@Model.PricePerKmUsd.ToString("0.00") USD</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="admin-panel vehicle-detail-info-card">
+                <div class="admin-panel-heading">
+                    <h2>Media</h2>
+                    @if (Model.Image is not null)
+                    {
+                        <a href="/admin/media/@Model.Image.Id">View media</a>
+                    }
+                </div>
+                @if (Model.Image is null)
+                {
+                    <p class="vehicle-detail-muted">No image has been assigned to this vehicle.</p>
+                }
+                else
+                {
+                    <dl class="vehicle-detail-list">
+                        <dt>File</dt><dd>@Model.Image.FileName</dd>
+                        <dt>Alt text</dt><dd>@(string.IsNullOrWhiteSpace(Model.Image.AltText) ? "Not set" : Model.Image.AltText)</dd>
+                        <dt>Size</dt><dd>@((Model.Image.Bytes / 1024m).ToString("0.#")) KB</dd>
+                        <dt>Dimensions</dt><dd>@Model.Image.Width x @Model.Image.Height</dd>
+                    </dl>
+                }
+            </div>
+        </div>
+    </div>
+</section>

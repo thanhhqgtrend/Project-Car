@@ -1,0 +1,79 @@
+@model AdminSettingsViewModel
+            <div class="tab-pane fade" id="theme-panel" role="tabpanel" aria-labelledby="theme-tab" tabindex="0">
+    <form class="admin-panel settings-form" method="post" action='@Url.Action("SaveThemeSettings")'>
+        @Html.AntiForgeryToken()
+        <div class="settings-section-heading">
+            <i class="bi bi-palette"></i>
+            <div>
+                <h2>Website color theme</h2>
+                <p>Controls the shared color variables used by the public website and admin UI.</p>
+            </div>
+        </div>
+
+        <div class="theme-preview">
+            <div class="theme-preview-surface" data-theme-preview style="--preview-ink:@Model.ThemeInkColor;--preview-muted:@Model.ThemeMutedColor;--preview-accent:@Model.ThemeAccentColor;--preview-accent-dark:@Model.ThemeAccentDarkColor;--preview-paper:@Model.ThemePaperColor;--preview-soft:@Model.ThemeSoftColor;--preview-line:@Model.ThemeLineColor;">
+                <div>
+                    <span class="theme-preview-kicker">Vietnam Transfer</span>
+                    <h3>Premium transfer experience</h3>
+                    <p>Preview of headings, supporting text, buttons, panels and borders using the selected palette.</p>
+                </div>
+                <button class="btn theme-preview-button" type="button">Book now</button>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-3 col-md-6">
+                <label class="form-label" for="ThemeAccentColor">Accent</label>
+                <div class="theme-color-control">
+                    <input class="form-control form-control-color" type="color" value="@Model.ThemeAccentColor" title="Accent color" data-theme-color-picker="ThemeAccentColor" />
+                    <input class="form-control" name="ThemeAccentColor" id="ThemeAccentColor" value="@Model.ThemeAccentColor" maxlength="7" pattern="^#[0-9a-fA-F]{6}$" data-theme-color-input="ThemeAccentColor" data-theme-css-var="--preview-accent" />
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label class="form-label" for="ThemeAccentDarkColor">Accent dark</label>
+                <div class="theme-color-control">
+                    <input class="form-control form-control-color" type="color" value="@Model.ThemeAccentDarkColor" title="Dark accent color" data-theme-color-picker="ThemeAccentDarkColor" />
+                    <input class="form-control" name="ThemeAccentDarkColor" id="ThemeAccentDarkColor" value="@Model.ThemeAccentDarkColor" maxlength="7" pattern="^#[0-9a-fA-F]{6}$" data-theme-color-input="ThemeAccentDarkColor" data-theme-css-var="--preview-accent-dark" />
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label class="form-label" for="ThemeInkColor">Text</label>
+                <div class="theme-color-control">
+                    <input class="form-control form-control-color" type="color" value="@Model.ThemeInkColor" title="Text color" data-theme-color-picker="ThemeInkColor" />
+                    <input class="form-control" name="ThemeInkColor" id="ThemeInkColor" value="@Model.ThemeInkColor" maxlength="7" pattern="^#[0-9a-fA-F]{6}$" data-theme-color-input="ThemeInkColor" data-theme-css-var="--preview-ink" />
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label class="form-label" for="ThemeMutedColor">Muted text</label>
+                <div class="theme-color-control">
+                    <input class="form-control form-control-color" type="color" value="@Model.ThemeMutedColor" title="Muted text color" data-theme-color-picker="ThemeMutedColor" />
+                    <input class="form-control" name="ThemeMutedColor" id="ThemeMutedColor" value="@Model.ThemeMutedColor" maxlength="7" pattern="^#[0-9a-fA-F]{6}$" data-theme-color-input="ThemeMutedColor" data-theme-css-var="--preview-muted" />
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label class="form-label" for="ThemePaperColor">Page background</label>
+                <div class="theme-color-control">
+                    <input class="form-control form-control-color" type="color" value="@Model.ThemePaperColor" title="Page background" data-theme-color-picker="ThemePaperColor" />
+                    <input class="form-control" name="ThemePaperColor" id="ThemePaperColor" value="@Model.ThemePaperColor" maxlength="7" pattern="^#[0-9a-fA-F]{6}$" data-theme-color-input="ThemePaperColor" data-theme-css-var="--preview-paper" />
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label class="form-label" for="ThemeSoftColor">Soft background</label>
+                <div class="theme-color-control">
+                    <input class="form-control form-control-color" type="color" value="@Model.ThemeSoftColor" title="Soft background" data-theme-color-picker="ThemeSoftColor" />
+                    <input class="form-control" name="ThemeSoftColor" id="ThemeSoftColor" value="@Model.ThemeSoftColor" maxlength="7" pattern="^#[0-9a-fA-F]{6}$" data-theme-color-input="ThemeSoftColor" data-theme-css-var="--preview-soft" />
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label class="form-label" for="ThemeLineColor">Borders</label>
+                <div class="theme-color-control">
+                    <input class="form-control form-control-color" type="color" value="@Model.ThemeLineColor" title="Border color" data-theme-color-picker="ThemeLineColor" />
+                    <input class="form-control" name="ThemeLineColor" id="ThemeLineColor" value="@Model.ThemeLineColor" maxlength="7" pattern="^#[0-9a-fA-F]{6}$" data-theme-color-input="ThemeLineColor" data-theme-css-var="--preview-line" />
+                </div>
+            </div>
+        </div>
+        <div class="admin-form-actions">
+            <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save color theme</button>
+        </div>
+    </form>
+            </div>

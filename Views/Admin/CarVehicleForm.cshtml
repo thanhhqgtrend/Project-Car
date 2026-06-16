@@ -1,0 +1,69 @@
+@model CarVehicleTypeFormViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var mode = (ViewData["VehicleFormMode"] as string) ?? "Edit";
+    var cloudinaryConfigured = ViewData["CloudinaryConfigured"] as bool? ?? false;
+    ViewData["Title"] = mode + " Vehicle";
+    var action = mode == "Create" ? "/admin/vehicles/create" : $"/admin/vehicles/{Model.Id}/edit";
+}
+
+<section class="admin-shell">
+    <a href="/admin/vehicles" class="admin-back">&larr; Back to vehicles</a>
+    <div class="admin-page-heading">
+        <div>
+            <h1>@mode vehicle</h1>
+            <p>Set the vehicle details used for public quotes and booking capacity checks.</p>
+        </div>
+    </div>
+
+    <div class="vehicle-edit-grid">
+        @if (!cloudinaryConfigured)
+        {
+            <div class="alert alert-warning vehicle-form-alert">Cloudinary is not configured. Existing media can be selected, but new image upload requires Cloudinary credentials.</div>
+        }
+        <form class="admin-panel vehicle-form vehicle-editor-card" method="post" action="@action" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.Partial("_CarVehicleFormFields", Model)
+            <div class="admin-form-actions vehicle-form-actions">
+                <a class="btn btn-outline-secondary" href="/admin/vehicles">Cancel</a>
+                <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save vehicle</button>
+            </div>
+        </form>
+
+        <aside class="vehicle-preview-panel">
+            <div class="vehicle-preview-image">
+                @if (!string.IsNullOrWhiteSpace(Model.CurrentImageUrl))
+                {
+                    <img id="vehiclePreviewImage" src="@CloudinaryUrlHelper.Transform(Model.CurrentImageUrl, CloudinaryUrlHelper.VehicleEditPreview)" alt="@Model.Name" decoding="async" />
+                }
+                else
+                {
+                    <i id="vehiclePreviewIcon" class="bi bi-car-front"></i>
+                }
+            </div>
+            <div class="vehicle-preview-body">
+                <div class="vehicle-preview-title">
+                    <h2 id="vehiclePreviewName">@(string.IsNullOrWhiteSpace(Model.Name) ? "Vehicle name" : Model.Name)</h2>
+                    <span id="vehiclePreviewActive" class="admin-status">@(Model.IsActive ? "Active" : "Inactive")</span>
+                </div>
+                <p id="vehiclePreviewDescription">@(string.IsNullOrWhiteSpace(Model.Description) ? "Short description for customers and admin users." : Model.Description)</p>
+                <div class="vehicle-preview-stats">
+                    <div><span>Passengers</span><strong id="vehiclePreviewPax">@Model.PassengerCapacity</strong></div>
+                    <div><span>Luggage</span><strong id="vehiclePreviewBags">@Model.LuggageCapacity</strong></div>
+                    <div><span>Base fare</span><strong id="vehiclePreviewBase">$@Model.BaseFareUsd.ToString("0.00")</strong></div>
+                    <div><span>Per km</span><strong id="vehiclePreviewKm">$@Model.PricePerKmUsd.ToString("0.00")</strong></div>
+                </div>
+                <div class="vehicle-preview-note">
+                    <i class="bi bi-info-circle"></i>
+                    This preview uses the same active state and pricing fields shown in public booking.
+                </div>
+            </div>
+        </aside>
+    </div>
+</section>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

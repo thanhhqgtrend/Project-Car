@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Home" xml:space="preserve"><value>ホーム</value></data>
+  <data name="About" xml:space="preserve"><value>会社情報</value></data>
+  <data name="Contact" xml:space="preserve"><value>お問い合わせ</value></data>
+  <data name="Book now" xml:space="preserve"><value>今すぐ予約</value></data>
+  <data name="Private Transfer" xml:space="preserve"><value>プライベート送迎</value></data>
+  <data name="Vietnam time" xml:space="preserve"><value>ベトナム時間</value></data>
+  <data name="Airport pickup" xml:space="preserve"><value>空港お迎え</value></data>
+  <data name="Airport dropoff" xml:space="preserve"><value>空港お送り</value></data>
+  <data name="A to B" xml:space="preserve"><value>A地点からB地点</value></data>
+  <data name="Car hire" xml:space="preserve"><value>車両チャーター</value></data>
+  <data name="Airport" xml:space="preserve"><value>空港</value></data>
+  <data name="Select airport" xml:space="preserve"><value>空港を選択</value></data>
+  <data name="Pickup point" xml:space="preserve"><value>乗車場所</value></data>
+  <data name="Dropoff point" xml:space="preserve"><value>降車場所</value></data>
+  <data name="Point A" xml:space="preserve"><value>A地点</value></data>
+  <data name="Point B" xml:space="preserve"><value>B地点</value></data>
+  <data name="Pickup time" xml:space="preserve"><value>お迎え時間</value></data>
+  <data name="Passengers" xml:space="preserve"><value>乗客</value></data>
+  <data name="passenger" xml:space="preserve"><value>名</value></data>
+  <data name="passenger(s)" xml:space="preserve"><value>名</value></data>
+  <data name="Search" xml:space="preserve"><value>検索</value></data>
+  <data name="Vietnam Transfer private rides in Vietnam" xml:space="preserve"><value>Vietnam Transfer ベトナムのプライベート送迎</value></data>
+  <data name="Professional private rides. Safe, on time and transparent from booking to arrival." xml:space="preserve"><value>予約から到着まで、安全・時間厳守・明朗料金のプライベート送迎です。</value></data>
+  <data name="Fixed price" xml:space="preserve"><value>固定料金</value></data>
+  <data name="Free cancellation 24h before pickup" xml:space="preserve"><value>お迎え24時間前まで無料キャンセル</value></data>
+  <data name="Professional drivers" xml:space="preserve"><value>プロドライバー</value></data>
+  <data name="Premium transfer vehicles" xml:space="preserve"><value>プレミアム送迎車両</value></data>
+  <data name="From" xml:space="preserve"><value>最低</value></data>
+  <data name="pax" xml:space="preserve"><value>名</value></data>
+  <data name="bags" xml:space="preserve"><value>個</value></data>
+  <data name="Search cars" xml:space="preserve"><value>車を検索</value></data>
+  <data name="Select your vehicle" xml:space="preserve"><value>車両を選択</value></data>
+  <data name="View photos" xml:space="preserve"><value>写真を見る</value></data>
+  <data name="Instant confirmation" xml:space="preserve"><value>即時確定</value></data>
+  <data name="Free waiting time" xml:space="preserve"><value>無料待機時間</value></data>
+  <data name="Meet and greet" xml:space="preserve"><value>ミート＆グリート</value></data>
+  <data name="Policy and cancellation" xml:space="preserve"><value>規定とキャンセル</value></data>
+  <data name="Booking information" xml:space="preserve"><value>予約情報</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>追加サービス</value></data>
+  <data name="Free" xml:space="preserve"><value>無料</value></data>
+  <data name="Information" xml:space="preserve"><value>情報</value></data>
+  <data name="First name (as shown on passport)" xml:space="preserve"><value>名（パスポート表記）</value></data>
+  <data name="Last name (as shown on passport)" xml:space="preserve"><value>姓（パスポート表記）</value></data>
+  <data name="Phone number" xml:space="preserve"><value>電話番号</value></data>
+  <data name="Email (for voucher)" xml:space="preserve"><value>メール（バウチャー用）</value></data>
+  <data name="Flight number" xml:space="preserve"><value>便名</value></data>
+  <data name="Promo code" xml:space="preserve"><value>プロモコード</value></data>
+  <data name="Go to payment" xml:space="preserve"><value>支払いへ進む</value></data>
+  <data name="Total price" xml:space="preserve"><value>合計金額</value></data>
+  <data name="Vehicle" xml:space="preserve"><value>車両</value></data>
+  <data name="Route" xml:space="preserve"><value>ルート</value></data>
+  <data name="Base price" xml:space="preserve"><value>基本料金</value></data>
+  <data name="Discount" xml:space="preserve"><value>割引</value></data>
+  <data name="Tax and fee" xml:space="preserve"><value>税金・手数料</value></data>
+  <data name="Total" xml:space="preserve"><value>合計</value></data>
+  <data name="Payment" xml:space="preserve"><value>支払い</value></data>
+  <data name="Booking summary" xml:space="preserve"><value>予約概要</value></data>
+  <data name="Payment successful" xml:space="preserve"><value>支払い完了</value></data>
+  <data name="View booking" xml:space="preserve"><value>予約を見る</value></data>
+  <data name="Something went wrong" xml:space="preserve"><value>問題が発生しました</value></data>
+  <data name="Contact support" xml:space="preserve"><value>サポートに連絡</value></data>
+  <data name="Request ID" xml:space="preserve"><value>リクエストID</value></data>
+  <data name="Booking Confirmation" xml:space="preserve"><value>予約確認</value></data>
+  <data name="Trip summary" xml:space="preserve"><value>旅程概要</value></data>
+  <data name="Estimated distance" xml:space="preserve"><value>推定距離</value></data>
+  <data name="24/7 travel support" xml:space="preserve"><value>24時間旅行サポート</value></data>
+  <data name="What to include" xml:space="preserve"><value>記載する情報</value></data>
+  <data name="Payment reference" xml:space="preserve"><value>支払い参照</value></data>
+  <data name="Online payment is not configured yet. Your booking has been saved; please contact support to complete payment." xml:space="preserve"><value>オンライン決済はまだ設定されていません。予約は保存されました。お支払い完了についてはサポートへお問い合わせください。</value></data>
+  <data name="Enter the email or phone number used for this booking to view the details." xml:space="preserve"><value>詳細を表示するには、予約時に使用したメールアドレスまたは電話番号を入力してください。</value></data>
+  <data name="Verify booking" xml:space="preserve"><value>予約を確認</value></data>
+  <data name="For your privacy, booking details are only shown after verification." xml:space="preserve"><value>プライバシー保護のため、予約詳細は確認後にのみ表示されます。</value></data>
+  <data name="Email or phone number" xml:space="preserve"><value>メールアドレスまたは電話番号</value></data>
+  <data name="Booking details could not be verified." xml:space="preserve"><value>予約情報を確認できませんでした。</value></data>
+  <data name="Page not found" xml:space="preserve"><value>ページが見つかりません</value></data>
+  <data name="The page you are looking for may have moved or is no longer available." xml:space="preserve"><value>お探しのページは移動されたか、現在利用できない可能性があります。</value></data>
+  <data name="This page is not available" xml:space="preserve"><value>このページは利用できません</value></data>
+  <data name="The link may be outdated, the booking page may require verification, or the address may have been typed incorrectly." xml:space="preserve"><value>リンクが古い、予約ページで確認が必要、またはアドレスの入力に誤りがある可能性があります。</value></data>
+  <data name="Back to home" xml:space="preserve"><value>ホームへ戻る</value></data>
+  <data name="If you opened a booking link from another browser, enter the email or phone number used for the booking to view it." xml:space="preserve"><value>別のブラウザから予約リンクを開いた場合は、予約時に使用したメールまたは電話番号を入力して表示してください。</value></data>
+  <data name="Airport transfers" xml:space="preserve"><value>空港送迎</value></data>
+  <data name="Start a new search with your airport, pickup time and route details to see available vehicles." xml:space="preserve"><value>空港、迎車時刻、ルート情報で新しく検索し、利用可能な車両を確認してください。</value></data>
+  <data name="Need help?" xml:space="preserve"><value>お困りですか？</value></data>
+  <data name="Our support team can help find your booking or confirm the right vehicle for your trip." xml:space="preserve"><value>サポートチームが予約の確認や、ご旅行に適した車両の確認をお手伝いします。</value></data>
+  <data name="Pickup date" xml:space="preserve"><value>お迎え日</value></data>
+  <data name="Please enter the pickup time." xml:space="preserve"><value>お迎え時間を入力してください。</value></data>
+  <data name="Please enter a valid pickup time." xml:space="preserve"><value>有効なお迎え時間を入力してください。</value></data>
+  <data name="Please select today or a future pickup date." xml:space="preserve"><value>本日または将来のお迎え日を選択してください。</value></data>
+  <data name="Popular point-to-point routes" xml:space="preserve"><value>人気のポイント間ルート</value></data>
+  <data name="Hanoi - Trang An" xml:space="preserve"><value>ハノイ - チャンアン</value></data>
+  <data name="Hanoi - Ha Long" xml:space="preserve"><value>ハノイ - ハロン</value></data>
+  <data name="Hanoi - Sa Pa" xml:space="preserve"><value>ハノイ - サパ</value></data>
+  <data name="800,000 VND" xml:space="preserve"><value>800,000 VND</value></data>
+  <data name="1,200,000 VND" xml:space="preserve"><value>1,200,000 VND</value></data>
+  <data name="2,300,000 VND" xml:space="preserve"><value>2,300,000 VND</value></data>
+  <data name="one way" xml:space="preserve"><value>片道</value></data>
+  <data name="View details" xml:space="preserve"><value>詳細を見る</value></data>
+  <data name="Previous routes" xml:space="preserve"><value>前のルート</value></data>
+  <data name="Next routes" xml:space="preserve"><value>次のルート</value></data>
+  <data name="Latest news" xml:space="preserve"><value>最新ニュース</value></data>
+  <data name="Top 08 best mountain-view resorts in Ninh Binh 2026" xml:space="preserve"><value>2026年 ニンビンの山景色が美しいリゾート Top 08</value></data>
+  <data name="10 best spring destinations near Hanoi in 2026" xml:space="preserve"><value>2026年 ハノイ近郊の春旅スポット10選</value></data>
+  <data name="0 reviews" xml:space="preserve"><value>0件のレビュー</value></data>
+  <data name="20 March 2026" xml:space="preserve"><value>2026年3月20日</value></data>
+  <data name="10 March 2026" xml:space="preserve"><value>2026年3月10日</value></data>
+  <data name="Premium transfer" xml:space="preserve"><value>プレミアム送迎</value></data>
+  <data name="1. Enter trip details" xml:space="preserve"><value>1. 旅程情報を入力</value></data>
+  <data name="10,000+ happy travelers" xml:space="preserve"><value>10,000人以上の満足した旅行者</value></data>
+  <data name="2. Select vehicle" xml:space="preserve"><value>2. 車両を選択</value></data>
+  <data name="24/7 support" xml:space="preserve"><value>24時間サポート</value></data>
+  <data name="3. Confirm booking" xml:space="preserve"><value>3. 予約を確認</value></data>
+  <data name="4. Meet your driver" xml:space="preserve"><value>4. ドライバーと合流</value></data>
+  <data name="Add more comfort to your transfer" xml:space="preserve"><value>送迎にさらに快適さを追加</value></data>
+  <data name="Always on time" xml:space="preserve"><value>いつも時間通り</value></data>
+  <data name="Book your ride in 4 simple steps" xml:space="preserve"><value>4つの簡単なステップで予約</value></data>
+  <data name="Booking process" xml:space="preserve"><value>予約の流れ</value></data>
+  <data name="Choose a vehicle that matches your group, luggage and comfort level." xml:space="preserve"><value>人数、荷物、快適さに合う車両をお選びください。</value></data>
+  <data name="Choose airport, address, time and passengers." xml:space="preserve"><value>空港、住所、時間、乗客数を選択します。</value></data>
+  <data name="Clean cars for business and leisure travel." xml:space="preserve"><value>ビジネスにも観光にも適した清潔な車両。</value></data>
+  <data name="Clean private cars" xml:space="preserve"><value>清潔な専用車</value></data>
+  <data name="Compare capacity, comfort and estimated price." xml:space="preserve"><value>定員、快適さ、見積料金を比較できます。</value></data>
+  <data name="Driver meets you on time at the agreed point." xml:space="preserve"><value>ドライバーが指定場所に時間通りお迎えします。</value></data>
+  <data name="Easy booking, fair price and polite driver." xml:space="preserve"><value>簡単予約、適正価格、丁寧なドライバー。</value></data>
+  <data name="Estimated route price before you confirm." xml:space="preserve"><value>確定前にルートの見積料金を確認できます。</value></data>
+  <data name="Fast support on WhatsApp after landing." xml:space="preserve"><value>到着後もWhatsAppで迅速にサポート。</value></data>
+  <data name="Featured service" xml:space="preserve"><value>注目サービス</value></data>
+  <data name="Featured services" xml:space="preserve"><value>注目サービス</value></data>
+  <data name="Fixed price airport pickup" xml:space="preserve"><value>固定料金の空港送迎</value></data>
+  <data name="Popular" xml:space="preserve"><value>人気</value></data>
+  <data name="Premium fleet" xml:space="preserve"><value>プレミアム車両</value></data>
+  <data name="Reach us through phone or messaging apps." xml:space="preserve"><value>電話またはメッセージアプリでご連絡ください。</value></data>
+  <data name="Recommended for business travel in Vietnam." xml:space="preserve"><value>ベトナムでの出張におすすめです。</value></data>
+  <data name="Select helpful extras during checkout, prepared together with your private ride." xml:space="preserve"><value>チェックアウト時に便利な追加サービスを選択できます。</value></data>
+  <data name="Smooth pickup and a very clean sedan." xml:space="preserve"><value>スムーズなお迎えととても清潔なセダン。</value></data>
+  <data name="Testimonials" xml:space="preserve"><value>お客様の声</value></data>
+  <data name="Transparent fare" xml:space="preserve"><value>明確な料金</value></data>
+  <data name="Trusted by international travelers" xml:space="preserve"><value>海外旅行者から信頼されています</value></data>
+  <data name="Verified traveler" xml:space="preserve"><value>認証済み旅行者</value></data>
+  <data name="We plan airport pickups around your flight." xml:space="preserve"><value>フライトに合わせて空港送迎を手配します。</value></data>
+  <data name="Why choose us" xml:space="preserve"><value>選ばれる理由</value></data>
+  <data name="Your booking number is created before payment." xml:space="preserve"><value>お支払い前に予約番号が発行されます。</value></data>
+</root>

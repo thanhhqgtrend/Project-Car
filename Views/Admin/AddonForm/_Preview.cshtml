@@ -1,0 +1,26 @@
+@model CarBookingAddonFormViewModel
+        <aside class="vehicle-preview-panel">
+            <div class="vehicle-preview-image addon-preview-image">
+                @if (!string.IsNullOrWhiteSpace(Model.CurrentImageUrl))
+                {
+                    <img id="addonPreviewImage" src="@CloudinaryUrlHelper.Transform(Model.CurrentImageUrl, CloudinaryUrlHelper.PublicAddonCard)" alt="@Model.Name" decoding="async" />
+                }
+                else
+                {
+                    <i id="addonPreviewIcon" class="bi bi-stars"></i>
+                }
+            </div>
+            <div class="vehicle-preview-body">
+                <div class="vehicle-preview-title">
+                    <h2 id="addonPreviewName">@(string.IsNullOrWhiteSpace(Model.Name) ? "Addon name" : Model.Name)</h2>
+                    <span id="addonPreviewActive" class="admin-status">@(Model.IsActive ? "Active" : "Inactive")</span>
+                </div>
+                <p id="addonPreviewDescription">@(string.IsNullOrWhiteSpace(Model.Description) ? "Short description for customers." : Model.Description)</p>
+                <div class="vehicle-preview-stats">
+                    <div><span>Price</span><strong id="addonPreviewPrice">$@Model.PriceUsd.ToString("0.00")</strong></div>
+                    <div><span>Rule</span><strong id="addonPreviewMode">@Model.PricingMode</strong></div>
+                    <div><span>Included</span><strong id="addonPreviewIncluded">@Model.IncludedQuantity</strong></div>
+                    <div><span>Order</span><strong id="addonPreviewOrder">@Model.DisplayOrder</strong></div>
+                </div>
+            </div>
+        </aside>

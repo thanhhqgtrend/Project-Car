@@ -1,0 +1,34 @@
+@model AdminSettingsViewModel
+            <div class="tab-pane fade" id="booking-panel" role="tabpanel" aria-labelledby="booking-tab" tabindex="0">
+    <form class="admin-panel settings-form" method="post" action='@Url.Action("SaveBookingSettings")'>
+        @Html.AntiForgeryToken()
+        <div class="settings-section-heading">
+            <i class="bi bi-receipt"></i>
+            <div>
+                <h2>Booking pricing defaults</h2>
+                <p>Used for new checkout price calculations only.</p>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-3">
+                <label class="form-label" for="BookingTaxFeeRate">Tax / fee rate</label>
+                @Html.TextBoxFor(m => m.BookingTaxFeeRate, new { @class = "form-control form-control-lg", type = "number", min = "0", max = "1", step = "0.01" })
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label" for="BookingCouponCode">Coupon code</label>
+                @Html.TextBoxFor(m => m.BookingCouponCode, new { @class = "form-control form-control-lg" })
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label" for="BookingDiscountRate">Discount rate</label>
+                @Html.TextBoxFor(m => m.BookingDiscountRate, new { @class = "form-control form-control-lg", type = "number", min = "0", max = "1", step = "0.01" })
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label" for="PaymentCurrency">Payment currency</label>
+                @Html.TextBoxFor(m => m.PaymentCurrency, new { @class = "form-control form-control-lg text-uppercase", maxlength = "12" })
+            </div>
+        </div>
+        <div class="admin-form-actions">
+            <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save booking defaults</button>
+        </div>
+    </form>
+            </div>

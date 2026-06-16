@@ -1,0 +1,36 @@
+@model CmsPageFormViewModel
+                <section class="vehicle-form-section">
+                    <div class="settings-section-heading">
+                        <i class="bi bi-image"></i>
+                        <div>
+                            <h2>Featured and OG images</h2>
+                            <p>Upload a new image or choose one from the media library.</p>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-6"><label class="form-label" for="FeaturedImageFile">Upload featured image</label><input class="form-control form-control-lg" name="FeaturedImageFile" id="FeaturedImageFile" type="file" accept="image/jpeg,image/png,image/webp" /></div>
+                        <div class="col-lg-6"><label class="form-label" for="FeaturedImageAltText">Featured image alt</label>@Html.TextBoxFor(m => m.FeaturedImageAltText, new { @class = "form-control form-control-lg" })</div>
+                        <div class="col-12">
+                            <label class="form-label" for="FeaturedMediaAssetId">Featured image from media library</label>
+                            <div class="vehicle-media-picker">
+                                <label class="vehicle-media-option no-image"><input type="radio" name="FeaturedMediaAssetId" value="" checked="@(!Model.FeaturedMediaAssetId.HasValue)" /><span><i class="bi bi-slash-circle"></i> No image</span></label>
+                                @foreach (var asset in Model.AvailableMedia)
+                                {
+                                    <label class="vehicle-media-option"><input type="radio" name="FeaturedMediaAssetId" value="@asset.Id" checked="@(Model.FeaturedMediaAssetId == asset.Id)" /><img src="@CloudinaryUrlHelper.For(asset, CloudinaryUrlHelper.MediaLibraryCard)" alt="@asset.AltText" loading="lazy" decoding="async" /><span>@asset.FileName</span></label>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-lg-6"><label class="form-label" for="OgImageFile">Upload OG image</label><input class="form-control form-control-lg" name="OgImageFile" id="OgImageFile" type="file" accept="image/jpeg,image/png,image/webp" /></div>
+                        <div class="col-lg-6"><label class="form-label" for="OgImageAltText">OG image alt</label>@Html.TextBoxFor(m => m.OgImageAltText, new { @class = "form-control form-control-lg" })</div>
+                        <div class="col-12">
+                            <label class="form-label" for="OgMediaAssetId">OG image from media library</label>
+                            <div class="vehicle-media-picker">
+                                <label class="vehicle-media-option no-image"><input type="radio" name="OgMediaAssetId" value="" checked="@(!Model.OgMediaAssetId.HasValue)" /><span><i class="bi bi-slash-circle"></i> No image</span></label>
+                                @foreach (var asset in Model.AvailableMedia)
+                                {
+                                    <label class="vehicle-media-option"><input type="radio" name="OgMediaAssetId" value="@asset.Id" checked="@(Model.OgMediaAssetId == asset.Id)" /><img src="@CloudinaryUrlHelper.For(asset, CloudinaryUrlHelper.MediaLibraryCard)" alt="@asset.AltText" loading="lazy" decoding="async" /><span>@asset.FileName</span></label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </section>

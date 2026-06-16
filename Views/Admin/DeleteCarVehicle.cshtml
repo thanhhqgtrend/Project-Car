@@ -1,0 +1,39 @@
+﻿@model CarVehicleType
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Deactivate Vehicle";
+}
+
+<section class="admin-shell">
+    <a href="/admin/vehicles" class="admin-back">â† Back to vehicles</a>
+    <div class="admin-page-heading">
+        <div>
+            <h1>Deactivate vehicle</h1>
+            <p>This soft delete hides the vehicle from public booking while preserving old booking history.</p>
+        </div>
+    </div>
+
+    <div class="admin-panel delete-panel">
+        <h2>@Model.Name</h2>
+        <p>@Model.Description</p>
+        <dl class="summary-list">
+            <dt>Capacity</dt><dd>@Model.PassengerCapacity passengers, @Model.LuggageCapacity bags</dd>
+            <dt>Pricing</dt><dd>$@Model.BaseFareUsd.ToString("0.00") base, $@Model.PricePerKmUsd.ToString("0.00") / km</dd>
+            <dt>Status</dt><dd>@(Model.IsActive ? "Active" : "Inactive")</dd>
+        </dl>
+
+        @if (Model.IsActive)
+        {
+            <form method="post" action="/admin/vehicles/@Model.Id/delete" class="admin-form-actions">
+                @Html.AntiForgeryToken()
+                <a class="btn btn-outline-secondary" href="/admin/vehicles/@Model.Id">Cancel</a>
+                <button class="btn btn-danger" type="submit">Deactivate vehicle</button>
+            </form>
+        }
+        else
+        {
+            <div class="alert alert-warning">This vehicle is already inactive.</div>
+            <a class="btn btn-outline-secondary" href="/admin/vehicles?status=inactive">Back to inactive vehicles</a>
+        }
+    </div>
+</section>

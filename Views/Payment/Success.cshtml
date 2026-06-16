@@ -1,0 +1,28 @@
+@model Booking
+@{
+    ViewData["Title"] = L["Payment Successful"];
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>@L["Payment successful"]</h1>
+        <p>@L["Booking"] @Model.BookingNumber @L["has been paid. A payment confirmation email has been sent according to the system configuration."]</p>
+    </div>
+</section>
+
+<section class="container confirmation-grid">
+    <div class="confirmation-main">
+        <div class="status-banner status-paid">
+            <span>@L["Status"]</span>
+            <strong>@Model.Status</strong>
+        </div>
+        <h2>@L["Order summary"]</h2>
+        <dl class="summary-list">
+            <dt>@L["Route"]</dt><dd>@Model.PickupAddress → @Model.DropoffAddress</dd>
+            <dt>@L["Vehicle"]</dt><dd>@Model.CarVehicleType?.Name</dd>
+            <dt>@L["Total paid"]</dt><dd>$@Model.EstimatedPriceUsd.ToString("0.00")</dd>
+            <dt>@L["Contact"]</dt><dd>@Model.Title @Model.FullName, @Model.Email, @Model.Phone</dd>
+        </dl>
+        <a class="btn btn-outline-gold" href="/booking/confirmation/@Model.BookingNumber">@L["View booking details"]</a>
+    </div>
+</section>

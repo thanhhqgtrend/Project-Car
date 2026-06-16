@@ -1,0 +1,18 @@
+@model BlogPostFormViewModel
+                <section class="vehicle-form-section">
+                    <div class="settings-section-heading">
+                        <i class="bi bi-search"></i>
+                        <div>
+                            <h2>SEO metadata</h2>
+                            <p>Meta, canonical, robots and Open Graph text for this language.</p>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-6"><label class="form-label" for="MetaTitle">Meta title</label><input class="form-control form-control-lg" name="MetaTitle" id="MetaTitle" value="@Model.MetaTitle" /></div>
+                        <div class="col-lg-6"><label class="form-label" for="Robots">Robots</label><input class="form-control form-control-lg" name="Robots" id="Robots" value="@Model.Robots" placeholder="index,follow" /></div>
+                        <div class="col-12"><label class="form-label" for="MetaDescription">Meta description</label><textarea class="form-control" name="MetaDescription" id="MetaDescription" rows="3">@Model.MetaDescription</textarea></div>
+                        <div class="col-12"><label class="form-label" for="CanonicalUrl">Canonical URL</label><input class="form-control form-control-lg" name="CanonicalUrl" id="CanonicalUrl" value="@Model.CanonicalUrl" placeholder="Leave blank to use /blog/{slug}" /></div>
+                        <div class="col-lg-6"><label class="form-label" for="OgTitle">OG title</label><input class="form-control form-control-lg" name="OgTitle" id="OgTitle" value="@Model.OgTitle" /></div>
+                        <div class="col-lg-6"><label class="form-label" for="OgDescription">OG description</label><textarea class="form-control" name="OgDescription" id="OgDescription" rows="3">@Model.OgDescription</textarea></div>
+                    </div>
+                </section>

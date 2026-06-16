@@ -1,0 +1,157 @@
+@model PopularRouteFormViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var mode = ViewData["PopularRouteFormMode"]?.ToString() ?? "Edit";
+    var cloudinaryConfigured = ViewData["CloudinaryConfigured"] as bool? ?? false;
+    ViewData["Title"] = $"{mode} Popular Route";
+    var action = mode == "Create" ? "/admin/popular-routes/create" : $"/admin/popular-routes/{Model.Id}/edit";
+}
+
+<section class="admin-shell">
+    <a href="/admin/popular-routes" class="admin-back">&larr; Back to popular routes</a>
+    <div class="admin-page-heading">
+        <div><h1>@mode popular route</h1><p>Set route text, price label, destination image and public visibility.</p></div>
+    </div>
+
+    <div class="vehicle-edit-grid">
+        @if (!cloudinaryConfigured)
+        {
+            <div class="alert alert-warning vehicle-form-alert">Cloudinary is not configured. Existing media can be selected, but new image upload requires Cloudinary credentials.</div>
+        }
+        <form class="admin-panel vehicle-form vehicle-editor-card" method="post" action="@action" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="vehicle-form-sections">
+                <section class="vehicle-form-section">
+                    <div class="vehicle-form-section-heading">
+                        <i class="bi bi-signpost-2"></i>
+                        <div>
+                            <h2>Route details</h2>
+                            <p>Customer-facing title, price label and link target.</p>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-8">
+                            <label class="form-label" for="Title">Route title</label>
+                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control form-control-lg", placeholder = "Hanoi - Trang An" })
+                            @Html.ValidationMessage("Title", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label" for="DisplayOrder">Display order</label>
+                            @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "form-control form-control-lg", type = "number", min = "0" })
+                            @Html.ValidationMessage("DisplayOrder", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="PriceLabel">Price label</label>
+                            @Html.TextBoxFor(m => m.PriceLabel, new { @class = "form-control form-control-lg", placeholder = "800,000 VND" })
+                            @Html.ValidationMessage("PriceLabel", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="BookingUrl">Booking URL</label>
+                            @Html.TextBoxFor(m => m.BookingUrl, new { @class = "form-control form-control-lg", placeholder = "/booking/search" })
+                            @Html.ValidationMessage("BookingUrl", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="Description">Description</label>
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "3", placeholder = "Private transfer from Hanoi to Trang An." })
+                            @Html.ValidationMessage("Description", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </section>
+
+                <section class="vehicle-form-section">
+                    <div class="vehicle-form-section-heading">
+                        <i class="bi bi-image"></i>
+                        <div>
+                            <h2>Route image</h2>
+                            <p>Upload a new Cloudinary image or select one from the media library.</p>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-7">
+                            <label class="form-label" for="ImageFile">Upload new image</label>
+                            <input class="form-control form-control-lg" name="ImageFile" id="ImageFile" type="file" accept="image/jpeg,image/png,image/webp" />
+                            <small class="text-muted">JPG, PNG or WebP. Maximum 5MB.</small>
+                            @Html.ValidationMessage("ImageFile", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-5">
+                            <label class="form-label" for="ImageAltText">Alt text</label>
+                            @Html.TextBoxFor(m => m.ImageAltText, new { @class = "form-control form-control-lg", placeholder = "Hanoi to Trang An private transfer" })
+                            @Html.ValidationMessage("ImageAltText", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="MediaAssetId">Choose from media library</label>
+                            <div class="vehicle-media-picker">
+                                <label class="vehicle-media-option no-image">
+                                    <input type="radio" name="MediaAssetId" value="" checked="@(!Model.MediaAssetId.HasValue)" />
+                                    <span><i class="bi bi-slash-circle"></i> No image</span>
+                                </label>
+                                @foreach (var asset in Model.AvailableMedia)
+                                {
+                                    <label class="vehicle-media-option">
+                                        <input type="radio" name="MediaAssetId" value="@asset.Id" checked="@(Model.MediaAssetId == asset.Id)" />
+                                        <img src="@CloudinaryUrlHelper.For(asset, CloudinaryUrlHelper.MediaLibraryCard)" alt="@asset.AltText" loading="lazy" decoding="async" />
+                                        <span>@asset.FileName</span>
+                                    </label>
+                                }
+                            </div>
+                            <small class="text-muted">Uploading a new image will override this selection after save.</small>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="vehicle-form-section">
+                    <div class="vehicle-form-section-heading">
+                        <i class="bi bi-toggle-on"></i>
+                        <div>
+                            <h2>Visibility</h2>
+                            <p>Control whether this route appears on the public homepage.</p>
+                        </div>
+                    </div>
+                    <label class="vehicle-toggle">
+                        @Html.CheckBoxFor(m => m.IsActive)
+                        <span>
+                            <strong>Active on public homepage</strong>
+                            <small>Inactive routes stay in admin but are hidden from visitors.</small>
+                        </span>
+                    </label>
+                </section>
+            </div>
+
+            <div class="admin-form-actions vehicle-form-actions">
+                <a class="btn btn-outline-secondary" href="/admin/popular-routes">Cancel</a>
+                <button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Save route</button>
+            </div>
+        </form>
+
+        <aside class="vehicle-preview-panel">
+            <div class="vehicle-preview-image addon-preview-image">
+                @if (!string.IsNullOrWhiteSpace(Model.CurrentImageUrl))
+                {
+                    <img id="routePreviewImage" src="@CloudinaryUrlHelper.Transform(Model.CurrentImageUrl, CloudinaryUrlHelper.PublicRouteCard)" alt="@Model.Title" decoding="async" />
+                }
+                else
+                {
+                    <i id="routePreviewIcon" class="bi bi-signpost-2"></i>
+                }
+            </div>
+            <div class="vehicle-preview-body">
+                <div class="vehicle-preview-title">
+                    <h2 id="routePreviewTitle">@(string.IsNullOrWhiteSpace(Model.Title) ? "Route title" : Model.Title)</h2>
+                    <span id="routePreviewActive" class="admin-status">@(Model.IsActive ? "Active" : "Inactive")</span>
+                </div>
+                <p id="routePreviewDescription">@(string.IsNullOrWhiteSpace(Model.Description) ? "Short description for this popular route." : Model.Description)</p>
+                <div class="vehicle-preview-stats">
+                    <div><span>Price</span><strong id="routePreviewPrice">@(string.IsNullOrWhiteSpace(Model.PriceLabel) ? "Price label" : Model.PriceLabel)</strong></div>
+                    <div><span>Order</span><strong id="routePreviewOrder">@Model.DisplayOrder</strong></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</section>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}
