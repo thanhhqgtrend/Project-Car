@@ -29,6 +29,11 @@
             <i class="bi bi-clock"></i> @L["Car hire"]
         </button>
     </li>
+    <li class="nav-item">
+        <button class="nav-link js-home-trip-tab" type="button" data-trip="Track" role="tab">
+            <i class="bi bi-search"></i> @L["Track booking"]
+        </button>
+    </li>
 </ul>
 
 <form class="row g-3 align-items-end js-booking-search-form" method="get" action="/booking/search" data-geoapify-key="@Model.GeoapifyApiKey" data-point-a-label="@pointALabel" data-point-b-label="@pointBLabel" data-pickup-label="@pickupPointLabel" data-dropoff-label="@dropoffPointLabel">
@@ -85,7 +90,13 @@
                 var end = document.getElementById('hire-end-date').value;
                 var pickup = document.getElementById('hire-pickup').value;
                 var pax = document.getElementById('hire-pax').value;
-               window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&PickupAddress=' + encodeURIComponent(pickup) + '&PassengerCount=' + pax;
+if (!pickup) {
+    var err = document.getElementById('hire-pickup-error');
+    err.style.display = 'block';
+    return;
+}
+document.getElementById('hire-pickup-error').style.display = 'none';
+window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&PickupAddress=' + encodeURIComponent(pickup) + '&PassengerCount=' + pax;
             } else {
                 document.querySelector('.js-booking-search-form').submit();
             }
@@ -111,6 +122,7 @@
     <div class="col-md-4">
         <label class="form-label">@L["Pickup address"] <span class="required-star">*</span></label>
         <input class="form-control" type="text" id="hire-pickup" placeholder="@L["Hotel, address, city or landmark"]" />
+        <span id="hire-pickup-error" class="text-danger" style="display:none;">@L["Please enter the pickup point."]</span>
     </div>
     <div class="col-md-2">
         <label class="form-label">@L["Passengers"]</label>
@@ -127,8 +139,33 @@
             var end = document.getElementById('hire-end-date').value;
             var pickup = document.getElementById('hire-pickup').value;
             var pax = document.getElementById('hire-pax').value;
-            window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&PickupAddress=' + encodeURIComponent(pickup) + '&PassengerCount=' + pax;
+ if (!pickup) {
+    var err = document.getElementById('hire-pickup-error');
+    err.style.display = 'block';
+    return;
+}
+document.getElementById('hire-pickup-error').style.display = 'none';
+window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&PickupAddress=' + encodeURIComponent(pickup) + '&PassengerCount=' + pax;
         ">@L["Search"]</button>
+    </div>
+</div>
+
+<div class="js-track-form row g-3 align-items-end" style="display:none;">
+    <div class="col-md-4">
+        <label class="form-label">@L["Booking number"]</label>
+        <input class="form-control" id="track-booking-number" placeholder="VD: C00005" />
+    </div>
+    <div class="col-md-5">
+        <label class="form-label">@L["Email or phone number"]</label>
+        <input class="form-control" id="track-email-phone" placeholder="@L["Email or phone used when booking"]" />
+    </div>
+    <div class="col-md-3 d-grid">
+        <button class="btn btn-gold" type="button" onclick="
+            var bn = document.getElementById('track-booking-number').value;
+            var ep = document.getElementById('track-email-phone').value;
+            if (!bn || !ep) return;
+            window.location.href = '/booking/track?bookingNumber=' + encodeURIComponent(bn) + '&emailOrPhone=' + encodeURIComponent(ep);
+        ">@L["Track booking"]</button>
     </div>
 </div>
 
@@ -136,14 +173,21 @@
     function toggleHireForm(tripType) {
         var hireForm = document.querySelector('.js-hire-form');
         var bookingForm = document.querySelector('.js-booking-search-form');
+        var trackForm = document.querySelector('.js-track-form');
         var searchBtn = document.getElementById('search-btn');
         if (!hireForm) return;
         if (tripType === 'Hire') {
             hireForm.style.display = 'flex';
             bookingForm.style.display = 'none';
+            if (trackForm) trackForm.style.display = 'none';
+        } else if (tripType === 'Track') {
+            hireForm.style.display = 'none';
+            bookingForm.style.display = 'none';
+            if (trackForm) trackForm.style.display = 'flex';
         } else {
             hireForm.style.display = 'none';
             bookingForm.style.display = '';
+            if (trackForm) trackForm.style.display = 'none';
         }
     }
 

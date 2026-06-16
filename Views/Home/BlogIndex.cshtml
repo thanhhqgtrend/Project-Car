@@ -4,36 +4,76 @@
     ViewData["MetaDescription"] = "Latest Vietnam transfer travel guides and private car tips.";
 }
 
-<section class="page-hero">
+<section class="blog-hero page-hero">
     <div class="container">
-        <h1>Blog</h1>
-        <p>Travel guides, route tips and private transfer planning notes.</p>
+        <h1>@L["Blog"]</h1>
+        <p>@L["Travel guides, route tips and private transfer planning notes."]</p>
     </div>
 </section>
 
-<section class="container content-page">
-    <div class="latest-news-grid">
-        @if (!Model.Posts.Any())
-        {
-            <div class="admin-panel">No blog posts published yet.</div>
-        }
-        @foreach (var post in Model.Posts)
-        {
-            <article class="latest-news-card">
-                <a class="latest-news-image" href="/blog/@post.Translation.Slug" aria-label="@post.Translation.Title">
-                    @if (!string.IsNullOrWhiteSpace(post.Post.FeaturedMediaAsset?.SecureUrl))
+<section class="container" style="margin-top:2rem; margin-bottom:3rem;">
+    <div class="row g-4">
+        <div class="col-lg-8">
+
+            @if (!Model.Posts.Any())
+            {
+                <div class="alert alert-info">@L["No blog posts published yet."]</div>
+            }
+
+            <div class="latest-news-grid">
+                @foreach (var post in Model.Posts)
+                {
+                    var published = post.Post.PublishedAtUtc ?? post.Post.CreatedAtUtc;
+                    <article class="latest-news-card">
+                        <a class="latest-news-image" href="/blog/@post.Translation.Slug">
+                            @if (!string.IsNullOrWhiteSpace(post.Post.FeaturedMediaAsset?.SecureUrl))
+                            {
+                                <img src="@CloudinaryUrlHelper.For(post.Post.FeaturedMediaAsset, CloudinaryUrlHelper.BlogCard)" alt="@post.Translation.Title" loading="lazy" decoding="async" width="640" height="360" />
+                            }
+                            else
+                            {
+                                <img src="/images/home-hero-airport-transfer.webp" alt="@post.Translation.Title" loading="lazy" decoding="async" width="640" height="360" />
+                            }
+                        </a>
+                        <div class="latest-news-body">
+                            <div class="news-date"><i class="bi bi-calendar3"></i> @published.ToString("dd MMMM yyyy", CultureInfo.CurrentUICulture)</div>
+                            <h3><a href="/blog/@post.Translation.Slug">@post.Translation.Title</a></h3>
+                            <p>@post.Translation.Excerpt</p>
+                            <a href="/blog/@post.Translation.Slug" class="btn btn-outline-gold btn-sm">@L["Read more"]</a>
+                        </div>
+                    </article>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="blog-sidebar-panel">
+                <h4>@L["Search"]</h4>
+                <form method="get" action="/blog" class="d-flex gap-2">
+                    <input class="form-control" name="search" value="@Model.Search" placeholder="@L["Search..."]" />
+                    <button class="btn btn-gold"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+
+            <div class="blog-sidebar-panel mt-4">
+                <h4>@L["Featured posts"]</h4>
+                <ul class="blog-featured-list">
+                    @foreach (var post in Model.FeaturedPosts)
                     {
-                        <img src="@CloudinaryUrlHelper.For(post.Post.FeaturedMediaAsset, CloudinaryUrlHelper.BlogCard)" alt="@post.Translation.Title" loading="lazy" decoding="async" width="640" height="360" />
+                        var published = post.Post.PublishedAtUtc ?? post.Post.CreatedAtUtc;
+                        <li>
+                            @if (!string.IsNullOrWhiteSpace(post.Post.FeaturedMediaAsset?.SecureUrl))
+                            {
+                                <img src="@CloudinaryUrlHelper.For(post.Post.FeaturedMediaAsset, CloudinaryUrlHelper.BlogCard)" alt="@post.Translation.Title" width="80" height="60" loading="lazy" />
+                            }
+                            <div>
+                                <a href="/blog/@post.Translation.Slug">@post.Translation.Title</a>
+                                <small><i class="bi bi-calendar3"></i> @published.ToString("dd/MM/yyyy")</small>
+                            </div>
+                        </li>
                     }
-                    else
-                    {
-                        <img src="/wwwroot/images/home-hero-airport-transfer.webp" alt="@post.Translation.Title" loading="lazy" decoding="async" width="640" height="360" />
-                    }
-                </a>
-                <h3><a href="/blog/@post.Translation.Slug">@post.Translation.Title</a></h3>
-                <p>@post.Translation.Excerpt</p>
-                <div class="news-date"><i class="bi bi-calendar3"></i> @((post.Post.PublishedAtUtc ?? post.Post.CreatedAtUtc).ToString("dd MMMM yyyy", CultureInfo.CurrentUICulture))</div>
-            </article>
-        }
+                </ul>
+            </div>
+        </div>
     </div>
 </section>

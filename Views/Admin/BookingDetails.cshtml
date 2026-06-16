@@ -6,7 +6,7 @@
 }
 
 <section class="admin-shell">
-    <a href="/admin/bookings" class="admin-back">â† Back to bookings</a>
+    <a href="/admin/bookings" class="admin-back"> Back to bookings</a>
     <div class="admin-page-heading">
         <div><h1>@Model.BookingNumber</h1><p>@Model.FullName - @Model.Status</p></div>
         <a class="btn btn-gold" href="/admin/bookings/@Model.Id/edit"><i class="bi bi-pencil-square"></i> Edit booking</a>
@@ -26,7 +26,7 @@
                     <dt>Messaging</dt><dd>@Model.MessagingApp @Model.MessagingHandle</dd>
                     <dt>Flight</dt><dd>@Model.FlightNumber</dd>
                     <dt>Trip</dt><dd>@Model.TripType - @Model.Airport?.Name</dd>
-                    <dt>Route</dt><dd>@Model.PickupAddress â†’ @Model.DropoffAddress</dd>
+                    <dt>Route</dt><dd>@Model.PickupAddress &rarr; @Model.DropoffAddress</dd>
                     <dt>Vehicle</dt><dd>@Model.CarVehicleType?.Name</dd>
                     <dt>Distance</dt><dd>@Model.DistanceKm.ToString("0.0") km (@Model.DistanceStatus)</dd>
                     <dt>Base price</dt><dd>$@Model.BasePriceUsd.ToString("0.00")</dd>
@@ -81,7 +81,7 @@
                 <div class="rich-editor" id="ManualEmailBodyEditor" contenteditable="true">
                     <p>Dear @Model.FullName,</p>
                     <p>We are contacting you about booking <strong>@Model.BookingNumber</strong>.</p>
-                    <p>Route: @Model.PickupAddress â†’ @Model.DropoffAddress</p>
+                    <p>Route: @Model.PickupAddress &rarr; @Model.DropoffAddress</p>
                     <p>Best regards,<br>@siteBrandName team</p>
                 </div>
                 <textarea class="d-none js-rich-email-body" name="BodyHtml"></textarea>

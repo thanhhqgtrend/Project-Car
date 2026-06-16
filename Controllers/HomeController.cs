@@ -74,8 +74,7 @@ public class HomeController : Controller
             .ToListAsync();
         model.LatestBlogPosts = latestPosts.Select(x => ToBlogPostViewModel(x, culture, Request)).ToList();
         return View(model);
-    }
-
+        }
     [Route("pages/{slug}")]
     public async Task<ActionResult> Page(string slug)
     {
@@ -140,22 +139,40 @@ public class HomeController : Controller
     }
 
     [Route("blog")]
-    public async Task<ActionResult> Blog()
+    public async Task<ActionResult> Blog(string? search)
     {
         var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-        var posts = await _db.BlogPosts
+        var query = _db.BlogPosts
             .Include(x => x.FeaturedMediaAsset)
             .Include(x => x.OgMediaAsset)
             .Include("Translations.OgMediaAsset")
             .AsNoTracking()
-            .Where(x => x.DeletedAtUtc == null && x.IsPublished && (!x.PublishedAtUtc.HasValue || x.PublishedAtUtc <= DateTime.UtcNow))
+            .Where(x => x.DeletedAtUtc == null && x.IsPublished && (!x.PublishedAtUtc.HasValue || x.PublishedAtUtc <= DateTime.UtcNow));
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            query = query.Where(x => x.Translations.Any(t => t.Title.Contains(search) || t.Excerpt.Contains(search)));
+        }
+
+        var posts = await query
             .OrderByDescending(x => x.PublishedAtUtc ?? x.CreatedAtUtc)
             .Take(24)
             .ToListAsync();
 
+        var featured = await _db.BlogPosts
+            .Include(x => x.FeaturedMediaAsset)
+            .Include("Translations.OgMediaAsset")
+            .AsNoTracking()
+            .Where(x => x.DeletedAtUtc == null && x.IsPublished)
+            .OrderByDescending(x => x.PublishedAtUtc ?? x.CreatedAtUtc)
+            .Take(4)
+            .ToListAsync();
+
         return View("BlogIndex", new BlogIndexViewModel
         {
-            Posts = posts.Select(x => ToBlogPostViewModel(x, culture, Request)).Where(x => !string.IsNullOrWhiteSpace(x.Translation.Slug)).ToList()
+            Posts = posts.Select(x => ToBlogPostViewModel(x, culture, Request)).Where(x => !string.IsNullOrWhiteSpace(x.Translation.Slug)).ToList(),
+            FeaturedPosts = featured.Select(x => ToBlogPostViewModel(x, culture, Request)).Where(x => !string.IsNullOrWhiteSpace(x.Translation.Slug)).ToList(),
+            Search = search ?? string.Empty
         });
     }
 

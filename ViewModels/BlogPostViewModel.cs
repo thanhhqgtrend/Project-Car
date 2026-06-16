@@ -15,7 +15,4 @@ public class BlogPostViewModel
     public string OgImageUrl { get; set; } = string.Empty;
 }
 
-public class BlogIndexViewModel
-{
-    public List<BlogPostViewModel> Posts { get; set; } = [];
-}
+

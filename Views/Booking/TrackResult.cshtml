@@ -1,0 +1,65 @@
+@model Booking
+@{
+    ViewData["Title"] = L["Booking"] + " " + Model.BookingNumber;
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1>@L["Booking"] @Model.BookingNumber</h1>
+        <p>@Model.FullName</p>
+    </div>
+</section>
+
+<section class="container" style="max-width:600px; margin-top:2rem; margin-bottom:3rem;">
+    <div class="admin-panel">
+        <h2>@L["Booking status"]</h2>
+        <div class="mb-3 text-center">
+            @{
+                var statusClass = Model.Status switch
+                {
+                    BookingStatus.Paid => "text-success",
+                    BookingStatus.Confirmed => "text-success",
+                    BookingStatus.Cancelled => "text-danger",
+                    _ => "text-warning"
+                };
+            }
+            <span class="fs-4 fw-bold @statusClass">@Model.Status</span>
+        </div>
+
+        <dl class="summary-list">
+            <dt>@L["Trip type"]</dt>
+            <dd>@Model.TripType</dd>
+
+            @if (Model.Airport != null)
+            {
+                <dt>@L["Airport"]</dt>
+                <dd>@Model.Airport.Name</dd>
+            }
+
+            <dt>@L["Pickup address"]</dt>
+            <dd>@Model.PickupAddress</dd>
+
+            <dt>@L["Dropoff address"]</dt>
+            <dd>@Model.DropoffAddress</dd>
+
+            <dt>@L["Pickup date"]</dt>
+            <dd>@Model.PickupDateTimeUtc.AddHours(7).ToString("dd/MM/yyyy HH:mm")</dd>
+
+            <dt>@L["Passengers"]</dt>
+            <dd>@Model.PassengerCount</dd>
+
+            @if (Model.CarVehicleType != null)
+            {
+                <dt>@L["Vehicle"]</dt>
+                <dd>@Model.CarVehicleType.Name</dd>
+            }
+
+            <dt>@L["Total"]</dt>
+            <dd><strong>$@Model.TotalPriceUsd.ToString("0.00")</strong></dd>
+        </dl>
+
+        <div class="text-center mt-3">
+            <a href="javascript:history.back()" class="btn btn-outline-gold">@L["Go back"]</a>
+        </div>
+    </div>
+</section>

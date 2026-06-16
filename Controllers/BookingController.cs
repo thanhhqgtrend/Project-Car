@@ -291,6 +291,55 @@ public class BookingController : Controller
         });
     }
 
+    [Route("booking/track")]
+    [HttpGet]
+    public async Task<ActionResult> Track(string bookingNumber, string emailOrPhone)
+    {
+        if (string.IsNullOrWhiteSpace(bookingNumber) || string.IsNullOrWhiteSpace(emailOrPhone))
+        {
+            return View();
+        }
+
+        var booking = await _db.Bookings
+            .Include(x => x.Airport)
+            .Include(x => x.CarVehicleType)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.BookingNumber == bookingNumber.Trim());
+
+        if (booking == null || !MatchesBookingContact(booking, emailOrPhone))
+        {
+            ViewBag.Error = "Booking not found. Please check your details.";
+            return View();
+        }
+
+        return View("TrackResult", booking);
+    }
+
+    [Route("booking/track")]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> TrackPost(string bookingNumber, string emailOrPhone)
+    {
+        if (string.IsNullOrWhiteSpace(bookingNumber) || string.IsNullOrWhiteSpace(emailOrPhone))
+        {
+            ViewBag.Error = "Please enter your booking number and email or phone.";
+            return View("Track");
+        }
+
+        var booking = await _db.Bookings
+            .Include(x => x.Airport)
+            .Include(x => x.CarVehicleType)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.BookingNumber == bookingNumber.Trim());
+
+        if (booking == null || !MatchesBookingContact(booking, emailOrPhone))
+        {
+            ViewBag.Error = "Booking not found. Please check your booking number and contact details.";
+            return View("Track");
+        }
+
+        return View("TrackResult", booking);
+    }
     [Route("booking/confirmation/{bookingNumber}/verify")]
     [HttpPost]
     [ValidateAntiForgeryToken]

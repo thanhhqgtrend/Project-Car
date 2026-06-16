@@ -489,3 +489,140 @@
 }
 
 .booking-search-card {
+    .blog-sidebar-panel {
+        background: var(--color-soft);
+        border-radius: 8px;
+        padding: 1.5rem;
+    }
+
+    .blog-featured-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+        .blog-featured-list li {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .blog-featured-list img {
+            border-radius: 6px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .blog-featured-list a {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--color-ink);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .blog-featured-list small {
+            color: var(--color-muted);
+            font-size: 0.8rem;
+        }
+
+    .blog-newsletter {
+        background: var(--color-ink);
+        color: white;
+    }
+
+        .blog-newsletter h4,
+        .blog-newsletter p {
+            color: white;
+        }
+
+    .faq-hero {
+        text-align: center;
+    }
+
+    .faq-search {
+        max-width: 500px;
+        margin: 1.5rem auto 0;
+    }
+
+    .faq-cards {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .faq-card {
+        background: var(--color-soft);
+        border-radius: 12px;
+        padding: 1.5rem 1rem;
+        height: 100%;
+    }
+
+        .faq-card i {
+            font-size: 2rem;
+            color: var(--color-accent);
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .faq-card strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-card p {
+            font-size: 0.875rem;
+            color: var(--color-muted);
+            margin: 0;
+        }
+
+    .faq-section {
+        margin-bottom: 3rem;
+    }
+
+    .faq-section-title {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .faq-accordion .accordion-button:not(.collapsed) {
+        background: var(--color-soft);
+        color: var(--color-ink);
+        box-shadow: none;
+    }
+
+    .faq-accordion .accordion-button:focus {
+        box-shadow: none;
+    }
+
+    .faq-help-section {
+        background: var(--color-soft);
+        padding: 4rem 0;
+        text-align: center;
+    }
+
+    .faq-help-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem 1rem;
+    }
+
+        .faq-help-card i {
+            font-size: 2rem;
+            color: var(--color-accent);
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .faq-help-card strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-help-card p {
+            color: var(--color-muted);
+            margin: 0;
+        }

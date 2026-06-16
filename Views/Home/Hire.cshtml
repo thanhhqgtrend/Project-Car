@@ -21,7 +21,7 @@
                     @foreach (var vehicle in Model.Vehicles)
                     {
                         var dailyRate = vehicle.DailyRateUsd.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
-                        var hireUrl = $"/booking/checkout?TripType=Hire&CarVehicleTypeId={vehicle.Id}&OriginAddress={Uri.EscapeDataString(Model.PickupAddress)}&PickupDateTime={Model.StartDate:yyyy-MM-dd}&PassengerCount={Model.PassengerCount}&StartDate={Model.StartDate:yyyy-MM-dd}&EndDate={Model.EndDate:yyyy-MM-dd}";
+                        var hireUrl = $"/booking/checkout?TripType=Hire&CarVehicleTypeId={vehicle.Id}&OriginAddress={Uri.EscapeDataString(Model.PickupAddress ?? string.Empty)}&PickupDateTime={Model.StartDate:yyyy-MM-dd}&PassengerCount={Model.PassengerCount}&StartDate={Model.StartDate:yyyy-MM-dd}&EndDate={Model.EndDate:yyyy-MM-dd}";
                         <article class="vehicle-result-card">
                             <div class="vehicle-result-media">
                                 @if (!string.IsNullOrWhiteSpace(vehicle.Image?.SecureUrl))
@@ -44,6 +44,10 @@
                                 <div class="vehicle-badges">
                                     <span>@L["No km limit"]</span>
                                     <span>@L["Flexible schedule"]</span>
+                                </div>
+                                <div class="vehicle-policy">
+                                    <strong>@L["Policy and cancellation"]</strong>
+                                    <span>@L["Free cancellation up to 24h before pickup. Final driver details are confirmed after payment."]</span>
                                 </div>
                             </div>
                             <div class="vehicle-result-price">

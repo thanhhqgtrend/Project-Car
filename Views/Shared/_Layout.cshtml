@@ -116,10 +116,30 @@
                 <h2>@L["Get transfer offers"]</h2>
                 <p>@L["Receive route deals and travel tips for Vietnam."]</p>
             </div>
-            <form class="newsletter-form">
-                <input type="email" class="form-control" placeholder="@L["Your email address"]" aria-label="Email">
-                <button type="button" class="btn btn-gold">@L["Subscribe"]</button>
-            </form>
+<form class="newsletter-form" id="brevo-newsletter-form">
+    <input type="email" name="EMAIL" id="brevo-email" class="form-control" placeholder="@L["Your email address"]" aria-label="Email" required />
+    <button type="submit" class="btn btn-gold">@L["Subscribe"]</button>
+</form>
+<span id="brevo-success" style="display:none; color:white;">&#10003; @L["Thank you! You have subscribed successfully."]</span>
+
+<script>
+document.getElementById('brevo-newsletter-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = document.getElementById('brevo-email').value;
+    var form = new FormData();
+    form.append('EMAIL', email);
+    form.append('email_address_check', '');
+    form.append('locale', 'en');
+    fetch('https://a0642ab1.sibforms.com/serve/MUIFAFstXiKs6tm1RXOjHfxgkm0zf9onu_8PNn5fsEYrzbJB4XWNDJDxs2AKKeNvRwxnzJQDyszhR2qi963duPfL_eKuE30Skm_aSHj4z9sBaYgbC8IwLhC3mqprwq1lid7QuWC_kL1vnr1uO-0MEzMwNyPV-WreBUikCqCkMWZAG_XX2biNYXtYuoedX6h6AEcNBc-RUwk1RzS6oQ==', {
+        method: 'POST',
+        body: form,
+        mode: 'no-cors'
+    }).then(function() {
+        document.getElementById('brevo-newsletter-form').style.display = 'none';
+        document.getElementById('brevo-success').style.display = 'block';
+    });
+});
+</script>
         </div>
     </section>
 

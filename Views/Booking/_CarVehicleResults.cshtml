@@ -1,6 +1,6 @@
 @model BookingSearchViewModel
 @{
-    var siteBrandName = AppSettings.GetAsync("Site:BrandName", "Vietnam Transfer");
+    var siteBrandName = AppSettings.GetAsync("Site:BrandName", "Vietnam Transfer").Result;
 }
 
 <section class="container booking-results">

@@ -61,7 +61,16 @@
                             <tr>
                                 <td><strong>@booking.BookingNumber</strong><br><small>@booking.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm") UTC</small></td>
                                 <td>@booking.FullName<br><small>@booking.Email</small></td>
-                                <td>@airportCode<br><small>@booking.PickupAddress â†’ @booking.DropoffAddress</small></td>
+                                <td>
+                                    @if (booking.TripType == TripType.Hire)
+                                    {
+                                        <small>Car hire</small>
+                                    }
+                                    else
+                                    {
+                                        @airportCode<br><small>@booking.PickupAddress &rarr; @booking.DropoffAddress</small>
+                                    }
+                                </td>
                                 <td>$@booking.EstimatedPriceUsd.ToString("0.00")</td>
                                 <td><span class="admin-status">@booking.Status</span></td>
                                 <td><a class="btn btn-sm btn-outline-gold" href="/admin/bookings/@booking.Id">Open</a></td>
