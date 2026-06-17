@@ -293,39 +293,32 @@ public class BookingController : Controller
 
     [Route("booking/track")]
     [HttpGet]
-    public async Task<ActionResult> Track(string bookingNumber, string emailOrPhone)
+    public ActionResult Track()
     {
-        if (string.IsNullOrWhiteSpace(bookingNumber) || string.IsNullOrWhiteSpace(emailOrPhone))
-        {
-            return View();
-        }
-
-        var booking = await _db.Bookings
-            .Include(x => x.Airport)
-            .Include(x => x.CarVehicleType)
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.BookingNumber == bookingNumber.Trim());
-
-        if (booking == null || !MatchesBookingContact(booking, emailOrPhone))
-        {
-            ViewBag.Error = "Booking not found. Please check your details.";
-            return View();
-        }
-
-        return View("TrackResult", booking);
+        return RedirectToAction("Search");
     }
 
-    [Route("booking/track")]
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<ActionResult> TrackPost(string bookingNumber, string emailOrPhone)
+
+    [Route("booking/track/check")]
+    [HttpGet]
+    public async Task<ActionResult> TrackCheck(string bookingNumber, string emailOrPhone)
     {
         if (string.IsNullOrWhiteSpace(bookingNumber) || string.IsNullOrWhiteSpace(emailOrPhone))
-        {
-            ViewBag.Error = "Please enter your booking number and email or phone.";
-            return View("Track");
-        }
+            return Json(new { found = false, error = "Please enter your booking number and email or phone." }, JsonRequestBehavior.AllowGet);
 
+        var booking = await _db.Bookings.AsNoTracking()
+            .FirstOrDefaultAsync(x => x.BookingNumber == bookingNumber.Trim());
+
+        if (booking == null || !MatchesBookingContact(booking, emailOrPhone))
+            return Json(new { found = false, error = "Booking not found. Please check your details." }, JsonRequestBehavior.AllowGet);
+
+        return Json(new { found = true }, JsonRequestBehavior.AllowGet);
+    }
+
+    [Route("booking/track/result")]
+    [HttpGet]
+    public async Task<ActionResult> TrackResult(string bookingNumber, string emailOrPhone)
+    {
         var booking = await _db.Bookings
             .Include(x => x.Airport)
             .Include(x => x.CarVehicleType)
@@ -333,10 +326,7 @@ public class BookingController : Controller
             .FirstOrDefaultAsync(x => x.BookingNumber == bookingNumber.Trim());
 
         if (booking == null || !MatchesBookingContact(booking, emailOrPhone))
-        {
-            ViewBag.Error = "Booking not found. Please check your booking number and contact details.";
-            return View("Track");
-        }
+            return RedirectToAction("Search");
 
         return View("TrackResult", booking);
     }

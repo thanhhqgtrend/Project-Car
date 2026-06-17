@@ -43,7 +43,7 @@
                                 @(booking.Airport?.Code ?? "-")<br><small>@booking.PickupAddress &rarr;@booking.DropoffAddress</small>
                             }
                         </td>
-                        <td>@booking.CarVehicleType?.Name<br><small>@booking.PassengerCount pax</small></td>
+                        <td>@(booking.CarVehicleType?.Name ?? "-")<br><small>@booking.PassengerCount pax</small></td>
                         <td>$@booking.EstimatedPriceUsd.ToString("0.00")</td>
                         <td><span class="admin-status">@booking.Status</span></td>
                         <td><a class="btn btn-sm btn-outline-gold" href="/admin/bookings/@booking.Id">Open</a></td>

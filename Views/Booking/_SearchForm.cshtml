@@ -39,6 +39,7 @@
 <form class="row g-3 align-items-end js-booking-search-form" method="get" action="/booking/search" data-geoapify-key="@Model.GeoapifyApiKey" data-point-a-label="@pointALabel" data-point-b-label="@pointBLabel" data-pickup-label="@pickupPointLabel" data-dropoff-label="@dropoffPointLabel">
     <input type="hidden" name="SearchSubmitted" value="true" />
     <input class="js-home-trip-type" type="hidden" name="TripType" value="@Model.TripType" />
+    
     <div class="col-md-3 js-home-airport-field js-airport-field">
         <label class="form-label">@L["Airport"]</label>
         <input class="form-control js-airport-autocomplete" list="airportOptions" value="@selectedAirport" placeholder="@L["Search airport"]" autocomplete="off" />
@@ -49,17 +50,17 @@
                 <option value="@airport.Text" data-id="@airport.Value"></option>
             }
         </datalist>
-        @Html.ValidationMessage("AirportId", "", new { @class = "text-danger" })
+        @Html.ValidationMessage("AirportId", "", new { @class = "text-danger fs-7 mt-1 d-block" })
     </div>
     <div class="col-md-4 js-home-origin-field">
         <label class="form-label js-home-origin-label">@L["Pickup point"]</label>
         <input class="form-control js-place-autocomplete" name="OriginAddress" id="OriginAddress" placeholder="@L["Hotel, address, city or landmark"]" />
-        @Html.ValidationMessage("OriginAddress", "", new { @class = "text-danger" })
+        @Html.ValidationMessage("OriginAddress", "", new { @class = "text-danger fs-7 mt-1 d-block" })
     </div>
     <div class="col-md-4 js-home-destination-field">
         <label class="form-label js-home-destination-label">@L["Dropoff point"]</label>
         <input class="form-control js-place-autocomplete" name="DestinationAddress" id="DestinationAddress" placeholder="@L["Hotel, address, city or landmark"]" />
-        @Html.ValidationMessage("DestinationAddress", "", new { @class = "text-danger" })
+        @Html.ValidationMessage("DestinationAddress", "", new { @class = "text-danger fs-7 mt-1 d-block" })
     </div>
     <div class="col-md-2">
         <label class="form-label">@L["Pickup date"]</label>
@@ -67,7 +68,7 @@
             <i class="bi bi-calendar3"></i>
             <input class="form-control date-input" name="PickupDateTime" id="PickupDateTime" type="date" min="@minPickupDate" value="@Model.PickupDateTime.ToString("yyyy-MM-dd")" />
         </div>
-        @Html.ValidationMessage("PickupDateTime", "", new { @class = "text-danger" })
+        @Html.ValidationMessage("PickupDateTime", "", new { @class = "text-danger fs-7 mt-1 d-block" })
     </div>
     <div class="col-md-2">
         <label class="form-label">@L["Passengers"]</label>
@@ -80,27 +81,10 @@
             <option value="7">7 @L["passenger(s)"]</option>
             <option value="9">9 @L["passenger(s)"]</option>
         </select>
-        @Html.ValidationMessage("PassengerCount", "", new { @class = "text-danger" })
+        @Html.ValidationMessage("PassengerCount", "", new { @class = "text-danger fs-7 mt-1 d-block" })
     </div>
     <div class="col-md-1 d-grid">
-        <button class="btn btn-gold" type="button" id="search-btn" onclick="
-            var tripType = document.querySelector('.js-home-trip-type').value;
-            if (tripType === 'Hire') {
-                var start = document.getElementById('hire-start-date').value;
-                var end = document.getElementById('hire-end-date').value;
-                var pickup = document.getElementById('hire-pickup').value;
-                var pax = document.getElementById('hire-pax').value;
-if (!pickup) {
-    var err = document.getElementById('hire-pickup-error');
-    err.style.display = 'block';
-    return;
-}
-document.getElementById('hire-pickup-error').style.display = 'none';
-window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&PickupAddress=' + encodeURIComponent(pickup) + '&PassengerCount=' + pax;
-            } else {
-                document.querySelector('.js-booking-search-form').submit();
-            }
-        ">@L["Search"]</button>
+        <button class="btn btn-gold" type="button" id="search-btn">@L["Search"]</button>
     </div>
 </form>
 
@@ -119,10 +103,10 @@ window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&Pickup
             <input class="form-control date-input" type="date" id="hire-end-date" value="@DateTime.Now.AddDays(2).ToString("yyyy-MM-dd")" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" />
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 position-relative">
         <label class="form-label">@L["Pickup address"] <span class="required-star">*</span></label>
         <input class="form-control" type="text" id="hire-pickup" placeholder="@L["Hotel, address, city or landmark"]" />
-        <span id="hire-pickup-error" class="text-danger" style="display:none;">@L["Please enter the pickup point."]</span>
+        <div id="hire-pickup-error" class="invalid-feedback"><i class="bi bi-exclamation-circle"></i> @L["Please enter the pickup point."]</div>
     </div>
     <div class="col-md-2">
         <label class="form-label">@L["Passengers"]</label>
@@ -134,48 +118,56 @@ window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&Pickup
         </select>
     </div>
     <div class="col-md-2 d-grid">
-        <button class="btn btn-gold" type="button" onclick="
-            var start = document.getElementById('hire-start-date').value;
-            var end = document.getElementById('hire-end-date').value;
-            var pickup = document.getElementById('hire-pickup').value;
-            var pax = document.getElementById('hire-pax').value;
- if (!pickup) {
-    var err = document.getElementById('hire-pickup-error');
-    err.style.display = 'block';
-    return;
-}
-document.getElementById('hire-pickup-error').style.display = 'none';
-window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&PickupAddress=' + encodeURIComponent(pickup) + '&PassengerCount=' + pax;
-        ">@L["Search"]</button>
+        <button class="btn btn-gold" type="button" id="hire-search-btn">@L["Search"]</button>
     </div>
 </div>
 
 <div class="js-track-form row g-3 align-items-end" style="display:none;">
-    <div class="col-md-4">
+    <div class="col-md-4 position-relative">
         <label class="form-label">@L["Booking number"]</label>
         <input class="form-control" id="track-booking-number" placeholder="VD: C00005" />
+        <div class="invalid-feedback track-field-error"><i class="bi bi-exclamation-circle"></i> <span class="track-err-text"></span></div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5 position-relative">
         <label class="form-label">@L["Email or phone number"]</label>
         <input class="form-control" id="track-email-phone" placeholder="@L["Email or phone used when booking"]" />
+        <div class="invalid-feedback track-field-error"><i class="bi bi-exclamation-circle"></i> <span class="track-err-text"></span></div>
     </div>
     <div class="col-md-3 d-grid">
-        <button class="btn btn-gold" type="button" onclick="
-            var bn = document.getElementById('track-booking-number').value;
-            var ep = document.getElementById('track-email-phone').value;
-            if (!bn || !ep) return;
-            window.location.href = '/booking/track?bookingNumber=' + encodeURIComponent(bn) + '&emailOrPhone=' + encodeURIComponent(ep);
-        ">@L["Track booking"]</button>
+        <button class="btn btn-gold" type="button" id="track-btn">@L["Track booking"]</button>
     </div>
 </div>
 
 <script>
+    // --- Các hàm tiện ích xử lý lỗi tập trung ---
+    function clearErrors() {
+        document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    }
+
+    function setFieldError(inputId, errorId = null, customMsg = null) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        
+        input.classList.add('is-invalid');
+        
+        if (errorId && customMsg) {
+            const errorContainer = document.getElementById(errorId);
+            if (errorContainer) {
+                const textNode = errorContainer.querySelector('span') || errorContainer;
+                textNode.textContent = customMsg;
+            }
+        }
+    }
+
+    // --- Điều hướng ẩn/hiện form ---
     function toggleHireForm(tripType) {
+        clearErrors();
         var hireForm = document.querySelector('.js-hire-form');
         var bookingForm = document.querySelector('.js-booking-search-form');
         var trackForm = document.querySelector('.js-track-form');
-        var searchBtn = document.getElementById('search-btn');
+        
         if (!hireForm) return;
+        
         if (tripType === 'Hire') {
             hireForm.style.display = 'flex';
             bookingForm.style.display = 'none';
@@ -197,8 +189,82 @@ window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&Pickup
             toggleHireForm(button.dataset.trip);
         });
     });
+    
     var initialTripType = document.querySelector('.js-home-trip-type');
     if (initialTripType && initialTripType.value === 'Hire') {
         toggleHireForm('Hire');
     }
+
+    // --- Xử lý Logic Submit ---
+    function submitHireLogic() {
+        var start = document.getElementById('hire-start-date').value;
+        var end = document.getElementById('hire-end-date').value;
+        var pickup = document.getElementById('hire-pickup').value.trim();
+        var pax = document.getElementById('hire-pax').value;
+
+        if (!pickup) {
+            setFieldError('hire-pickup');
+            return;
+        }
+        window.location.href = '/hire?StartDate=' + start + '&EndDate=' + end + '&PickupAddress=' + encodeURIComponent(pickup) + '&PassengerCount=' + pax;
+    }
+
+    // Nút search của form chính (Đã tách logic inline HTML ra ngoài sạch sẽ)
+    document.getElementById('search-btn').addEventListener('click', function () {
+        var tripType = document.querySelector('.js-home-trip-type').value;
+        if (tripType === 'Hire') {
+            submitHireLogic();
+        } else {
+            document.querySelector('.js-booking-search-form').submit();
+        }
+    });
+
+    // Nút search của riêng form Hire biệt lập
+    document.getElementById('hire-search-btn').addEventListener('click', submitHireLogic);
+
+    // --- Xử lý Logic Track Booking ---
+    document.getElementById('track-btn').addEventListener('click', async function () {
+        var bnInput = document.getElementById('track-booking-number');
+        var epInput = document.getElementById('track-email-phone');
+        var bn = bnInput.value.trim();
+        var ep = epInput.value.trim();
+
+        clearErrors();
+
+        if (!bn || !ep) {
+            const reqMsg = '@L["Please enter your booking number and email or phone."]';
+            if (!bn) {
+                bnInput.classList.add('is-invalid');
+                bnInput.closest('.position-relative').querySelector('.track-err-text').textContent = reqMsg;
+            }
+            if (!ep) {
+                epInput.classList.add('is-invalid');
+                epInput.closest('.position-relative').querySelector('.track-err-text').textContent = reqMsg;
+            }
+            return;
+        }
+
+        var btn = this;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+
+        try {
+            var res = await fetch('/booking/track/check?bookingNumber=' + encodeURIComponent(bn) + '&emailOrPhone=' + encodeURIComponent(ep));
+            var data = await res.json();
+            if (data.found) {
+                window.location.href = '/booking/track/result?bookingNumber=' + encodeURIComponent(bn) + '&emailOrPhone=' + encodeURIComponent(ep);
+            } else {
+                bnInput.classList.add('is-invalid');
+                epInput.classList.add('is-invalid');
+                document.querySelectorAll('.track-err-text').forEach(el => el.textContent = data.error);
+            }
+        } catch (e) {
+            bnInput.classList.add('is-invalid');
+            epInput.classList.add('is-invalid');
+            document.querySelectorAll('.track-err-text').forEach(el => el.textContent = 'Something went wrong. Please try again.');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '@L["Track booking"]';
+        }
+    });
 </script>

@@ -7,19 +7,28 @@
     var destinationEncoded = Uri.EscapeDataString(Model.DestinationAddress ?? "");
     var pickupDate = DateTime.Now.AddHours(4).ToString("yyyy-MM-dd");
     var bookingUrl = $"/booking/search?TripType=PointToPoint&OriginAddress={originEncoded}&DestinationAddress={destinationEncoded}&PickupDateTime={pickupDate}&PassengerCount=1&SearchSubmitted=true";
+
+    var culture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var translation = GetRouteTranslation(Model.Slug, culture);
+    var displayTitle = translation?.Title ?? Model.Title;
+    var displayDescription = translation?.Description ?? Model.Description;
+    var displayBodyHtml = translation?.BodyHtml ?? Model.BodyHtml;
+    var displayHighlight1 = translation?.HighlightOne ?? Model.HighlightOne;
+    var displayHighlight2 = translation?.HighlightTwo ?? Model.HighlightTwo;
+    var displayHighlight3 = translation?.HighlightThree ?? Model.HighlightThree;
 }
 
 <section class="page-hero">
     <div class="container">
-        <h1>@Model.Title</h1>
-        <p>@Model.Description</p>
+        <h1>@displayTitle</h1>
+        <p>@displayDescription</p>
     </div>
 </section>
 
 @if (!string.IsNullOrWhiteSpace(Model.Image?.SecureUrl))
 {
     <section class="container" style="margin-top:2rem;">
-        <img src="@Model.Image.SecureUrl" alt="@Model.Title" class="w-100 rounded" style="max-height:400px;object-fit:cover;" />
+        <img src="@Model.Image.SecureUrl" alt="@displayTitle" class="w-100 rounded" style="max-height:400px;object-fit:cover;" />
     </section>
 }
 
@@ -28,30 +37,30 @@
         <div class="col-lg-8">
             <div class="card p-4">
                 <h2>@L["About this route"]</h2>
-                @if (!string.IsNullOrWhiteSpace(Model.BodyHtml))
+                @if (!string.IsNullOrWhiteSpace(displayBodyHtml))
                 {
-                    @Html.Raw(Model.BodyHtml)
+                    @Html.Raw(displayBodyHtml)
                 }
                 else
                 {
-                    <p>@Model.Description</p>
+                    <p>@displayDescription</p>
                 }
 
-                @if (!string.IsNullOrWhiteSpace(Model.HighlightOne) || !string.IsNullOrWhiteSpace(Model.HighlightTwo) || !string.IsNullOrWhiteSpace(Model.HighlightThree))
+                @if (!string.IsNullOrWhiteSpace(displayHighlight1) || !string.IsNullOrWhiteSpace(displayHighlight2) || !string.IsNullOrWhiteSpace(displayHighlight3))
                 {
                     <h3 style="margin-top:1.5rem;">@L["Highlights"]</h3>
                     <ul>
-                        @if (!string.IsNullOrWhiteSpace(Model.HighlightOne))
+                        @if (!string.IsNullOrWhiteSpace(displayHighlight1))
                         {
-                            <li>@Model.HighlightOne</li>
+                            <li>@displayHighlight1</li>
                         }
-                        @if (!string.IsNullOrWhiteSpace(Model.HighlightTwo))
+                        @if (!string.IsNullOrWhiteSpace(displayHighlight2))
                         {
-                            <li>@Model.HighlightTwo</li>
+                            <li>@displayHighlight2</li>
                         }
-                        @if (!string.IsNullOrWhiteSpace(Model.HighlightThree))
+                        @if (!string.IsNullOrWhiteSpace(displayHighlight3))
                         {
-                            <li>@Model.HighlightThree</li>
+                            <li>@displayHighlight3</li>
                         }
                     </ul>
                 }
@@ -75,3 +84,53 @@
         </div>
     </div>
 </section>
+
+@functions {
+    private class RouteTranslationData
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string BodyHtml { get; set; }
+        public string HighlightOne { get; set; }
+        public string HighlightTwo { get; set; }
+        public string HighlightThree { get; set; }
+    }
+
+    private static RouteTranslationData GetRouteTranslation(string slug, string culture)
+    {
+        if (culture == "vi") return null; 
+
+        var translations = new Dictionary<string, RouteTranslationData>
+        {
+            ["hanoi-trang-an"] = new RouteTranslationData
+            {
+                Title = "Hanoi - Trang An",
+                Description = "Private transfer from Hanoi to Trang An and Ninh Binh.",
+                BodyHtml = "<p>Trang An is a famous scenic complex in Ninh Binh, recognized by UNESCO as a World Cultural and Natural Heritage Site. The trip from Hanoi to Trang An takes about 2 hours by car.</p><p>Visitors will travel by boat through mysterious caves, admire majestic mountains and lush green rice fields.</p>",
+                HighlightOne = "UNESCO World Heritage Site",
+                HighlightTwo = "Stunning caves and waterways",
+                HighlightThree = "About 100km from Hanoi, 2-hour drive"
+            },
+            ["hanoi-ha-long"] = new RouteTranslationData
+            {
+                Title = "Hanoi - Ha Long",
+                Description = "Comfortable private transfer from Hanoi to Ha Long Bay.",
+                BodyHtml = "<p>Ha Long Bay is a world natural wonder recognized by UNESCO, located in Quang Ninh province. The trip from Hanoi to Ha Long takes about 3-4 hours by car.</p><p>Visitors will admire thousands of magnificent limestone islands, mysterious caves and the turquoise waters of the bay.</p>",
+                HighlightOne = "UNESCO World Natural Wonder",
+                HighlightTwo = "Thousands of limestone islands and caves",
+                HighlightThree = "About 165km from Hanoi, 3-4 hour drive"
+            },
+            ["hanoi-sa-pa"] = new RouteTranslationData
+            {
+                Title = "Hanoi - Sa Pa",
+                Description = "Long-distance private transfer from Hanoi to Sa Pa.",
+                BodyHtml = "<p>Sa Pa is a mountain town located at an altitude of 1,500m, famous for its beautiful terraced fields and ethnic minority culture. The trip from Hanoi to Sa Pa takes about 5-6 hours by car.</p><p>Visitors will trek through villages and admire Mount Fansipan, the roof of Indochina.</p>",
+                HighlightOne = "Vietnam's most beautiful terraced fields",
+                HighlightTwo = "Mount Fansipan - Roof of Indochina",
+                HighlightThree = "About 320km from Hanoi, 5-6 hour drive"
+            }
+        };
+
+        return translations.TryGetValue(slug, out var result) ? result : null;
+    }
+}

@@ -23,14 +23,11 @@
         <input type="hidden" name="CarVehicleTypeId" value="@Model.CarVehicleTypeId" />
         <input type="hidden" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
         <input type="hidden" name="EndDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
-
-        @if (Model.TripType != TripType.Hire)
-{
-    @Html.Partial("Checkout/_AddonsSection", Model)
-}
+        @Html.Partial("Checkout/_AddonsSection", Model)
         @Html.Partial("Checkout/_PassengerSection", Model)
         <button class="btn btn-gold btn-lg w-100" type="submit">@L["Go to payment"]</button>
     </form>
 
     @Html.Partial("Checkout/_Summary", Model)
+
 </section>
