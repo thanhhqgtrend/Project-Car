@@ -68,6 +68,8 @@ public class Booking
     [MaxLength(160)]
     public string Email { get; set; } = string.Empty;
 
+    public string? UserId { get; set; }
+
     [MaxLength(60)]
     public string Phone { get; set; } = string.Empty;
 

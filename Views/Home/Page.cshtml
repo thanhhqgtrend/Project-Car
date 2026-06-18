@@ -14,6 +14,7 @@
         ["dateModified"] = modified.ToString("O"),
         ["image"] = string.IsNullOrWhiteSpace(Model.OgImageUrl) ? null : Model.OgImageUrl
     };
+    var isFaqPage = string.Equals(Model.Slug, "faq", StringComparison.OrdinalIgnoreCase);
 }
 
 @section Head {
@@ -31,6 +32,100 @@
         <meta property="og:image" content="@Model.OgImageUrl" />
     }
     <script type="application/ld+json">@Html.Raw(JsonSerializer.Serialize(jsonLd.Where(x => x.Value is not null).ToDictionary(x => x.Key, x => x.Value)))</script>
+    @if (isFaqPage)
+    {
+        <style>
+            .faq-search-box {
+                max-width: 560px;
+                margin: 0 auto 2.5rem;
+                position: relative;
+            }
+            .faq-search-box .faq-search-icon {
+                position: absolute;
+                left: 1.1rem;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--muted, #6f6f6f);
+                pointer-events: none;
+                display: flex;
+            }
+            .faq-search-box .faq-search-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+            .faq-search-box input {
+                width: 100%;
+                padding: 0.95rem 2.75rem 0.95rem 2.85rem;
+                border: 1px solid var(--line, #e9e4d9);
+                border-radius: 999px;
+                font-size: 1rem;
+                background: var(--paper, #ffffff);
+                color: var(--ink, #151515);
+                box-shadow: 0 1px 2px rgba(21, 21, 21, 0.04);
+                transition: border-color 0.18s ease, box-shadow 0.18s ease;
+            }
+            .faq-search-box input::placeholder {
+                color: var(--muted, #6f6f6f);
+            }
+            .faq-search-box input:hover {
+                border-color: var(--gold, #c89b3c);
+            }
+            .faq-search-box input:focus {
+                outline: none;
+                border-color: var(--gold, #c89b3c);
+                box-shadow: 0 0 0 3px rgba(200, 155, 60, 0.18);
+            }
+            .faq-search-box .faq-search-clear {
+                position: absolute;
+                right: 0.6rem;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 28px;
+                height: 28px;
+                border: none;
+                background: transparent;
+                color: var(--muted, #6f6f6f);
+                cursor: pointer;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                transition: background 0.15s ease, color 0.15s ease;
+            }
+            .faq-search-box .faq-search-clear:hover {
+                background: var(--soft, #f7f5f0);
+                color: var(--ink, #151515);
+            }
+            .faq-search-box .faq-search-clear svg {
+                width: 14px;
+                height: 14px;
+            }
+            .faq-search-box.has-value .faq-search-clear {
+                display: flex;
+            }
+            .faq-search-count {
+                text-align: center;
+                font-size: 0.85rem;
+                color: var(--muted, #6f6f6f);
+                margin: -1.75rem auto 1.75rem;
+                max-width: 560px;
+                min-height: 1.2em;
+            }
+            .faq-search-empty {
+                text-align: center;
+                color: var(--muted, #6f6f6f);
+                padding: 2.5rem 1rem;
+                display: none;
+            }
+            .faq-search-empty .faq-search-empty-icon {
+                margin-bottom: 0.5rem;
+                opacity: 0.5;
+            }
+            .faq-hidden {
+                display: none !important;
+            }
+        </style>
+    }
 }
 
 <section class="page-hero">
@@ -45,6 +140,117 @@
         <img src="@CloudinaryUrlHelper.For(Model.Page.FeaturedMediaAsset, CloudinaryUrlHelper.BlogHero)" alt="@Model.Title" decoding="async" />
     </section>
 }
-<section class="container content-page">
+
+@if (isFaqPage)
+{
+    <div class="container">
+        <div class="faq-search-box" id="faqSearchBox">
+            <span class="faq-search-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <input type="text" id="faqSearchInput" placeholder="Search FAQs..." autocomplete="off" aria-label="Search FAQs" />
+            <button type="button" class="faq-search-clear" id="faqSearchClear" aria-label="Clear search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <p class="faq-search-count" id="faqSearchCount"></p>
+    </div>
+}
+
+<section class="container content-page" id="cmsContent">
     @Html.Raw(Model.BodyHtml)
+    @if (isFaqPage)
+    {
+        <div class="faq-search-empty" id="faqSearchEmpty">
+            <div class="faq-search-empty-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <p>No questions match your search.</p>
+        </div>
+    }
 </section>
+
+@if (isFaqPage)
+{
+    @section Scripts
+    {
+        <script>
+            (function () {
+                var input = document.getElementById('faqSearchInput');
+                var content = document.getElementById('cmsContent');
+                var emptyMessage = document.getElementById('faqSearchEmpty');
+                var searchBox = document.getElementById('faqSearchBox');
+                var clearButton = document.getElementById('faqSearchClear');
+                var countLabel = document.getElementById('faqSearchCount');
+                if (!input || !content) {
+                    return;
+                }
+
+                var heading = content.querySelector('h3') ? 'h3' : 'h2';
+                var allHeadings = Array.prototype.slice.call(content.querySelectorAll(heading));
+                var headings = allHeadings.filter(function (h) {
+                    return /\?\s*$/.test((h.textContent || '').trim());
+                });
+
+                var entries = headings.map(function (h) {
+                    var nodes = [h];
+                    var next = h.nextElementSibling;
+                    while (next && next.tagName.toLowerCase() !== heading) {
+                        nodes.push(next);
+                        next = next.nextElementSibling;
+                    }
+                    return {
+                        heading: h,
+                        nodes: nodes,
+                        text: nodes.map(function (n) { return n.textContent || ''; }).join(' ').toLowerCase()
+                    };
+                });
+
+                var totalCount = entries.length;
+
+                function applyFilter() {
+                    var term = input.value.trim().toLowerCase();
+                    var visibleCount = 0;
+
+                    entries.forEach(function (entry) {
+                        var matches = !term || entry.text.indexOf(term) !== -1;
+
+                        entry.heading.classList.toggle('faq-hidden', !matches);
+                        entry.nodes.forEach(function (n) {
+                            n.classList.toggle('faq-hidden', !matches);
+                        });
+
+                        if (matches) {
+                            visibleCount++;
+                        }
+                    });
+
+                    if (emptyMessage) {
+                        emptyMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+                    }
+
+                    if (searchBox) {
+                        searchBox.classList.toggle('has-value', term.length > 0);
+                    }
+
+                    if (countLabel) {
+                        countLabel.textContent = term
+                            ? (visibleCount + ' of ' + totalCount + ' question' + (totalCount === 1 ? '' : 's'))
+                            : '';
+                    }
+                }
+
+                input.addEventListener('input', applyFilter);
+
+                if (clearButton) {
+                    clearButton.addEventListener('click', function () {
+                        input.value = '';
+                        applyFilter();
+                        input.focus();
+                    });
+                }
+            })();
+        </script>
+    }
+}
+

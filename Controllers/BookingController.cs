@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Web;
 using System.Web.Security;
 using System.Text;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 
 namespace LuxuryCar.Controllers;
@@ -218,6 +219,7 @@ public class BookingController : Controller
         var booking = new Booking
         {
             BookingNumber = await _bookingNumberService.NextAsync(),
+            UserId = CurrentCustomerUserId(),
             TripType = model.TripType,
             AirportId = model.AirportId,
             CarVehicleTypeId = model.CarVehicleTypeId,
@@ -722,7 +724,21 @@ public class BookingController : Controller
 
         return TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(localDateTime, DateTimeKind.Unspecified), zone);
     }
+    private string? CurrentCustomerUserId()
+    {
+        var identity = User?.Identity;
+        if (identity == null || !identity.IsAuthenticated)
+        {
+            return null;
+        }
 
+        if (!string.Equals(identity.AuthenticationType, "CustomerCookie", StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        return (identity as ClaimsIdentity)?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    }
     private static DateTime VietnamToday() => DateTime.UtcNow.AddHours(7).Date;
 
     private static decimal Clamp(decimal value, decimal min, decimal max) =>

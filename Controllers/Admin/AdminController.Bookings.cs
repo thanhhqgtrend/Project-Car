@@ -49,6 +49,7 @@ public partial class AdminController
 
     [Route("bookings/{id:int}/email")]
     [HttpPost]
+    [ValidateInput(false)]
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> SendBookingEmail(int id, AdminManualEmailViewModel model)
     {

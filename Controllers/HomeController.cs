@@ -433,7 +433,7 @@ public class HomeController : Controller
             return true;
         }
 
-        var reserved = new[] { "/admin", "/blog", "/booking", "/payment", "/contact", "/culture", "/css", "/js", "/images", "/lib", "/api", "/home" };
+        var reserved = new[] { "/admin", "/account", "/blog", "/booking", "/payment", "/contact", "/culture", "/css", "/js", "/images", "/lib", "/api", "/home" };
         return reserved.Any(prefix =>
             string.Equals(path, prefix, StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith(prefix + "/", StringComparison.OrdinalIgnoreCase));

@@ -1,0 +1,52 @@
+@model IEnumerable<LuxuryCar.Models.Booking>
+@{
+    ViewData["Title"] = "My bookings";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">My bookings</h1>
+        @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { @class = "d-inline" }))
+        {
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-secondary btn-sm">Sign out</button>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <p class="text-muted">You don't have any bookings yet. <a href="/booking/search">Book a transfer</a> to get started.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Booking #</th>
+                        <th>Pickup</th>
+                        <th>Drop-off</th>
+                        <th>Pickup time</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model)
+                    {
+                        <tr>
+                            <td>@booking.BookingNumber</td>
+                            <td>@booking.PickupAddress</td>
+                            <td>@booking.DropoffAddress</td>
+                            <td>@booking.PickupDateTimeUtc.ToLocalTime().ToString("dd MMM yyyy, HH:mm")</td>
+                            <td>
+                                <span class="badge bg-secondary">@booking.Status</span>
+                            </td>
+                            <td>$@booking.TotalPriceUsd.ToString("0.00")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

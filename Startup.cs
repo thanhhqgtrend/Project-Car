@@ -1,4 +1,5 @@
 using System;
+using LuxuryCar.Infrastructure;
 using LuxuryCar.Infrastructure.Startup;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -17,7 +18,6 @@ namespace LuxuryCar
             app.CreatePerOwinContext(Data.ApplicationDbContext.Create);
             app.CreatePerOwinContext<Identity.ApplicationUserManager>(Identity.ApplicationUserManager.Create);
             app.CreatePerOwinContext<Identity.ApplicationSignInManager>(Identity.ApplicationSignInManager.Create);
-
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
@@ -30,6 +30,15 @@ namespace LuxuryCar
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
+            });
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = CustomerAuthentication.CookieAuthenticationType,
+                CookieName = "LuxuryCar.Customer",
+                LoginPath = new PathString("/account/login"),
+                ExpireTimeSpan = TimeSpan.FromDays(14),
+                SlidingExpiration = true
             });
 
             AutofacConfig.ConfigureOwin(app);

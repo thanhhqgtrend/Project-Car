@@ -1,0 +1,202 @@
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using System.Data.Entity;
+using LuxuryCar.Data;
+using LuxuryCar.Identity;
+using LuxuryCar.Infrastructure;
+using LuxuryCar.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
+using Microsoft.Owin.Security;
+
+namespace LuxuryCar.Controllers
+{
+    [RoutePrefix("account")]
+    public class AccountController : Controller
+    {
+        private readonly ApplicationDbContext _db;
+
+        public AccountController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
+        private IOwinContext OwinContext
+        {
+            get
+            {
+                var environment = (System.Collections.Generic.IDictionary<string, object>)
+                    System.Web.HttpContext.Current.Items["owin.Environment"];
+                return new OwinContext(environment);
+            }
+        }
+
+        private ApplicationUserManager UserManager => OwinContext.GetUserManager<ApplicationUserManager>();
+
+        private IAuthenticationManager AuthenticationManager => OwinContext.Authentication;
+
+        [Route("register")]
+        [HttpGet]
+        public ActionResult Register(string? returnUrl)
+        {
+            if (IsCustomerSignedIn())
+            {
+                return RedirectToLocal(returnUrl, "/account/my-bookings");
+            }
+
+            return View(new CustomerRegisterViewModel { ReturnUrl = returnUrl });
+        }
+
+        [Route("register")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(CustomerRegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var existing = await UserManager.FindByEmailAsync(model.Email);
+            if (existing != null)
+            {
+                ModelState.AddModelError(string.Empty, "An account with this email already exists.");
+                return View(model);
+            }
+
+            var user = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                EmailConfirmed = true
+            };
+
+            var result = await UserManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+                return View(model);
+            }
+
+            await UserManager.AddToRoleAsync(user.Id, "Customer");
+            await SignInCustomerAsync(user, isPersistent: false);
+
+            return RedirectToLocal(model.ReturnUrl, "/account/my-bookings");
+        }
+
+        [Route("login")]
+        [HttpGet]
+        public ActionResult Login(string? returnUrl)
+        {
+            if (IsCustomerSignedIn())
+            {
+                return RedirectToLocal(returnUrl, "/account/my-bookings");
+            }
+
+            return View(new CustomerLoginViewModel { ReturnUrl = returnUrl });
+        }
+
+        [Route("login")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(CustomerLoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await UserManager.FindByEmailAsync(model.Email);
+            if (user == null || !await UserManager.CheckPasswordAsync(user, model.Password))
+            {
+                ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                return View(model);
+            }
+
+            await SignInCustomerAsync(user, model.RememberMe);
+
+            return RedirectToLocal(model.ReturnUrl, "/account/my-bookings");
+        }
+
+        [Route("logout")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Logout()
+        {
+            AuthenticationManager.SignOut(CustomerAuthentication.CookieAuthenticationType);
+            return Redirect("/");
+        }
+
+        [Route("my-bookings")]
+        [HttpGet]
+        [CustomerAuthorize]
+        public async Task<ActionResult> MyBookings()
+        {
+            var userId = CurrentCustomerId();
+            if (userId == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var bookings = await _db.Bookings
+                .AsNoTracking()
+                .Include(x => x.CarVehicleType)
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.CreatedAtUtc)
+                .ToListAsync();
+
+            return View(bookings);
+        }
+
+        private async Task SignInCustomerAsync(ApplicationUser user, bool isPersistent)
+        {
+            AuthenticationManager.SignOut(CustomerAuthentication.CookieAuthenticationType);
+
+            var roles = await UserManager.GetRolesAsync(user.Id);
+
+            var identity = new ClaimsIdentity(CustomerAuthentication.CookieAuthenticationType);
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+            identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName ?? user.Email ?? string.Empty));
+            identity.AddClaim(new Claim(ClaimTypes.Email, user.Email ?? string.Empty));
+            foreach (var role in roles)
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Role, role));
+            }
+
+            AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, identity);
+        }
+
+        private bool IsCustomerSignedIn()
+        {
+            return User?.Identity?.IsAuthenticated == true
+                && string.Equals(User.Identity.AuthenticationType, CustomerAuthentication.CookieAuthenticationType, StringComparison.Ordinal);
+        }
+
+        private string? CurrentCustomerId()
+        {
+            if (!IsCustomerSignedIn())
+            {
+                return null;
+            }
+
+            return (User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        }
+
+        private ActionResult RedirectToLocal(string? returnUrl, string fallback)
+        {
+            if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return Redirect(fallback);
+        }
+    }
+}

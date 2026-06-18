@@ -25,6 +25,8 @@ namespace LuxuryCar
 
         protected void Application_Start()
         {
+            System.Web.Helpers.AntiForgeryConfig.UniqueClaimTypeIdentifier =
+            System.Security.Claims.ClaimTypes.NameIdentifier;
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
