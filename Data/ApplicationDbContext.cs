@@ -20,6 +20,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<CarVehicleType> CarVehicleTypes { get; set; }
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<CarBookingAddon> CarBookingAddons { get; set; }
+    public DbSet<BookingReview> BookingReviews { get; set; }
     public DbSet<CarBookingAddonSelection> CarBookingAddonSelections { get; set; }
     public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
     public DbSet<MediaAsset> MediaAssets { get; set; }
@@ -117,6 +118,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany()
             .HasForeignKey(x => x.MediaAssetId)
             .WillCascadeOnDelete(false);
+        builder.Entity<BookingReview>()
+            .HasRequired(x => x.Booking)
+            .WithMany()
+            .HasForeignKey(x => x.BookingId)
+            .WillCascadeOnDelete(false);
+        builder.Entity<BookingReview>().HasIndex(x => x.BookingId).IsUnique();
 
         builder.Entity<CarVehicleType>().Property(x => x.BaseFareUsd).HasPrecision(10, 2);
         builder.Entity<CarVehicleType>().Property(x => x.PricePerKmUsd).HasPrecision(10, 2);

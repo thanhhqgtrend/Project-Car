@@ -4,6 +4,7 @@ using LuxuryCar.Infrastructure.Startup;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 
@@ -38,7 +39,8 @@ namespace LuxuryCar
                 CookieName = "LuxuryCar.Customer",
                 LoginPath = new PathString("/account/login"),
                 ExpireTimeSpan = TimeSpan.FromDays(14),
-                SlidingExpiration = true
+                SlidingExpiration = true,
+                AuthenticationMode = AuthenticationMode.Passive
             });
 
             AutofacConfig.ConfigureOwin(app);

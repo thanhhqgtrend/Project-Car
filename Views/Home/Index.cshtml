@@ -205,15 +205,57 @@ var routeDetailUrl = string.IsNullOrWhiteSpace(routeSlug) ? bookingUrl : $"/rout
         <h2>@L["10,000+ happy travelers"]</h2>
     </div>
     <div class="row g-4">
-        @foreach (var item in new[] { L["Smooth pickup and a very clean sedan."], L["Easy booking, fair price and polite driver."], L["Recommended for business travel in Vietnam."], L["Fast support on WhatsApp after landing."] })
+        @if (Model.FeaturedReviews.Any())
         {
-            <div class="col-md-6 col-xl-3">
-                <div class="testimonial-card">
-                    <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                    <p>@item</p>
-                    <strong>@L["Verified traveler"]</strong>
+            foreach (var review in Model.FeaturedReviews)
+            {
+                <div class="col-md-6 col-xl-3">
+                    <div class="testimonial-card">
+                        <div class="stars">
+                            @for (var i = 0; i < review.Rating; i++)
+                            {
+                                <i class="bi bi-star-fill"></i>
+                            }
+                        </div>
+                        <p>@review.Comment</p>
+                        <strong>@AbbreviateName(review.Booking?.FullName)</strong>
+                    </div>
                 </div>
-            </div>
+            }
+        }
+        else
+        {
+            foreach (var item in new[] { L["Smooth pickup and a very clean sedan."], L["Easy booking, fair price and polite driver."], L["Recommended for business travel in Vietnam."], L["Fast support on WhatsApp after landing."] })
+            {
+                <div class="col-md-6 col-xl-3">
+                    <div class="testimonial-card">
+                        <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                        <p>@item</p>
+                        <strong>@L["Verified traveler"]</strong>
+                    </div>
+                </div>
+            }
         }
     </div>
 </section>
+
+@functions {
+    private static string AbbreviateName(string? fullName)
+    {
+        var trimmed = (fullName ?? string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(trimmed))
+        {
+            return "Verified traveler";
+        }
+
+        var parts = trimmed.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length <= 1)
+        {
+            return parts.Length == 1 ? parts[0] : "Verified traveler";
+        }
+
+        var first = parts[0];
+        var initials = string.Join(".", parts.Skip(1).Select(p => p[0].ToString().ToUpperInvariant())) + ".";
+        return $"{first} {initials}";
+    }
+}

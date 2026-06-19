@@ -11,6 +11,9 @@
     var themePaper = NormalizeThemeColor(AppSettings.GetAsync("Theme:Paper", "#ffffff").GetAwaiter().GetResult(), "#ffffff");
     var themeSoft = NormalizeThemeColor(AppSettings.GetAsync("Theme:Soft", "#f7f5f0").GetAwaiter().GetResult(), "#f7f5f0");
     var themeLine = NormalizeThemeColor(AppSettings.GetAsync("Theme:Line", "#e9e4d9").GetAwaiter().GetResult(), "#e9e4d9");
+    var customerIdentity = GetCustomerIdentity(Context);
+    var isCustomerSignedIn = customerIdentity?.IsAuthenticated == true;
+    var customerDisplayName = customerIdentity?.Name ?? string.Empty;
 }
 <!DOCTYPE html>
 <html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
@@ -64,14 +67,10 @@
                     <li class="nav-item"><a class="nav-link" href="/contact">@L["Contact"]</a></li>
                     <li class="nav-item"><a class="btn btn-outline-gold" href="/booking/search">@L["Book now"]</a></li>
                         <li class="nav-item dropdown">
-    @{
-        var isCustomerSignedIn = User?.Identity?.IsAuthenticated == true
-            && string.Equals(User.Identity.AuthenticationType, "CustomerCookie", StringComparison.Ordinal);
-    }
     @if (isCustomerSignedIn)
     {
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            <i class="bi bi-person-circle"></i> @User.Identity.Name
+            <i class="bi bi-person-circle"></i> @customerDisplayName
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" href="/account/my-bookings">My bookings</a></li>
@@ -237,5 +236,22 @@ document.getElementById('brevo-newsletter-form').addEventListener('submit', func
             default:
                 return "English";
         }
+    }
+
+    private static System.Security.Claims.ClaimsIdentity? GetCustomerIdentity(HttpContextBase httpContext)
+    {
+        var environment = httpContext?.Items["owin.Environment"] as System.Collections.Generic.IDictionary<string, object>;
+        if (environment == null)
+        {
+            return null;
+        }
+
+        var owinContext = new Microsoft.Owin.OwinContext(environment);
+        var result = owinContext.Authentication
+            .AuthenticateAsync("CustomerCookie")
+            .GetAwaiter()
+            .GetResult();
+
+        return result?.Identity;
     }
 }

@@ -11,6 +11,7 @@ using LuxuryCar.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using LuxuryCar.Models;
 using Microsoft.Owin.Security;
 
 namespace LuxuryCar.Controllers
@@ -41,11 +42,12 @@ namespace LuxuryCar.Controllers
 
         [Route("register")]
         [HttpGet]
-        public ActionResult Register(string? returnUrl)
+        public async Task<ActionResult> Register(string? returnUrl)
         {
-            if (IsCustomerSignedIn())
+            var identity = await GetCustomerIdentityAsync();
+            if (IsCustomerSignedIn(identity))
             {
-                return RedirectToLocal(returnUrl, "/account/my-bookings");
+                return RedirectToLocal(returnUrl, "/");
             }
 
             return View(new CustomerRegisterViewModel { ReturnUrl = returnUrl });
@@ -93,11 +95,12 @@ namespace LuxuryCar.Controllers
 
         [Route("login")]
         [HttpGet]
-        public ActionResult Login(string? returnUrl)
+        public async Task<ActionResult> Login(string? returnUrl)
         {
-            if (IsCustomerSignedIn())
+            var identity = await GetCustomerIdentityAsync();
+            if (IsCustomerSignedIn(identity))
             {
-                return RedirectToLocal(returnUrl, "/account/my-bookings");
+                return RedirectToLocal(returnUrl, "/");
             }
 
             return View(new CustomerLoginViewModel { ReturnUrl = returnUrl });
@@ -122,7 +125,7 @@ namespace LuxuryCar.Controllers
 
             await SignInCustomerAsync(user, model.RememberMe);
 
-            return RedirectToLocal(model.ReturnUrl, "/account/my-bookings");
+            return RedirectToLocal(model.ReturnUrl, "/");
         }
 
         [Route("logout")]
@@ -139,7 +142,8 @@ namespace LuxuryCar.Controllers
         [CustomerAuthorize]
         public async Task<ActionResult> MyBookings()
         {
-            var userId = CurrentCustomerId();
+            var identity = await GetCustomerIdentityAsync();
+            var userId = CustomerIdFromIdentity(identity);
             if (userId == null)
             {
                 return RedirectToAction("Login");
@@ -152,7 +156,67 @@ namespace LuxuryCar.Controllers
                 .OrderByDescending(x => x.CreatedAtUtc)
                 .ToListAsync();
 
+            var bookingIds = bookings.Select(x => x.Id).ToList();
+            ViewBag.ReviewedBookingIds = await _db.BookingReviews
+                .Where(x => bookingIds.Contains(x.BookingId))
+                .Select(x => x.BookingId)
+                .ToListAsync();
+
             return View(bookings);
+        }
+
+        [Route("my-bookings/{bookingId:int}/review")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [CustomerAuthorize]
+        public async Task<ActionResult> SubmitReview(int bookingId, int rating, string? comment)
+        {
+            var identity = await GetCustomerIdentityAsync();
+            var userId = CustomerIdFromIdentity(identity);
+            if (userId == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            if (rating < 1 || rating > 5)
+            {
+                TempData["ReviewError"] = "Please choose a rating between 1 and 5 stars.";
+                return RedirectToAction("MyBookings");
+            }
+
+            var booking = await _db.Bookings.FirstOrDefaultAsync(x => x.Id == bookingId && x.UserId == userId);
+            if (booking == null)
+            {
+                return HttpNotFound();
+            }
+
+            var isCompleted = booking.PickupDateTimeUtc < DateTime.UtcNow
+                && (booking.Status == BookingStatus.Paid || booking.Status == BookingStatus.Confirmed);
+            if (!isCompleted)
+            {
+                TempData["ReviewError"] = "This trip is not eligible for a review yet.";
+                return RedirectToAction("MyBookings");
+            }
+
+            var alreadyReviewed = await _db.BookingReviews.AnyAsync(x => x.BookingId == bookingId);
+            if (alreadyReviewed)
+            {
+                TempData["ReviewError"] = "You've already reviewed this booking.";
+                return RedirectToAction("MyBookings");
+            }
+
+            _db.BookingReviews.Add(new BookingReview
+            {
+                BookingId = bookingId,
+                UserId = userId,
+                Rating = rating,
+                Comment = comment?.Trim() ?? string.Empty,
+                CreatedAtUtc = DateTime.UtcNow
+            });
+            await _db.SaveChangesAsync();
+
+            TempData["ReviewSuccess"] = "Thank you for your review!";
+            return RedirectToAction("MyBookings");
         }
 
         private async Task SignInCustomerAsync(ApplicationUser user, bool isPersistent)
@@ -173,21 +237,17 @@ namespace LuxuryCar.Controllers
             AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, identity);
         }
 
-        private bool IsCustomerSignedIn()
+        private async Task<ClaimsIdentity?> GetCustomerIdentityAsync()
         {
-            return User?.Identity?.IsAuthenticated == true
-                && string.Equals(User.Identity.AuthenticationType, CustomerAuthentication.CookieAuthenticationType, StringComparison.Ordinal);
+            var result = await AuthenticationManager.AuthenticateAsync(CustomerAuthentication.CookieAuthenticationType);
+            return result?.Identity;
         }
 
-        private string? CurrentCustomerId()
-        {
-            if (!IsCustomerSignedIn())
-            {
-                return null;
-            }
+        private bool IsCustomerSignedIn(ClaimsIdentity? identity) =>
+            identity?.IsAuthenticated == true;
 
-            return (User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        }
+        private static string? CustomerIdFromIdentity(ClaimsIdentity? identity) =>
+            identity?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         private ActionResult RedirectToLocal(string? returnUrl, string fallback)
         {

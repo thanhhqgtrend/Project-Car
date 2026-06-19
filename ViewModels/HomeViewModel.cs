@@ -11,5 +11,6 @@ public class HomeViewModel
     public List<Airport> PopularDestinations { get; set; } = [];
     public List<CmsPage> Articles { get; set; } = [];
     public List<BlogPostViewModel> LatestBlogPosts { get; set; } = [];
+    public List<BookingReview> FeaturedReviews { get; set; } = [];
     public string GeoapifyApiKey { get; set; } = string.Empty;
 }

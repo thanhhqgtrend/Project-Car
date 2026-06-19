@@ -1,6 +1,10 @@
 @model IEnumerable<LuxuryCar.Models.Booking>
+@using LuxuryCar.Models
 @{
     ViewData["Title"] = "My bookings";
+    var reviewedBookingIds = (ViewBag.ReviewedBookingIds as List<int>) ?? new List<int>();
+    var reviewError = TempData["ReviewError"] as string;
+    var reviewSuccess = TempData["ReviewSuccess"] as string;
 }
 
 <div class="container py-5">
@@ -12,6 +16,15 @@
             <button type="submit" class="btn btn-outline-secondary btn-sm">Sign out</button>
         }
     </div>
+
+    @if (!string.IsNullOrWhiteSpace(reviewSuccess))
+    {
+        <div class="alert alert-success">@reviewSuccess</div>
+    }
+    @if (!string.IsNullOrWhiteSpace(reviewError))
+    {
+        <div class="alert alert-danger">@reviewError</div>
+    }
 
     @if (!Model.Any())
     {
@@ -29,11 +42,17 @@
                         <th>Pickup time</th>
                         <th>Status</th>
                         <th>Total</th>
+                        <th>Review</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var booking in Model)
                     {
+                        var isPast = booking.PickupDateTimeUtc < DateTime.UtcNow;
+                        var isEligibleStatus = booking.Status == BookingStatus.Paid || booking.Status == BookingStatus.Confirmed;
+                        var isEligibleForReview = isPast && isEligibleStatus;
+                        var alreadyReviewed = reviewedBookingIds.Contains(booking.Id);
+
                         <tr>
                             <td>@booking.BookingNumber</td>
                             <td>@booking.PickupAddress</td>
@@ -43,6 +62,59 @@
                                 <span class="badge bg-secondary">@booking.Status</span>
                             </td>
                             <td>$@booking.TotalPriceUsd.ToString("0.00")</td>
+                            <td>
+                                @if (alreadyReviewed)
+                                {
+                                    <span class="text-muted small">Reviewed</span>
+                                }
+                                else if (isEligibleForReview)
+                                {
+                                    <button type="button" class="btn btn-sm btn-outline-gold" data-bs-toggle="modal" data-bs-target="#reviewModal-@booking.Id">
+                                        Write a review
+                                    </button>
+
+                                    <div class="modal fade" id="reviewModal-@booking.Id" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                @using (Html.BeginForm("SubmitReview", "Account", new { bookingId = booking.Id }, FormMethod.Post))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Review booking @booking.BookingNumber</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Rating</label>
+                                                            <div class="d-flex gap-2">
+                                                                @for (var star = 1; star <= 5; star++)
+                                                                {
+                                                                    <label class="d-flex flex-column align-items-center" style="cursor:pointer;">
+                                                                        <input type="radio" name="rating" value="@star" required style="margin-bottom:2px;" />
+                                                                        <span>@star &#9733;</span>
+                                                                    </label>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Comment (optional)</label>
+                                                            <textarea name="comment" class="form-control" rows="3" maxlength="2000" placeholder="How was your trip?"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-gold">Submit review</button>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted small">Not eligible yet</span>
+                                }
+                            </td>
                         </tr>
                     }
                 </tbody>

@@ -60,8 +60,15 @@ public class HomeController : Controller
                 .ThenBy(x => x.Title)
                 .Take(12)
                 .ToListAsync(),
-            GeoapifyApiKey = await _settings.GetAsync("Geoapify:ApiKey")
-        };
+            GeoapifyApiKey = await _settings.GetAsync("Geoapify:ApiKey"),
+            FeaturedReviews = await _db.BookingReviews
+                .AsNoTracking()
+                .Include(x => x.Booking)
+                .Where(x => x.Rating == 5 && x.Comment != "")
+                .OrderByDescending(x => x.CreatedAtUtc)
+                .Take(4)
+                .ToListAsync()
+                };
         var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
         var latestPosts = await _db.BlogPosts
             .Include(x => x.FeaturedMediaAsset)
