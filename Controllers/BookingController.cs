@@ -725,20 +725,20 @@ public class BookingController : Controller
         return TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(localDateTime, DateTimeKind.Unspecified), zone);
     }
     private string? CurrentCustomerUserId()
+{
+    var identity = User?.Identity;
+    if (identity == null || !identity.IsAuthenticated)
     {
-        var identity = User?.Identity;
-        if (identity == null || !identity.IsAuthenticated)
-        {
-            return null;
-        }
-
-        if (!string.Equals(identity.AuthenticationType, "CustomerCookie", StringComparison.Ordinal))
-        {
-            return null;
-        }
-
-        return (identity as ClaimsIdentity)?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        return null;
     }
+
+    if (!string.Equals(identity.AuthenticationType, "CustomerCookie", StringComparison.Ordinal))
+    {
+        return null;
+    }
+
+    return (identity as ClaimsIdentity)?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+}
     private static DateTime VietnamToday() => DateTime.UtcNow.AddHours(7).Date;
 
     private static decimal Clamp(decimal value, decimal min, decimal max) =>

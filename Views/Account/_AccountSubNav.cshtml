@@ -1,0 +1,34 @@
+@{
+    var currentAction = (string)ViewContext.RouteData.Values["action"];
+}
+<style>
+    .account-subnav {
+        border-bottom: 1px solid var(--line, #e9e4d9);
+        background: var(--soft, #f7f5f0);
+    }
+    .account-subnav .container {
+        display: flex;
+        gap: 1.75rem;
+    }
+    .account-subnav a {
+        display: inline-block;
+        padding: 1rem 0;
+        color: var(--muted, #6f6f6f);
+        text-decoration: none;
+        font-weight: 500;
+        border-bottom: 2px solid transparent;
+    }
+    .account-subnav a:hover {
+        color: var(--ink, #151515);
+    }
+    .account-subnav a.active {
+        color: var(--ink, #151515);
+        border-bottom-color: var(--gold, #c89b3c);
+    }
+</style>
+<div class="account-subnav">
+    <div class="container">
+        <a href="/account/my-bookings" class="@(currentAction == "MyBookings" ? "active" : "")">Bookings</a>
+        <a href="/account/profile" class="@(currentAction == "Profile" ? "active" : "")">Profile</a>
+    </div>
+</div>

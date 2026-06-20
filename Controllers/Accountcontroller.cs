@@ -90,7 +90,7 @@ namespace LuxuryCar.Controllers
             await UserManager.AddToRoleAsync(user.Id, "Customer");
             await SignInCustomerAsync(user, isPersistent: false);
 
-            return RedirectToLocal(model.ReturnUrl, "/account/my-bookings");
+            return RedirectToLocal(model.ReturnUrl, "/");
         }
 
         [Route("login")]
@@ -219,6 +219,116 @@ namespace LuxuryCar.Controllers
             return RedirectToAction("MyBookings");
         }
 
+        [Route("profile")]
+        [HttpGet]
+        [CustomerAuthorize]
+        public async Task<ActionResult> Profile()
+        {
+            var identity = await GetCustomerIdentityAsync();
+            var userId = CustomerIdFromIdentity(identity);
+            if (userId == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var user = await UserManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            return View(new ProfileViewModel
+            {
+                Email = user.Email ?? string.Empty,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneCountryCode = string.IsNullOrWhiteSpace(user.PhoneCountryCode) ? "+84" : user.PhoneCountryCode,
+                PhoneNumber = user.PhoneNumber
+            });
+        }
+
+        [Route("profile")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [CustomerAuthorize]
+        public async Task<ActionResult> Profile(ProfileViewModel model)
+        {
+            var identity = await GetCustomerIdentityAsync();
+            var userId = CustomerIdFromIdentity(identity);
+            if (userId == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var current = await UserManager.FindByIdAsync(userId);
+                model.Email = current?.Email ?? model.Email ?? string.Empty;
+                return View(model);
+            }
+
+            var user = await UserManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            user.FirstName = string.IsNullOrWhiteSpace(model.FirstName) ? null : model.FirstName.Trim();
+            user.LastName = string.IsNullOrWhiteSpace(model.LastName) ? null : model.LastName.Trim();
+            user.PhoneCountryCode = string.IsNullOrWhiteSpace(model.PhoneCountryCode) ? null : model.PhoneCountryCode.Trim();
+            user.PhoneNumber = string.IsNullOrWhiteSpace(model.PhoneNumber) ? null : model.PhoneNumber.Trim();
+
+            var result = await UserManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+                model.Email = user.Email ?? string.Empty;
+                return View(model);
+            }
+
+            await SignInCustomerAsync(user, isPersistent: true);
+
+            TempData["ProfileSuccess"] = "Your profile has been updated.";
+            return RedirectToAction("Profile");
+        }
+
+        [Route("profile/change-password")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [CustomerAuthorize]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            var identity = await GetCustomerIdentityAsync();
+            var userId = CustomerIdFromIdentity(identity);
+            if (userId == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var firstError = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .FirstOrDefault();
+                TempData["PasswordError"] = firstError ?? "Please check your password entries.";
+                return RedirectToAction("Profile");
+            }
+
+            var result = await UserManager.ChangePasswordAsync(userId, model.CurrentPassword, model.NewPassword);
+            if (!result.Succeeded)
+            {
+                TempData["PasswordError"] = string.Join(" ", result.Errors);
+                return RedirectToAction("Profile");
+            }
+
+            TempData["PasswordSuccess"] = "Your password has been changed.";
+            return RedirectToAction("Profile");
+        }
+
         private async Task SignInCustomerAsync(ApplicationUser user, bool isPersistent)
         {
             AuthenticationManager.SignOut(CustomerAuthentication.CookieAuthenticationType);
@@ -227,7 +337,7 @@ namespace LuxuryCar.Controllers
 
             var identity = new ClaimsIdentity(CustomerAuthentication.CookieAuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
-            identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName ?? user.Email ?? string.Empty));
+            identity.AddClaim(new Claim(ClaimTypes.Name, !string.IsNullOrWhiteSpace(user.DisplayName) ? user.DisplayName : (user.UserName ?? user.Email ?? string.Empty)));
             identity.AddClaim(new Claim(ClaimTypes.Email, user.Email ?? string.Empty));
             foreach (var role in roles)
             {

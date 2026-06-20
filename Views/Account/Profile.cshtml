@@ -1,0 +1,176 @@
+@model LuxuryCar.ViewModels.ProfileViewModel
+@{
+    ViewData["Title"] = "My profile";
+    var profileSuccess = TempData["ProfileSuccess"] as string;
+    var passwordSuccess = TempData["PasswordSuccess"] as string;
+    var passwordError = TempData["PasswordError"] as string;
+
+    var countries = new[]
+    {
+        new { Code = "+84", Name = "Vietnam" },
+        new { Code = "+1", Name = "United States" },
+        new { Code = "+33", Name = "France" },
+        new { Code = "+44", Name = "United Kingdom" },
+        new { Code = "+81", Name = "Japan" },
+        new { Code = "+82", Name = "Korea" },
+        new { Code = "+86", Name = "China" }
+    };
+}
+
+<style>
+    .profile-card {
+        border: 1px solid var(--line, #e9e4d9);
+        border-radius: 12px;
+        background: var(--paper, #fff);
+        margin-bottom: 1.5rem;
+    }
+    .profile-card-header {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid var(--line, #e9e4d9);
+    }
+    .profile-card-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        background: var(--soft, #f7f5f0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gold, #c89b3c);
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+    .profile-card-header h2 {
+        font-size: 1.05rem;
+        margin: 0;
+    }
+    .profile-card-header p {
+        font-size: 0.85rem;
+        color: var(--muted, #6f6f6f);
+        margin: 0;
+    }
+    .profile-card-body {
+        padding: 1.5rem;
+    }
+    .phone-input-group {
+        display: flex;
+        gap: 0.5rem;
+    }
+    .phone-input-group select {
+        flex: 0 0 110px;
+    }
+</style>
+
+@Html.Partial("~/Views/Account/_AccountSubNav.cshtml")
+
+<div class="container py-5" style="max-width: 640px;">
+    <h1 class="mb-1">Profile</h1>
+    <p class="text-muted mb-4">Manage your account information and password.</p>
+
+    @if (!string.IsNullOrWhiteSpace(profileSuccess))
+    {
+        <div class="alert alert-success">@profileSuccess</div>
+    }
+
+    <div class="profile-card">
+        <div class="profile-card-header">
+            <span class="profile-card-icon"><i class="bi bi-person"></i></span>
+            <div>
+                <h2>Account information</h2>
+                <p>Your personal details</p>
+            </div>
+        </div>
+        <div class="profile-card-body">
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Where(x => string.IsNullOrEmpty(x.Key)).SelectMany(x => x.Value.Errors).Any())
+            {
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+            }
+
+            @using (Html.BeginForm("Profile", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.FirstName, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger small" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.LastName, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="text" class="form-control" value="@Model.Email" disabled readonly />
+                    <small class="text-muted">Your email address can't be changed here.</small>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <div class="phone-input-group">
+                        @Html.DropDownListFor(m => m.PhoneCountryCode,
+                            countries.Select(c => new SelectListItem
+                            {
+                                Text = $"{c.Name}(+{c.Code.TrimStart('+')})",
+                                Value = c.Code,
+                                Selected = c.Code == Model.PhoneCountryCode
+                            }), new { @class = "form-select" })
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "912 345 678" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger small" })
+                </div>
+
+                <button type="submit" class="btn btn-gold">Save changes</button>
+            }
+        </div>
+    </div>
+
+    <div class="profile-card">
+        <div class="profile-card-header">
+            <span class="profile-card-icon"><i class="bi bi-shield-lock"></i></span>
+            <div>
+                <h2>Change password</h2>
+                <p>Update the password used to sign in</p>
+            </div>
+        </div>
+        <div class="profile-card-body">
+            @if (!string.IsNullOrWhiteSpace(passwordSuccess))
+            {
+                <div class="alert alert-success">@passwordSuccess</div>
+            }
+            @if (!string.IsNullOrWhiteSpace(passwordError))
+            {
+                <div class="alert alert-danger">@passwordError</div>
+            }
+
+            @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label class="form-label">Current password</label>
+                    <input type="password" name="CurrentPassword" class="form-control" autocomplete="current-password" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">New password</label>
+                    <input type="password" name="NewPassword" class="form-control" autocomplete="new-password" minlength="8" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Confirm new password</label>
+                    <input type="password" name="ConfirmPassword" class="form-control" autocomplete="new-password" minlength="8" required />
+                </div>
+
+                <button type="submit" class="btn btn-outline-gold">Change password</button>
+            }
+        </div>
+    </div>
+</div>
