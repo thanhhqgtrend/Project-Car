@@ -6,34 +6,34 @@
                 <input type="hidden" name="FullName" id="FullName" />
                 <div class="col-md-6">
                     <label class="form-label" for="FirstName">@L["First name (as shown on passport)"] <span class="required-star">*</span></label>
-                    <input class="form-control form-control-lg" name="FirstName" id="FirstName" />
+                    <input class="form-control form-control-lg" name="FirstName" id="FirstName" value="@Model.FirstName" />
                     @Html.ValidationMessage("FirstName", "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-6">
                     <label class="form-label" for="LastName">@L["Last name (as shown on passport)"] <span class="required-star">*</span></label>
-                    <input class="form-control form-control-lg" name="LastName" id="LastName" />
+                    <input class="form-control form-control-lg" name="LastName" id="LastName" value="@Model.LastName" />
                     @Html.ValidationMessage("LastName", "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-6">
                     <label class="form-label" for="Phone">@L["Phone number"] <span class="required-star">*</span></label>
                     <select class="form-select form-select-lg" name="CountryCode" id="CountryCode">
-                        <option value="+84">Vietnam(+84)</option>
-                        <option value="+1">United States(+1)</option>
-                        <option value="+33">France(+33)</option>
-                        <option value="+44">United Kingdom(+44)</option>
-                        <option value="+81">Japan(+81)</option>
-                        <option value="+82">Korea(+82)</option>
-                        <option value="+86">China(+86)</option>
+                        <option value="+84" selected="@(Model.CountryCode == "+84")">Vietnam(+84)</option>
+                        <option value="+1" selected="@(Model.CountryCode == "+1")">United States(+1)</option>
+                        <option value="+33" selected="@(Model.CountryCode == "+33")">France(+33)</option>
+                        <option value="+44" selected="@(Model.CountryCode == "+44")">United Kingdom(+44)</option>
+                        <option value="+81" selected="@(Model.CountryCode == "+81")">Japan(+81)</option>
+                        <option value="+82" selected="@(Model.CountryCode == "+82")">Korea(+82)</option>
+                        <option value="+86" selected="@(Model.CountryCode == "+86")">China(+86)</option>
                     </select>
                 </div>
                 <div class="col-md-6 phone-number-field">
                     <label class="form-label d-none d-md-block">&nbsp;</label>
-                    <input class="form-control form-control-lg" name="Phone" id="Phone" />
+                    <input class="form-control form-control-lg" name="Phone" id="Phone" value="@Model.Phone" />
                     @Html.ValidationMessage("Phone", "", new { @class = "text-danger" })
                 </div>
                 <div class="col-12">
                     <label class="form-label" for="Email">@L["Email (for voucher)"] <span class="required-star">*</span></label>
-                    <input class="form-control" name="Email" id="Email" />
+                    <input class="form-control" name="Email" id="Email" value="@Model.Email" />
                     @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
                 </div>
                 @if (Model.TripType == TripType.Hire)

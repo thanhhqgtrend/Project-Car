@@ -12,6 +12,9 @@ public class QuoteService : IQuoteService
     private readonly IAppSettingService _settings;
     private readonly IAppLogger<QuoteService> _logger;
     private readonly IRuntimeCache _cache;
+    private const double MinimumGeocodeConfidence = 0.4;
+    private const decimal VietnamBiasLatitude = 16.0m;
+    private const decimal VietnamBiasLongitude = 107.8m;
 
     public QuoteService(IHttpClientFactory httpClientFactory, IAppSettingService settings, IAppLogger<QuoteService> logger, IRuntimeCache cache)
     {
@@ -187,11 +190,19 @@ public class QuoteService : IQuoteService
         }
 
         var client = _httpClientFactory.CreateClient();
-        var url = $"https://api.geoapify.com/v1/geocode/search?text={Uri.EscapeDataString(address)}&filter=countrycode:vn&format=json&limit=1&lang=en&apiKey={Uri.EscapeDataString(apiKey)}";
+        var bias = $"proximity:{VietnamBiasLongitude.ToString(System.Globalization.CultureInfo.InvariantCulture)},{VietnamBiasLatitude.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
+        var url = $"https://api.geoapify.com/v1/geocode/search?text={Uri.EscapeDataString(address)}&filter=countrycode:vn&bias={Uri.EscapeDataString(bias)}&format=json&limit=1&lang=en&apiKey={Uri.EscapeDataString(apiKey)}";
         var response = JsonSerializer.Deserialize<GeoapifyGeocodeResponse>(await client.GetStringAsync(url));
         var result = response?.Results.FirstOrDefault();
         if (result is null)
         {
+            return null;
+        }
+
+        if (result.Confidence < MinimumGeocodeConfidence)
+        {
+            _logger.LogWarning(new InvalidOperationException($"Low confidence geocode for '{address}'"),
+                $"Geoapify geocode for '{address}' had low confidence ({result.Confidence:0.00}); treating as unresolved.");
             return null;
         }
 
@@ -215,6 +226,18 @@ public class QuoteService : IQuoteService
 
         [JsonPropertyName("lon")]
         public decimal Longitude { get; set; }
+
+        [JsonPropertyName("rank")]
+        public GeoapifyRank? Rank { get; set; }
+
+        [JsonIgnore]
+        public double Confidence => Rank?.Confidence ?? 0;
+    }
+
+    private sealed class GeoapifyRank
+    {
+        [JsonPropertyName("confidence")]
+        public double Confidence { get; set; }
     }
 
     private sealed class GeoapifyRouteResponse

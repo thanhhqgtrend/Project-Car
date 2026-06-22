@@ -10,6 +10,10 @@ using System.Web.Security;
 using System.Text;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
+using LuxuryCar.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
+using Microsoft.Owin.Security;
 
 namespace LuxuryCar.Controllers;
 
@@ -34,6 +38,20 @@ public class BookingController : Controller
         _emailService = emailService;
         _settings = settings;
     }
+
+    private IOwinContext OwinContext
+    {
+        get
+        {
+            var environment = (System.Collections.Generic.IDictionary<string, object>)
+                System.Web.HttpContext.Current.Items["owin.Environment"];
+            return new OwinContext(environment);
+        }
+    }
+
+    private ApplicationUserManager UserManager => OwinContext.GetUserManager<ApplicationUserManager>();
+
+    private IAuthenticationManager AuthenticationManager => OwinContext.Authentication;
 
     [HttpGet]
     [Route("booking/search")]
@@ -164,6 +182,7 @@ public class BookingController : Controller
         }
 
         await ApplyPriceAsync(model);
+        await ApplyCustomerAutofillAsync(model);
         return View(model);
     }
 
@@ -219,7 +238,7 @@ public class BookingController : Controller
         var booking = new Booking
         {
             BookingNumber = await _bookingNumberService.NextAsync(),
-            UserId = CurrentCustomerUserId(),
+            UserId = await CurrentCustomerUserIdAsync(),
             TripType = model.TripType,
             AirportId = model.AirportId,
             CarVehicleTypeId = model.CarVehicleTypeId,
@@ -376,6 +395,46 @@ public class BookingController : Controller
         if (string.IsNullOrWhiteSpace(model.PickupTime) && model.PickupDateTime.TimeOfDay != TimeSpan.Zero)
         {
             model.PickupTime = model.PickupDateTime.ToString("HH:mm");
+        }
+    }
+
+    private async Task ApplyCustomerAutofillAsync(BookingCheckoutViewModel model)
+    {
+
+        if (!string.IsNullOrWhiteSpace(model.FirstName) || !string.IsNullOrWhiteSpace(model.Email))
+        {
+            return;
+        }
+
+        var customer = await CurrentCustomerAsync();
+        if (customer == null)
+        {
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(model.FirstName))
+        {
+            model.FirstName = customer.FirstName ?? string.Empty;
+        }
+
+        if (string.IsNullOrWhiteSpace(model.LastName))
+        {
+            model.LastName = customer.LastName ?? string.Empty;
+        }
+
+        if (string.IsNullOrWhiteSpace(model.Email))
+        {
+            model.Email = customer.Email ?? string.Empty;
+        }
+
+        if (string.IsNullOrWhiteSpace(model.Phone))
+        {
+            model.Phone = customer.PhoneNumber ?? string.Empty;
+        }
+
+        if (string.IsNullOrWhiteSpace(model.CountryCode) && !string.IsNullOrWhiteSpace(customer.PhoneCountryCode))
+        {
+            model.CountryCode = customer.PhoneCountryCode;
         }
     }
 
@@ -724,21 +783,19 @@ public class BookingController : Controller
 
         return TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(localDateTime, DateTimeKind.Unspecified), zone);
     }
-    private string? CurrentCustomerUserId()
-{
-    var identity = User?.Identity;
-    if (identity == null || !identity.IsAuthenticated)
+
+    private async Task<string?> CurrentCustomerUserIdAsync()
     {
-        return null;
+        var result = await AuthenticationManager.AuthenticateAsync("CustomerCookie");
+        return result?.Identity?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     }
 
-    if (!string.Equals(identity.AuthenticationType, "CustomerCookie", StringComparison.Ordinal))
+    private async Task<ApplicationUser?> CurrentCustomerAsync()
     {
-        return null;
+        var userId = await CurrentCustomerUserIdAsync();
+        return userId == null ? null : await UserManager.FindByIdAsync(userId);
     }
 
-    return (identity as ClaimsIdentity)?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-}
     private static DateTime VietnamToday() => DateTime.UtcNow.AddHours(7).Date;
 
     private static decimal Clamp(decimal value, decimal min, decimal max) =>
